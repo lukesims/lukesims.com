@@ -1,5 +1,6 @@
 {
-  "name": "lukesims-com",
+  "private": true,
+  "name": "lukesims.com",
   "type": "module",
   "version": "0.0.1",
   "scripts": {
@@ -10,5 +11,11 @@
   },
   "dependencies": {
     "astro": "^5.13.9"
+  },
+  "devDependencies": {
+    "@trivago/prettier-plugin-sort-imports": "^5.2.2",
+    "prettier": "^3.6.2",
+    "prettier-plugin-astro": "^0.14.1",
+    "prettier-plugin-tailwindcss": "^0.6.14"
   }
 }
