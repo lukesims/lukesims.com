@@ -1,0 +1,32 @@
+---
+import { ClientRouter } from "astro:transitions";
+
+import "@fontsource-variable/bricolage-grotesque";
+import "@fontsource-variable/public-sans";
+import "~/styles/app.css";
+
+export interface Props {
+  bodyClass?: string;
+  title: string;
+}
+
+const { bodyClass, title } = Astro.props;
+---
+
+<html lang="en" transition:animate="none" transition:name="root">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{title} &bullet; Software Development by Luke Sims</title>
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="Luke Sims" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <ClientRouter />
+  </head>
+  <body class={bodyClass}>
+    <slot />
+  </body>
+</html>

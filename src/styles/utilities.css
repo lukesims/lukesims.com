@@ -1,0 +1,10 @@
+@utility print-color-exact {
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+@utility transition-page {
+  transition-property: all;
+  transition-duration: 0.3s;
+  transition-timing-function: var(--ease-out);
+}

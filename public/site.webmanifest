@@ -1,0 +1,22 @@
+{
+  "name": "Luke Sims",
+  "short_name": "Luke Sims",
+  "display": "standalone",
+  "theme_color": "#facc15",
+  "background_color": "#facc15",
+
+  "icons": [
+    {
+      "src": "/web-app-manifest-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/web-app-manifest-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

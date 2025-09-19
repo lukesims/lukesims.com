@@ -1,0 +1,12 @@
+@import "tailwindcss";
+
+@plugin "@tailwindcss/typography";
+@plugin "@iconify/tailwind4";
+
+@custom-variant dark (&:where(.dark, .dark *));
+@custom-variant icon (& > [class*="icon-"]);
+@custom-variant has-icon (&:has(> [class*="icon-"]));
+
+@import "./theme.css";
+@import "./base.css";
+@import "./utilities.css";

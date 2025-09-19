@@ -1,0 +1,60 @@
+---
+import { QRCode } from "~/components/qr-code";
+
+interface Props {
+  centered?: boolean;
+  qrCode?: string;
+}
+
+const { centered, qrCode } = Astro.props;
+
+const year = new Date().getFullYear();
+const years = year === 2025 ? "2025" : `2025&ndash;${year}`;
+
+const qrData = qrCode || Astro.url.toString();
+---
+
+<footer
+  id="page-footer"
+  class:list={[
+    "grow print:mr-5 print:ml-4",
+    "flex gap-7 px-8 pt-7 pb-5 print:gap-5 print:p-0",
+    "inset-shadow-blue-700 print:inset-shadow-none",
+    "print:shadow-border print:shadow-md",
+    "border-border print:border-2",
+    "print-color-exact bg-blue-600 text-white",
+    centered
+      ? "inset-shadow-xl items-center justify-center border-t-4"
+      : "inset-shadow-lg items-start justify-start",
+  ]}
+>
+  <p class="block print:hidden" set:html={`&copy; ${years} Luke Sims`} />
+
+  <div class="ml-5 hidden grow items-center justify-between print:flex">
+    <div class="font-display text-xs leading-relaxed font-semibold">
+      <p set:html={`&copy; ${years} Luke Sims`} />
+      <p class="has-[.pageNumber:empty]:hidden has-[.totalPages:empty]:hidden">
+        Page <span class="pageNumber"></span>
+        of <span class="totalPages"></span>
+      </p>
+    </div>
+
+    <div class="font-display text-right text-xs leading-relaxed font-semibold">
+      To view online scan the QR code or go to<br />
+      <a href={qrData} style={{ color: "#fff", textDecoration: "underline" }}
+        >{qrData}</a
+      >
+    </div>
+  </div>
+
+  <div class="hidden h-18 w-18.5 shrink-0 border-l-2 border-black print:block">
+    <QRCode
+      client:load
+      className="h-full w-full"
+      data={qrData}
+      width={72}
+      height={72}
+      margin={0}
+    />
+  </div>
+</footer>

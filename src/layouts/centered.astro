@@ -1,0 +1,35 @@
+---
+import Footer from "~/components/layout/footer.astro";
+import { Header } from "~/components/layout/header";
+import BaseLayout, { type Props as BaseProps } from "~/layouts/base.astro";
+
+interface Props extends BaseProps {
+  errorCode?: string;
+  qrCode?: string;
+}
+
+const { bodyClass, errorCode, qrCode, title } = Astro.props;
+const { pathname } = Astro.url;
+---
+
+<BaseLayout bodyClass={bodyClass} title={title}>
+  <Header
+    centered
+    client:load
+    currentPath={pathname}
+    errorCode={errorCode}
+    transition:persist="page-header"
+  />
+  <div class="flex min-h-screen w-full pt-[calc(45dvh-6px)]">
+    <main
+      class:list={[
+        "flex grow flex-col items-end px-8 py-6",
+        "border-border border-r-4",
+        "inset-shadow-[0_6px] inset-shadow-gray-600/25",
+      ]}
+    >
+      <slot />
+    </main>
+    <Footer qrCode={qrCode} />
+  </div>
+</BaseLayout>

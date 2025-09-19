@@ -1,0 +1,158 @@
+:root {
+  --bg-chroma: 0.013;
+  --bg-hue: 58.071;
+  --bg-elevation-1: oklch(72% var(--bg-chroma) var(--bg-hue));
+  --bg-elevation-2: oklch(76% var(--bg-chroma) var(--bg-hue));
+  --bg-elevation-3: oklch(80% var(--bg-chroma) var(--bg-hue));
+  --bg-elevation-4: oklch(84% var(--bg-chroma) var(--bg-hue));
+  --bg-elevation-5: oklch(88% var(--bg-chroma) var(--bg-hue));
+  --bg-elevation-6: oklch(92% var(--bg-chroma) var(--bg-hue));
+  --bg-elevation-7: oklch(96% var(--bg-chroma) var(--bg-hue));
+  --bg-elevation-8: oklch(100% var(--bg-chroma) var(--bg-hue));
+
+  --background: var(--bg-elevation-4);
+  --foreground: oklch(0 0 0);
+  --border: oklch(0 0 0);
+  --shadow: var(--border);
+  --shadow-inset: oklch(from var(--color-stone-700) l c h / 0.2);
+
+  --anchor: var(--color-blue-600);
+  --anchor-hover: var(--color-green-500);
+  --button: var(--bg-elevation-8);
+  --button-foreground: var(--foreground);
+  --button-hover: var(--bg-elevation-4);
+  --card: var(--bg-elevation-6);
+  --card-foreground: var(--foreground);
+  --heading: oklch(0 0 0);
+  --input: var(--bg-elevation-1);
+  --input-foreground: var(--foreground);
+
+  --primary: var(--color-blue-400);
+  --primary-foreground: oklch(0 0 0);
+  --muted: var(--color-stone-100);
+  --muted-foreground: var(--color-stone-500);
+  --danger: var(--color-red-600);
+  --danger-foreground: oklch(1 0 0);
+  --info: var(--color-blue-600);
+  --info-foreground: oklch(1 0 0);
+  --success: var(--color-green-500);
+  --success-foreground: oklch(0 0 0);
+
+  --shadow-xs-size: 2px;
+  --shadow-sm-size: 3px;
+  --shadow-md-size: 4px;
+  --shadow-lg-size: 6px;
+  --shadow-xl-size: 10px;
+}
+
+.dark {
+  /* TODO */
+}
+
+@media print {
+  :root {
+    --bg-elevation-1: #fff;
+    --bg-elevation-2: #fff;
+    --bg-elevation-3: #fff;
+    --bg-elevation-4: #fff;
+    --bg-elevation-5: #fff;
+    --bg-elevation-6: #fff;
+    --bg-elevation-7: #fff;
+    --bg-elevation-8: #fff;
+  }
+}
+
+@theme inline {
+  --breakpoint-3xl: 120rem;
+
+  --color-elevation-1: var(--bg-elevation-1);
+  --color-elevation-2: var(--bg-elevation-2);
+  --color-elevation-3: var(--bg-elevation-3);
+  --color-elevation-4: var(--bg-elevation-4);
+  --color-elevation-5: var(--bg-elevation-5);
+  --color-elevation-6: var(--bg-elevation-6);
+  --color-elevation-7: var(--bg-elevation-7);
+  --color-elevation-8: var(--bg-elevation-8);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-border: var(--border);
+  --color-shadow: var(--shadow);
+  --color-shadow-inset: var(--shadow-inset);
+
+  --color-anchor: var(--anchor);
+  --color-anchor-hover: var(--anchor-hover);
+  --color-button: var(--button);
+  --color-button-foreground: var(--button-foreground);
+  --color-button-hover: var(--button-hover);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-heading: var(--heading);
+  --color-input: var(--input);
+  --color-input-foreground: var(--input-foreground);
+
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-danger: var(--danger);
+  --color-danger-foreground: var(--danger-foreground);
+  --color-info: var(--info);
+  --color-info-foreground: var(--info-foreground);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+
+  --default-transition-duration: 100ms;
+  --default-transition-timing-function: var(--ease-out);
+
+  --font-display:
+    "Bricolage Grotesque Variable", "ui-sans-serif", "system-ui", "sans-serif",
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-sans:
+    "Public Sans Variable", "ui-sans-serif", "system-ui", "sans-serif",
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+
+  --drop-shadow-xs: var(--shadow-xs-size) var(--shadow-xs-size)
+    var(--tw-drop-shadow-color);
+  --drop-shadow-sm: var(--shadow-sm-size) var(--shadow-sm-size)
+    var(--tw-drop-shadow-color);
+  --drop-shadow-md: var(--shadow-md-size) var(--shadow-md-size)
+    var(--tw-drop-shadow-color);
+  --drop-shadow-lg: var(--shadow-lg-size) var(--shadow-lg-size)
+    var(--tw-drop-shadow-color);
+  --drop-shadow-xl: var(--shadow-xl-size) var(--shadow-xl-size)
+    var(--tw-drop-shadow-color);
+
+  --inset-shadow-xs: inset var(--shadow-xs-size) var(--shadow-xs-size)
+    var(--tw-inset-shadow-color);
+  --inset-shadow-sm: inset var(--shadow-sm-size) var(--shadow-sm-size)
+    var(--tw-inset-shadow-color);
+  --inset-shadow-md: inset var(--shadow-md-size) var(--shadow-md-size)
+    var(--tw-inset-shadow-color);
+  --inset-shadow-lg: inset var(--shadow-lg-size) var(--shadow-lg-size)
+    var(--tw-inset-shadow-color);
+  --inset-shadow-xl: inset var(--shadow-xl-size) var(--shadow-xl-size)
+    var(--tw-inset-shadow-color);
+
+  --shadow-xs: var(--shadow-xs-size) var(--shadow-xs-size)
+    var(--tw-shadow-color);
+  --shadow-sm: var(--shadow-sm-size) var(--shadow-sm-size)
+    var(--tw-shadow-color);
+  --shadow-md: var(--shadow-md-size) var(--shadow-md-size)
+    var(--tw-shadow-color);
+  --shadow-lg: var(--shadow-lg-size) var(--shadow-lg-size)
+    var(--tw-shadow-color);
+  --shadow-xl: var(--shadow-xl-size) var(--shadow-xl-size)
+    var(--tw-shadow-color);
+
+  --text-shadow-xs: var(--shadow-xs-size) var(--shadow-xs-size)
+    var(--tw-text-shadow-color);
+  --text-shadow-sm: var(--shadow-sm-size) var(--shadow-sm-size)
+    var(--tw-text-shadow-color);
+  --text-shadow-md: var(--shadow-md-size) var(--shadow-md-size)
+    var(--tw-text-shadow-color);
+  --text-shadow-lg: var(--shadow-lg-size) var(--shadow-lg-size)
+    var(--tw-text-shadow-color);
+  --text-shadow-xl: var(--shadow-xl-size) var(--shadow-xl-size)
+    var(--tw-text-shadow-color);
+}
