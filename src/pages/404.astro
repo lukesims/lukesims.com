@@ -1,0 +1,11 @@
+---
+export const prerender = false;
+
+import { Heading } from "~/components/heading";
+import Layout from "~/layouts/centered.astro";
+---
+
+<Layout errorCode="404" title="Error 404: Page Not Found">
+  <Heading>Page Not Found</Heading>
+  <p class="text-2xl text-pretty">Sorry &ndash; that page doesn't exist 🙁</p>
+</Layout>
