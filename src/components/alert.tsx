@@ -4,7 +4,7 @@ import { type ComponentProps } from "react";
 import { cn } from "~/utils/styles";
 
 const styles = cva(
-  "border-border shadow-border has-icon:grid-cols-[calc(var(--spacing)*7)_1fr] has-icon:gap-x-3 icon:order-first icon:size-7 icon:text-current relative grid w-full grid-cols-[0_1fr] items-start gap-y-1 border-2 px-4 py-3 shadow-lg",
+  "border-border shadow-border has-icon:grid-cols-[calc(var(--spacing)*7)_1fr] has-icon:gap-x-3 icon:order-first icon:size-7 icon:text-current relative grid w-full grid-cols-[0_1fr] items-start gap-y-1 border-4 px-4 py-3 shadow-lg",
   {
     variants: {
       variant: {

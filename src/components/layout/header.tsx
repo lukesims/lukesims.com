@@ -79,8 +79,8 @@ export function Header({
                 !centered && "grow",
               )}
             >
-              <Button asChild className={activeClass("/")}>
-                <a href="/">Home</a>
+              <Button asChild className={activeClass("/about")}>
+                <a href="/about">About</a>
               </Button>
               <Button asChild className={activeClass("/projects")}>
                 <a href="/projects">Projects</a>

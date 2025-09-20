@@ -26,6 +26,44 @@ export default defineConfig({
         context: "client",
         optional: false,
       }),
+      CONTACT_EMAIL: envField.string({
+        access: "public",
+        context: "server",
+        optional: false,
+      }),
+
+      SMTP_FROM: envField.string({
+        access: "public",
+        context: "server",
+        default: "Luke Sims <do-not-reply@lukesims.com>",
+        optional: true,
+      }),
+      SMTP_HOST: envField.string({
+        access: "public",
+        context: "server",
+        optional: false,
+      }),
+      SMTP_PASS: envField.string({
+        access: "secret",
+        context: "server",
+        optional: true,
+      }),
+      SMTP_PORT: envField.number({
+        access: "public",
+        context: "server",
+        optional: false,
+      }),
+      SMTP_SECURE: envField.boolean({
+        access: "public",
+        context: "server",
+        default: false,
+        optional: true,
+      }),
+      SMTP_USER: envField.string({
+        access: "secret",
+        context: "server",
+        optional: true,
+      }),
     },
   },
 });

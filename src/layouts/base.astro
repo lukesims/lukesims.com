@@ -1,6 +1,8 @@
 ---
 import { ClientRouter } from "astro:transitions";
 
+import { Toaster } from "~/components/toast";
+
 import "@fontsource-variable/bricolage-grotesque";
 import "@fontsource-variable/public-sans";
 import "~/styles/app.css";
@@ -28,5 +30,6 @@ const { bodyClass, title } = Astro.props;
   </head>
   <body class={bodyClass}>
     <slot />
+    <Toaster client:load />
   </body>
 </html>
