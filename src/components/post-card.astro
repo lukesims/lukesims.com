@@ -1,0 +1,47 @@
+---
+import { Image } from "astro:assets";
+import { getEntries, type CollectionEntry } from "astro:content";
+
+import FormattedDate from "~/components/formatted-date.astro";
+import { Card } from "~/components/card";
+import { Chip } from "~/components/chip";
+import { Heading } from "~/components/heading";
+
+interface Props {
+  post: CollectionEntry<"blog">;
+}
+
+const { post } = Astro.props;
+const categories = (await getEntries(post.data.categories)).filter((c) => c);
+---
+
+<article>
+  <a href={`/blog/${post.id}`} class="group block">
+    <Card className="flex items-center gap-12 p-8">
+      <Image
+        src={post.data.hero}
+        alt=""
+        width={360}
+        height={280}
+        layout="constrained"
+        class="border-border shadow-border transform border-3 shadow-md transition group-hover:translate-x-1 group-hover:translate-y-1 group-hover:shadow-none"
+      />
+      <div class="flex flex-col items-start">
+        <div class="font-display text-sm leading-none">
+          <FormattedDate date={post.data.published} />
+        </div>
+        <Heading
+          level="h2"
+          className="mb-5 leading-[1.1] transition group-hover:text-blue-600"
+          >{post.data.title}</Heading
+        >
+        <div class="mb-6">
+          {post.data.description}
+        </div>
+        <div class="flex gap-2">
+          {categories.map((c) => <Chip>{c.data.title}</Chip>)}
+        </div>
+      </div>
+    </Card>
+  </a>
+</article>
