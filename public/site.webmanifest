@@ -2,8 +2,8 @@
   "name": "Luke Sims",
   "short_name": "Luke Sims",
   "display": "standalone",
-  "theme_color": "#facc15",
-  "background_color": "#facc15",
+  "theme_color": "#ffdf20",
+  "background_color": "#ffdf20",
 
   "icons": [
     {
