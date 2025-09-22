@@ -64,6 +64,12 @@ export default defineConfig({
         context: "server",
         optional: true,
       }),
+
+      STORAGE_PATH: envField.string({
+        access: "public",
+        context: "server",
+        optional: false,
+      }),
     },
   },
 });
