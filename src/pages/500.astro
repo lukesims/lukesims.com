@@ -1,0 +1,37 @@
+---
+export const prerender = false;
+
+import { Heading } from "~/components/heading";
+import CenteredLayout from "~/layouts/centered.astro";
+
+interface Props {
+  error: unknown;
+}
+
+const { error } = Astro.props;
+
+const statusParam = Astro.url.searchParams.get("status");
+const errorParam = Astro.url.searchParams.get("error");
+const messageParam = Astro.url.searchParams.get("message");
+
+let content, errorCode, heading, title;
+
+if (statusParam) {
+  errorCode = statusParam;
+  heading = errorParam ?? "Error";
+  content = messageParam ?? "An error occurred";
+  title = `Error ${statusParam}: ${errorParam}`;
+} else if (error instanceof Error) {
+  errorCode = "500";
+  content = error.message ?? "An error occurred";
+  heading = error.name ?? "Error";
+  title = `Error: ${error.name}`;
+} else {
+  return Astro.rewrite("/404");
+}
+---
+
+<CenteredLayout errorCode={errorCode} title={title}>
+  <Heading>{heading}</Heading>
+  <p class="text-2xl text-pretty">{content}</p>
+</CenteredLayout>
