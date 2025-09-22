@@ -10,6 +10,7 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/db": "^0.18.0",
     "@fontsource-variable/bricolage-grotesque": "^5.2.10",
     "@fontsource-variable/public-sans": "^5.2.7",
     "@radix-ui/react-form": "^0.1.8",

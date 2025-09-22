@@ -1,3 +1,4 @@
+import db from "@astrojs/db";
 import react from "@astrojs/react";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig, envField } from "astro/config";
@@ -14,7 +15,7 @@ export default defineConfig({
   site: SITE_URL,
   trailingSlash: "never",
 
-  integrations: [react()],
+  integrations: [db(), react()],
   vite: {
     plugins: [tailwindcss()],
   },
