@@ -20,7 +20,11 @@ export class ExpiredSignatureError extends Error {}
 export class InvalidSignatureError extends Error {}
 
 /**
- * @todo
+ * Throws errors if the URL's signature is invalid or the URL has expired.
+ *
+ * @param url The URL to validate.
+ * @throws InvalidSignatureError
+ * @throws ExpiredSignatureError
  */
 export function assertUrlIsValid(url: string | URL) {
   if (typeof url === "string") url = new URL(url);

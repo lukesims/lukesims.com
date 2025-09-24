@@ -3,8 +3,6 @@ import { ClientRouter } from "astro:transitions";
 
 import { Toaster } from "~/components/toast";
 
-import "@fontsource-variable/bricolage-grotesque";
-import "@fontsource-variable/public-sans";
 import "~/styles/app.css";
 
 export interface Props {
@@ -26,6 +24,7 @@ const { bodyClass, title } = Astro.props;
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <meta name="apple-mobile-web-app-title" content="Luke Sims" />
     <link rel="manifest" href="/site.webmanifest" />
+    <link rel="stylesheet" href="/fonts.css" />
     <ClientRouter />
   </head>
   <body class={bodyClass}>

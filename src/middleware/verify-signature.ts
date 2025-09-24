@@ -1,7 +1,11 @@
 import type { APIContext } from "astro";
 import { defineMiddleware } from "astro:middleware";
 
-import { errorResponse } from "~/utils/http";
+import {
+  expiredSignatureResponse,
+  internalErrorResponse,
+  invalidSignatureResponse,
+} from "~/utils/http";
 import {
   assertUrlIsValid,
   ExpiredSignatureError,
@@ -17,31 +21,18 @@ const signedRoutes = [/^\/cv\/[A-Za-z0-9]+\/view$/];
  * Verifies URL signatures for the routes and actions that use them.
  */
 export const verifySignature = defineMiddleware(async (context, next) => {
-  if (!shouldApply(context)) {
-    return next();
-  }
+  if (!shouldApply(context)) return next();
 
   try {
     assertUrlIsValid(context.url);
   } catch (error) {
-    if (error instanceof InvalidSignatureError) {
-      return errorResponse(403, {
-        error: "Invalid Signature",
-        message: "Lorem ipsum dolor sit amet.", // @todo
-      });
-    }
-    if (error instanceof ExpiredSignatureError) {
-      return errorResponse(410, {
-        error: "Page Expired",
-        message: "Lorem ipsum dolor sit amet.", // @todo
-      });
-    }
+    if (error instanceof InvalidSignatureError)
+      return invalidSignatureResponse();
+    if (error instanceof ExpiredSignatureError)
+      return expiredSignatureResponse();
     // @todo capture
     console.error(error);
-    return errorResponse(500, {
-      error: "Internal Server Error",
-      message: "Please try again later.",
-    });
+    return internalErrorResponse();
   }
 
   return next();

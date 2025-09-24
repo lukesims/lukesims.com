@@ -4,6 +4,8 @@ import tailwindcss from "@tailwindcss/vite";
 import { defineConfig, envField } from "astro/config";
 import { loadEnv } from "vite";
 
+import node from "@astrojs/node";
+
 const { SITE_URL } = loadEnv(
   process.env.NODE_ENV || "production",
   process.cwd(),
@@ -14,8 +16,8 @@ const { SITE_URL } = loadEnv(
 export default defineConfig({
   site: SITE_URL,
   trailingSlash: "never",
-
   integrations: [db(), react()],
+
   vite: {
     plugins: [tailwindcss()],
   },
@@ -73,4 +75,8 @@ export default defineConfig({
       }),
     },
   },
+
+  adapter: node({
+    mode: "standalone",
+  }),
 });

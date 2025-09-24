@@ -5,7 +5,7 @@ import { CONTACT_EMAIL } from "astro:env/server";
 import { z, ZodError } from "zod";
 
 import { sendEmail } from "~/utils/email";
-import { errorResponse, response } from "~/utils/http";
+import { internalErrorResponse, validationErrorResponse } from "~/utils/http";
 
 export const prerender = false;
 
@@ -34,14 +34,11 @@ export const POST: APIRoute = async ({ request }) => {
     validated = contactEndpointSchema.parse(data);
   } catch (error) {
     if (error instanceof ZodError) {
-      return response(422, error.flatten().fieldErrors);
+      return validationErrorResponse(error);
     }
     // @todo report
     console.error(error);
-    return errorResponse(500, {
-      error: "Internal Server Error",
-      message: "Please try again later.",
-    });
+    return internalErrorResponse();
   }
 
   // let emailInfo: SentMessageInfo;
@@ -63,7 +60,8 @@ export const POST: APIRoute = async ({ request }) => {
     });
   } catch (error) {
     // @todo report
-    return response(500, { error: "Internal Server Error" });
+    console.error(error);
+    return internalErrorResponse();
   }
 
   return new Response();

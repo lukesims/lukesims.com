@@ -1,0 +1,53 @@
+---
+export const prerender = false;
+
+import { SITE_URL } from "astro:env/client";
+
+import ContactInfo from "~/components/cv/contact-info.astro";
+import Education from "~/components/cv/education.astro";
+import Experience from "~/components/cv/experience.astro";
+import { Header } from "~/components/cv/header";
+import { Nav } from "~/components/cv/nav";
+import { Skills } from "~/components/cv/skills";
+import Summary from "~/components/cv/summary.astro";
+import ContentLayout from "~/layouts/content.astro";
+import { getAugmentedCv } from "~/utils/content";
+import { response } from "~/utils/http";
+
+const { id } = Astro.params;
+if (!id) return Astro.rewrite("/404");
+
+const accessRequestId = Astro.url.searchParams.get("req");
+if (!accessRequestId || !accessRequestId.length) return response(400);
+
+const cv = await getAugmentedCv(id);
+if (!cv) return Astro.rewrite("/404");
+
+const qrCode = new URL(`/cv/${id}`, SITE_URL).toString();
+---
+
+<ContentLayout bodyClass="print-color-exact" qrCode={qrCode} title="My CV">
+  <div
+    class:list={[
+      "mx-auto w-full py-24 print:py-0 print:pr-2",
+      "flex flex-col items-center gap-8 print:gap-4",
+      "text-center text-pretty",
+    ]}
+  >
+    <Header title={cv.data.title} />
+    <ContactInfo />
+    <Nav id={cv.id} url={Astro.url} />
+    <Summary summary={cv.data.summary} />
+    <Skills skills={cv.relations.skills} />
+
+    <div
+      class:list={[
+        "flex w-full flex-col items-center gap-8",
+        "print:block print:columns-2 print:gap-4",
+      ]}
+    >
+      <Experience experience={cv.relations.experience} />
+      <Education education={cv.relations.education} />
+    </div>
+  </div>
+</ContentLayout>

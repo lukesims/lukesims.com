@@ -25,6 +25,13 @@ Copy the example file and configure your environment variables:
 cp .env.example .env
 ```
 
+Create keys for signing/verifying URLs:
+
+```sh
+openssl genrsa -out storage/keys/private-key.pem 2048
+openssl rsa -pubout -in storage/keys/private-key.pem -out storage/keys/public-key.pem
+```
+
 Then you can install deps and run the dev server:
 
 ```sh

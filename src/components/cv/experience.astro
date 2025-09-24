@@ -1,0 +1,52 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { Heading } from "~/components/heading";
+import {
+  Timeline,
+  TimelineItem,
+  TimelineItemHeading,
+} from "~/components/timeline";
+
+interface Props {
+  experience: CollectionEntry<"experience">[];
+}
+
+const { experience } = Astro.props;
+---
+
+<section class="w-full max-w-2xl print:mb-8">
+  <Heading level="h2" className="relative mb-8 w-full pt-32 print:hidden">
+    <div id="experience" class="absolute -top-24"></div>
+    Experience
+  </Heading>
+
+  <Heading level="h3" className="mb-3 hidden print:block">Experience</Heading>
+
+  <Timeline>
+    {
+      experience.map((job) => (
+        <TimelineItem
+          date={
+            job.data.endYear
+              ? job.data.startYear === job.data.endYear
+                ? `${job.data.endYear}`
+                : `${job.data.startYear} - ${job.data.endYear}`
+              : `Since ${job.data.startYear}`
+          }
+          tags={[job.data.location]}
+        >
+          <hgroup>
+            <TimelineItemHeading>{job.data.title}</TimelineItemHeading>
+            <p class="font-display mb-4 text-base/7 font-bold print:mb-3 print:text-sm/7">
+              {job.data.company}
+            </p>
+          </hgroup>
+          <div
+            set:html={job.rendered?.html}
+            class="text-foreground/70 text-base print:text-sm [&_li]:mb-1 [&_li]:last:mb-0 [&_p]:mb-2 [&_p]:last:mb-0 [&_ul]:mb-2 [&_ul]:list-outside [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:last:mb-0 [&_ul_ul]:mb-0 [&_ul_ul]:pt-1"
+          />
+        </TimelineItem>
+      ))
+    }
+  </Timeline>
+</section>
