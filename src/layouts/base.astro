@@ -1,6 +1,4 @@
 ---
-import { ClientRouter } from "astro:transitions";
-
 import { Toaster } from "~/components/toast";
 
 import "~/styles/app.css";
@@ -13,7 +11,7 @@ export interface Props {
 const { bodyClass, title } = Astro.props;
 ---
 
-<html lang="en" transition:animate="none" transition:name="root">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
@@ -25,7 +23,6 @@ const { bodyClass, title } = Astro.props;
     <meta name="apple-mobile-web-app-title" content="Luke Sims" />
     <link rel="manifest" href="/site.webmanifest" />
     <link rel="stylesheet" href="/fonts.css" />
-    <ClientRouter />
   </head>
   <body class={bodyClass}>
     <slot />

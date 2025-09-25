@@ -13,20 +13,10 @@ const { pathname } = Astro.url;
 ---
 
 <BaseLayout bodyClass={bodyClass} title={title}>
-  <Header
-    centered
-    client:load
-    currentPath={pathname}
-    errorCode={errorCode}
-    transition:persist="page-header"
-  />
+  <Header centered client:load currentPath={pathname} errorCode={errorCode} />
   <div class="flex min-h-screen w-full pt-[calc(45dvh-6px)]">
     <main
-      class:list={[
-        "flex grow flex-col items-end px-8 py-6",
-        "border-border border-r-4",
-        "inset-shadow-[0_6px] inset-shadow-gray-600/25",
-      ]}
+      class="border-border flex grow flex-col items-end border-r-4 px-8 py-6 inset-shadow-[0_6px] inset-shadow-gray-600/25"
     >
       <slot />
     </main>
