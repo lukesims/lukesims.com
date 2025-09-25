@@ -41,9 +41,7 @@ const qrData = qrCode || Astro.url.toString();
 
     <div class="font-display text-right text-xs leading-relaxed font-semibold">
       To view online scan the QR code or go to<br />
-      <a href={qrData} style={{ color: "#fff", textDecoration: "underline" }}
-        >{qrData}</a
-      >
+      <a href={qrData} class="text-white underline">{qrData}</a>
     </div>
   </div>
 

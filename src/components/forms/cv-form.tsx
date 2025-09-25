@@ -33,11 +33,9 @@ export function CvForm({ id }: CvFormProps) {
         method: "POST",
       });
     } catch (err) {
-      toast({
+      toast.danger({
         title: "Internal Error",
         description: "Please try again later.",
-        icon: "icon-[ri--error-warning-line]",
-        variant: "danger",
       });
       setLoading(false);
       return;
@@ -52,11 +50,9 @@ export function CvForm({ id }: CvFormProps) {
           name: errors.name?.[0],
         });
       } else {
-        toast({
+        toast.danger({
           title: "Internal Error",
           description: "Please try again later.",
-          icon: "icon-[ri--error-warning-line]",
-          variant: "danger",
         });
       }
       setLoading(false);
@@ -65,11 +61,9 @@ export function CvForm({ id }: CvFormProps) {
 
     form.reset();
     setLoading(false);
-    toast({
+    toast.success({
       title: "Check your email!",
       description: "I've sent you a link.",
-      icon: "icon-[ri--thumb-up-line]",
-      variant: "success",
     });
   };
 

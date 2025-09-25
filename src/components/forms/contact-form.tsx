@@ -31,11 +31,9 @@ export function ContactForm() {
         method: "POST",
       });
     } catch (err) {
-      toast({
+      toast.danger({
         title: "Internal Error",
         description: "Please try again later.",
-        icon: "icon-[ri--error-warning-line]",
-        variant: "danger",
       });
       setLoading(false);
       return;
@@ -51,11 +49,9 @@ export function ContactForm() {
           message: errors.message?.[0],
         });
       } else {
-        toast({
+        toast.danger({
           title: "Internal Error",
           description: "Please try again later.",
-          icon: "icon-[ri--error-warning-line]",
-          variant: "danger",
         });
       }
       setLoading(false);
@@ -64,11 +60,9 @@ export function ContactForm() {
 
     form.reset();
     setLoading(false);
-    toast({
+    toast.success({
       title: "Sent!",
       description: "I'll get back to you as soon as possible.",
-      icon: "icon-[ri--thumb-up-line]",
-      variant: "success",
     });
   };
 

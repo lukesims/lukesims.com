@@ -10,7 +10,3 @@
 @import "./theme.css";
 @import "./base.css";
 @import "./utilities.css";
-
-@layer components {
-  @import "sonner/dist/styles.css";
-}

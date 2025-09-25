@@ -35,8 +35,8 @@
   --danger-foreground: oklch(1 0 0);
   --info: var(--color-blue-600);
   --info-foreground: oklch(1 0 0);
-  --success: var(--color-green-500);
-  --success-foreground: oklch(0 0 0);
+  --success: var(--color-green-600);
+  --success-foreground: oklch(1 0 0);
 
   --shadow-xs-size: 2px;
   --shadow-sm-size: 3px;
@@ -112,17 +112,6 @@
     "Public Sans Variable", "ui-sans-serif", "system-ui", "sans-serif",
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 
-  --drop-shadow-xs: var(--shadow-xs-size) var(--shadow-xs-size)
-    var(--tw-drop-shadow-color);
-  --drop-shadow-sm: var(--shadow-sm-size) var(--shadow-sm-size)
-    var(--tw-drop-shadow-color);
-  --drop-shadow-md: var(--shadow-md-size) var(--shadow-md-size)
-    var(--tw-drop-shadow-color);
-  --drop-shadow-lg: var(--shadow-lg-size) var(--shadow-lg-size)
-    var(--tw-drop-shadow-color);
-  --drop-shadow-xl: var(--shadow-xl-size) var(--shadow-xl-size)
-    var(--tw-drop-shadow-color);
-
   --inset-shadow-xs: inset var(--shadow-xs-size) var(--shadow-xs-size)
     var(--tw-inset-shadow-color);
   --inset-shadow-sm: inset var(--shadow-sm-size) var(--shadow-sm-size)
@@ -145,14 +134,23 @@
   --shadow-xl: var(--shadow-xl-size) var(--shadow-xl-size)
     var(--tw-shadow-color);
 
-  --text-shadow-xs: var(--shadow-xs-size) var(--shadow-xs-size)
-    var(--tw-text-shadow-color);
-  --text-shadow-sm: var(--shadow-sm-size) var(--shadow-sm-size)
-    var(--tw-text-shadow-color);
-  --text-shadow-md: var(--shadow-md-size) var(--shadow-md-size)
-    var(--tw-text-shadow-color);
-  --text-shadow-lg: var(--shadow-lg-size) var(--shadow-lg-size)
-    var(--tw-text-shadow-color);
-  --text-shadow-xl: var(--shadow-xl-size) var(--shadow-xl-size)
-    var(--tw-text-shadow-color);
+  --animate-hide: hide 0.1s ease-in;
+  --animate-slide-in-down: slide-in-down 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-toast-swipe: toast-swipe 0.1s ease-out;
+
+  /* prettier-ignore */
+  @keyframes hide {
+    0% { opacity: 1; }
+    100% { opacity: 0; }
+  }
+  /* prettier-ignore */
+  @keyframes slide-in-down {
+    0% { transform: translateY(-100%); }
+    100% { transform: translateY(0); }
+  }
+  /* prettier-ignore */
+  @keyframes toast-swipe {
+    0% { transform: translateY(var(--radix-toast-swipe-end-y)); }
+    100% { transform: translateY(100%); }
+  }
 }
