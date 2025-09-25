@@ -1,10 +1,9 @@
 import db from "@astrojs/db";
+import node from "@astrojs/node";
 import react from "@astrojs/react";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig, envField } from "astro/config";
 import { loadEnv } from "vite";
-
-import node from "@astrojs/node";
 
 const { SITE_URL } = loadEnv(
   process.env.NODE_ENV || "production",
@@ -20,6 +19,10 @@ export default defineConfig({
 
   vite: {
     plugins: [tailwindcss()],
+  },
+
+  experimental: {
+    csp: true,
   },
 
   env: {
