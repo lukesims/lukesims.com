@@ -1,22 +1,36 @@
 ---
-import { Toaster } from "~/components/toast";
+import { SEO, type SEOProps } from "astro-seo";
 
+import { Toaster } from "~/components/toast";
 import "~/styles/app.css";
 
-export interface Props {
+export interface Props
+  extends Pick<
+    SEOProps,
+    | "canonical"
+    | "description"
+    | "extend"
+    | "nofollow"
+    | "noindex"
+    | "openGraph"
+    | "title"
+  > {
   bodyClass?: string;
   captcha?: boolean;
-  title: string;
 }
 
-const { bodyClass, captcha = false, title } = Astro.props;
+const { bodyClass, captcha = false, ...seoProps } = Astro.props;
 ---
 
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
-    <title>{title} &bullet; Software Development by Luke Sims</title>
+    <SEO
+      {...seoProps}
+      titleDefault="Software Developer in Essex, UK"
+      titleTemplate="%s • Luke Sims"
+    />
     <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="shortcut icon" href="/favicon.ico" />

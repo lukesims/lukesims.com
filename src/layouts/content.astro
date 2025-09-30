@@ -7,10 +7,10 @@ interface Props extends BaseProps {
   qrCode?: string;
 }
 
-const { bodyClass, captcha, qrCode, title } = Astro.props;
+const { qrCode, ...layoutProps } = Astro.props;
 ---
 
-<BaseLayout {bodyClass} {captcha} {title}>
+<BaseLayout {...layoutProps}>
   <Header client:load currentPath={Astro.url.pathname} />
   <div
     class="inset-shadow-xl flex min-h-screen w-full flex-col pt-20 inset-shadow-gray-600/25 print:p-0 print:inset-shadow-none"
