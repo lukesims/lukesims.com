@@ -1,18 +1,24 @@
+import type { APIContext } from "astro";
 import { defineMiddleware } from "astro:middleware";
+
+/**
+ * List of regexes defining the routes that do not require this middleware.
+ */
+const ignoredRoutes = [
+  /^\/contact\/send$/,
+  /^\/cv\/[A-Za-z0-9]+\/access$/,
+  /^\/cv\/[A-Za-z0-9]+\/download$/,
+];
 
 /**
  * Attempts to render an error page when the current route or another
  * middleware returns a `Response` with a HTTP error code (4xx/5xx).
  *
- * If the request is for an API route, the response is passed through without
- * modification since those endpoints are not expected to return HTML.
- *
  * Must be first in the sequence of middlewares to ensure
  * that it can handle errors from other middlewares.
  */
 export const renderHttpErrors = defineMiddleware(async (context, next) => {
-  // If the request is for an API route, skip this middleware.
-  if (context.url.pathname.startsWith("/api/")) return next();
+  if (!shouldApply(context)) return next();
 
   // Await the final response and if it's not an error or it's a 404
   // (handled by Astro), do nothing and return the response as-is.
@@ -30,3 +36,19 @@ export const renderHttpErrors = defineMiddleware(async (context, next) => {
       ]).toString(),
   );
 });
+
+/**
+ * Determines whether the middleware should apply to the
+ * current context, based on the path that is being accessed.
+ *
+ * @param context - The Astro API context object.
+ * @return `true` if the middleware should apply, `false` otherwise.
+ */
+function shouldApply(context: APIContext): boolean {
+  for (const route of ignoredRoutes) {
+    if (context.url.pathname.match(route)) {
+      return false;
+    }
+  }
+  return true;
+}

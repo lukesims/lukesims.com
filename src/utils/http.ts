@@ -34,6 +34,10 @@ export function notFoundResponse() {
   });
 }
 
+export function retryCaptchaResponse() {
+  return response(422, { captcha_token: ["retry"] });
+}
+
 export function validationErrorResponse(error: ZodError) {
   return response(422, error.flatten().fieldErrors);
 }

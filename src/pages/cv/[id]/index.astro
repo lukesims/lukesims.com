@@ -14,7 +14,7 @@ const cv = await getEntry("cv", id);
 if (!cv) return Astro.rewrite("/404");
 ---
 
-<Layout title="My CV">
+<Layout captcha title="My CV">
   <div class="mx-auto flex w-full max-w-xl flex-col items-center gap-8 py-12">
     <Heading>Curriculum Vitae</Heading>
 

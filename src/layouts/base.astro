@@ -5,10 +5,11 @@ import "~/styles/app.css";
 
 export interface Props {
   bodyClass?: string;
+  captcha?: boolean;
   title: string;
 }
 
-const { bodyClass, title } = Astro.props;
+const { bodyClass, captcha = false, title } = Astro.props;
 ---
 
 <html lang="en">
@@ -23,6 +24,15 @@ const { bodyClass, title } = Astro.props;
     <meta name="apple-mobile-web-app-title" content="Luke Sims" />
     <link rel="manifest" href="/site.webmanifest" />
     <link rel="stylesheet" href="/fonts.css" />
+    {
+      captcha && (
+        <script
+          defer
+          is:inline
+          src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit"
+        />
+      )
+    }
   </head>
   <body class={bodyClass}>
     <slot />

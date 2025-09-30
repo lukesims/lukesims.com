@@ -7,10 +7,10 @@ interface Props extends BaseProps {
   qrCode?: string;
 }
 
-const { bodyClass, qrCode, title } = Astro.props;
+const { bodyClass, captcha, qrCode, title } = Astro.props;
 ---
 
-<BaseLayout bodyClass={bodyClass} title={title}>
+<BaseLayout {bodyClass} {captcha} {title}>
   <Header client:load currentPath={Astro.url.pathname} />
   <div
     class="inset-shadow-xl flex min-h-screen w-full flex-col pt-20 inset-shadow-gray-600/25 print:p-0 print:inset-shadow-none"
@@ -18,6 +18,6 @@ const { bodyClass, qrCode, title } = Astro.props;
     <main class="container mx-auto grow">
       <slot />
     </main>
-    <Footer centered qrCode={qrCode} />
+    <Footer centered {qrCode} />
   </div>
 </BaseLayout>

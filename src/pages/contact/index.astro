@@ -6,8 +6,8 @@ import { Heading } from "~/components/heading";
 import Layout from "~/layouts/content.astro";
 ---
 
-<Layout title="Luke Sims">
-  <div class="mx-auto flex w-full max-w-xl flex-col items-center gap-8 py-12">
+<Layout captcha title="Luke Sims">
+  <div class="mx-auto flex w-full max-w-2xl flex-col items-center gap-8 py-12">
     <Heading>Get in Touch</Heading>
 
     <Alert className="shadow-lg" variant="info">
@@ -15,7 +15,7 @@ import Layout from "~/layouts/content.astro";
       <AlertTitle>I'm available for contract/freelance work!</AlertTitle>
     </Alert>
 
-    <Card className="w-full px-6 pt-5 pb-7 shadow-lg">
+    <Card className="w-full px-9 pt-7 pb-9 shadow-lg">
       <ContactForm client:load />
     </Card>
   </div>

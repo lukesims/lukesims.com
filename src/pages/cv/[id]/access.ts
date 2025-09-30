@@ -3,39 +3,45 @@ import { getEntry } from "astro:content";
 import { accessRequests, db, eq, visitors } from "astro:db";
 import { SITE_URL } from "astro:env/client";
 import { nanoid } from "nanoid";
-import { z } from "zod";
+// import type { SentMessageInfo } from "nodemailer";
+import { z, ZodError } from "zod";
 
 import { sendEmail } from "~/utils/email";
+import { email, string } from "~/utils/form-validation";
 import {
   internalErrorResponse,
   notFoundResponse,
+  retryCaptchaResponse,
   validationErrorResponse,
 } from "~/utils/http";
 import { createTemporaryUrl } from "~/utils/signatures";
+import { TurnstileError, validateTurnstile } from "~/utils/turnstile";
 
 export const prerender = false;
 
 // Schema for validating the request body
 export type CvAccessRequest = z.infer<typeof cvAccessSchema>;
 export const cvAccessSchema = z.object({
+  name: string(),
+  email: email(),
   company: z.string().optional(),
-  email: z
-    .string({ message: "valueMissing" })
-    .min(1, { message: "tooShort" })
-    .email({ message: "typeMismatch" }),
-  name: z.string({ message: "valueMissing" }).min(1, { message: "tooShort" }),
+  captcha_token: string(),
 });
 
 /**
  * Request handler for: `POST /cv/[id]/access`
  */
-export const POST: APIRoute = async ({ params, request }) => {
-  // Parse the request body as JSON and validate the result
+export const POST: APIRoute = async ({
+  clientAddress,
+  params,
+  request,
+  site,
+}) => {
   let data: CvAccessRequest;
   try {
     data = cvAccessSchema.parse(await request.json());
   } catch (error) {
-    if (error instanceof z.ZodError) {
+    if (error instanceof ZodError) {
       return validationErrorResponse(error);
     }
     // @todo report
@@ -43,11 +49,25 @@ export const POST: APIRoute = async ({ params, request }) => {
     return internalErrorResponse();
   }
 
-  // Attempt to find the specified CV in the database
+  try {
+    await validateTurnstile(
+      data.captcha_token,
+      clientAddress,
+      "cv",
+      site?.hostname,
+    );
+  } catch (error) {
+    if (error instanceof TurnstileError && error.shouldRetry) {
+      return retryCaptchaResponse();
+    }
+    // @todo report
+    console.error(error);
+    return internalErrorResponse();
+  }
+
   const cv = await getEntry("cv", params.id!);
   if (!cv) return notFoundResponse();
 
-  // Attempt to find the visitor in the database, add them if they don't exist
   const visitorResult = await db
     .select()
     .from(visitors)
@@ -58,21 +78,19 @@ export const POST: APIRoute = async ({ params, request }) => {
       ? visitorResult
       : await db.insert(visitors).values(data).returning();
 
-  // Track this request in the database
-  let accessRequestData = {
-    id: nanoid(12),
-    cv: cv.id,
-    visitorId: visitor.id,
-    requestedAt: new Date(),
-  };
   const [accessRequest] = await db
     .insert(accessRequests)
-    .values(accessRequestData)
+    .values({
+      id: nanoid(12),
+      cv: cv.id,
+      visitorId: visitor.id,
+      requestedAt: new Date(),
+    })
     .returning();
 
-  // Send the email to the user with the CV URL
+  // let emailInfo: SentMessageInfo;
   try {
-    const emailInfo = await sendEmail({
+    /* emailInfo = */ await sendEmail({
       to: data.email,
       subject: "Luke Sims' CV",
       text: `Access the CV here: ${createTemporaryUrl(

@@ -5,25 +5,30 @@ import { CONTACT_EMAIL } from "astro:env/server";
 import { z, ZodError } from "zod";
 
 import { sendEmail } from "~/utils/email";
-import { internalErrorResponse, validationErrorResponse } from "~/utils/http";
+import { email, string } from "~/utils/form-validation";
+import {
+  internalErrorResponse,
+  retryCaptchaResponse,
+  validationErrorResponse,
+} from "~/utils/http";
+import { TurnstileError, validateTurnstile } from "~/utils/turnstile";
 
 export const prerender = false;
 
+// Schema for validating the request body
+export type ContactEndpointRequest = z.infer<typeof contactEndpointSchema>;
 export const contactEndpointSchema = z.object({
-  name: z.string({ message: "valueMissing" }).min(1, { message: "tooShort" }),
-  email: z
-    .string({ message: "valueMissing" })
-    .min(1, { message: "tooShort" })
-    .email({ message: "typeMismatch" }),
+  name: string(),
+  email: email(),
   phone: z.string().optional(),
-  message: z
-    .string({ message: "valueMissing" })
-    .min(1, { message: "tooShort" }),
+  message: string(),
+  captcha_token: string(),
 });
 
-export type ContactEndpointRequest = z.infer<typeof contactEndpointSchema>;
-
-export const POST: APIRoute = async ({ request }) => {
+/**
+ * Request handler for: `POST /contact/send`
+ */
+export const POST: APIRoute = async ({ clientAddress, request, site }) => {
   const data: Record<string, string> = {};
   (await request.formData()).forEach(
     (value, key) => (data[key] = value.toString()),
@@ -35,6 +40,22 @@ export const POST: APIRoute = async ({ request }) => {
   } catch (error) {
     if (error instanceof ZodError) {
       return validationErrorResponse(error);
+    }
+    // @todo report
+    console.error(error);
+    return internalErrorResponse();
+  }
+
+  try {
+    await validateTurnstile(
+      validated.captcha_token,
+      clientAddress,
+      "contact",
+      site?.hostname,
+    );
+  } catch (error) {
+    if (error instanceof TurnstileError && error.shouldRetry) {
+      return retryCaptchaResponse();
     }
     // @todo report
     console.error(error);

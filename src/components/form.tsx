@@ -29,7 +29,17 @@ export interface FieldProps {
   }[];
 }
 
-export function Field({
+export function Field({ children, required = false, ...props }: FieldProps) {
+  return (
+    <FieldContainer {...props} required={required}>
+      <RadixForm.Control asChild required={required}>
+        {children}
+      </RadixForm.Control>
+    </FieldContainer>
+  );
+}
+
+export function FieldContainer({
   children,
   label,
   messages = [],
@@ -58,9 +68,7 @@ export function Field({
           </RadixForm.Message>
         ))}
       </div>
-      <RadixForm.Control asChild required={required}>
-        {children}
-      </RadixForm.Control>
+      {children}
     </RadixForm.Field>
   );
 }

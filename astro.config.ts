@@ -15,8 +15,12 @@ const { SITE_URL } = loadEnv(
 export default defineConfig({
   site: SITE_URL,
   trailingSlash: "never",
-  integrations: [db(), react()],
 
+  adapter: node({
+    mode: "standalone",
+  }),
+
+  integrations: [db(), react()],
   vite: {
     plugins: [tailwindcss()],
   },
@@ -31,6 +35,7 @@ export default defineConfig({
         access: "public",
         context: "client",
         optional: false,
+        url: true,
       }),
       CONTACT_EMAIL: envField.string({
         access: "public",
@@ -38,26 +43,25 @@ export default defineConfig({
         optional: false,
       }),
 
-      SMTP_FROM: envField.string({
-        access: "public",
-        context: "server",
-        default: "Luke Sims <do-not-reply@lukesims.com>",
-        optional: true,
-      }),
       SMTP_HOST: envField.string({
         access: "public",
         context: "server",
         optional: false,
       }),
-      SMTP_PASS: envField.string({
-        access: "secret",
-        context: "server",
-        optional: true,
-      }),
       SMTP_PORT: envField.number({
         access: "public",
         context: "server",
         optional: false,
+      }),
+      SMTP_USER: envField.string({
+        access: "secret",
+        context: "server",
+        optional: true,
+      }),
+      SMTP_PASS: envField.string({
+        access: "secret",
+        context: "server",
+        optional: true,
       }),
       SMTP_SECURE: envField.boolean({
         access: "public",
@@ -65,10 +69,10 @@ export default defineConfig({
         default: false,
         optional: true,
       }),
-      SMTP_USER: envField.string({
-        access: "secret",
+      SMTP_FROM: envField.string({
+        access: "public",
         context: "server",
-        optional: true,
+        optional: false,
       }),
 
       STORAGE_PATH: envField.string({
@@ -76,10 +80,17 @@ export default defineConfig({
         context: "server",
         optional: false,
       }),
+
+      TURNSTILE_SITE_KEY: envField.string({
+        access: "public",
+        context: "client",
+        optional: false,
+      }),
+      TURNSTILE_SECRET_KEY: envField.string({
+        access: "secret",
+        context: "server",
+        optional: false,
+      }),
     },
   },
-
-  adapter: node({
-    mode: "standalone",
-  }),
 });
