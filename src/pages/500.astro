@@ -2,7 +2,7 @@
 export const prerender = false;
 
 import { Heading } from "~/components/heading";
-import CenteredLayout from "~/layouts/centered.astro";
+import Layout from "~/layouts/centered.astro";
 
 interface Props {
   error: unknown;
@@ -32,7 +32,7 @@ if (statusParam) {
 }
 ---
 
-<CenteredLayout errorCode={errorCode} title={title}>
+<Layout noindex errorCode={errorCode} title={title}>
   <Heading>{heading}</Heading>
   <p class="mt-6 mb-2 text-2xl leading-relaxed text-pretty">{content}</p>
   {
@@ -49,4 +49,4 @@ if (statusParam) {
         </p>
       )
   }
-</CenteredLayout>
+</Layout>

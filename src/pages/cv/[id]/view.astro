@@ -10,7 +10,7 @@ import { Header } from "~/components/cv/header";
 import { Nav } from "~/components/cv/nav";
 import { Skills } from "~/components/cv/skills";
 import Summary from "~/components/cv/summary.astro";
-import ContentLayout from "~/layouts/content.astro";
+import Layout from "~/layouts/content.astro";
 import { getAugmentedCv } from "~/utils/content";
 import { response } from "~/utils/http";
 
@@ -26,7 +26,7 @@ if (!cv) return Astro.rewrite("/404");
 const qrCode = new URL(`/cv/${id}`, SITE_URL).toString();
 ---
 
-<ContentLayout bodyClass="print-color-exact" qrCode={qrCode} title="My CV">
+<Layout noindex bodyClass="print-color-exact" qrCode={qrCode} title="My CV">
   <div
     class:list={[
       "mx-auto w-full py-24 print:py-0 print:pr-2",
@@ -50,4 +50,4 @@ const qrCode = new URL(`/cv/${id}`, SITE_URL).toString();
       <Education education={cv.relations.education} />
     </div>
   </div>
-</ContentLayout>
+</Layout>
