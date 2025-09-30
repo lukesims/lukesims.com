@@ -12,6 +12,7 @@
   "dependencies": {
     "@astrojs/db": "^0.18.0",
     "@astrojs/node": "^9.4.4",
+    "@astrojs/sitemap": "^3.6.0",
     "@fontsource-variable/bricolage-grotesque": "^5.2.10",
     "@fontsource-variable/public-sans": "^5.2.7",
     "@nanostores/react": "^1.0.0",

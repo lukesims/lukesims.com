@@ -1,6 +1,7 @@
 import db from "@astrojs/db";
 import node from "@astrojs/node";
 import react from "@astrojs/react";
+import sitemap from "@astrojs/sitemap";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig, envField } from "astro/config";
 import { loadEnv } from "vite";
@@ -20,7 +21,7 @@ export default defineConfig({
     mode: "standalone",
   }),
 
-  integrations: [db(), react()],
+  integrations: [db(), react(), sitemap()],
   vite: {
     plugins: [tailwindcss()],
   },
