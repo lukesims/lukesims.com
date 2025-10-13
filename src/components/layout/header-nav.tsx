@@ -61,7 +61,7 @@ export function HeaderNav({
         ))}
         <a
           href="/contact"
-          className="font-display hidden h-18 w-full items-center gap-1 border-x-4 border-black bg-black px-4 text-base font-semibold text-white transition hover:bg-blue-600 sm:flex lg:px-6 lg:text-lg xl:gap-2 xl:px-8 xl:text-xl"
+          className="font-display hidden h-18 w-full items-center gap-1 border-x-4 border-black bg-black px-4 text-base font-semibold text-white ring-0 ring-blue-600 transition ring-inset hover:bg-blue-600 focus:outline-none focus-visible:ring-6 sm:flex lg:px-6 lg:text-lg xl:gap-2 xl:px-8 xl:text-xl"
         >
           <span>Get in Touch</span>
           <span className="icon-[ri--arrow-right-up-line] size-6 transition md:size-7 xl:size-8"></span>

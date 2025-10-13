@@ -16,7 +16,7 @@ const { contactInfo, mainNav, mobileNav, printHeading } = Astro.props;
 
 <header
   id="page-header"
-  class="print-color-exact fixed inset-x-0 top-[-6px] z-50 flex h-20 justify-start px-6 sm:px-8 lg:justify-center lg:px-12 print:static print:m-5 print:mt-0 print:h-18 print:px-0"
+  class="print-color-exact bg-background fixed inset-x-0 top-0 z-50 flex h-24 justify-start px-6 pt-4 sm:px-8 lg:justify-center lg:px-12 print:static print:mx-5 print:h-18 print:p-0"
 >
   <div
     class="pointer-events-none absolute inset-0 -bottom-12 mask-[linear-gradient(black,transparent)] backdrop-blur-[2px] lg:hidden print:hidden"
@@ -30,11 +30,23 @@ const { contactInfo, mainNav, mobileNav, printHeading } = Astro.props;
     class="shadow-border relative flex max-w-7xl items-center shadow-md lg:w-full lg:shadow-lg print:shadow-md"
   >
     <div
-      class="border-border flex h-20 shrink-0 items-end justify-end border-4 bg-yellow-400 p-4 lg:px-5 lg:py-5.5 print:h-18 print:border-2 print:px-5 print:py-5"
+      class="border-border relative h-20 shrink-0 overflow-hidden border-4 print:h-18 print:border-2"
     >
-      <a href="/" class="text-black hover:text-blue-600">
-        <LogoStacked className="block h-10 lg:hidden print:hidden" />
-        <Logo className="hidden h-7 lg:block print:block" />
+      <a
+        href="#main"
+        class="font-display absolute top-0 left-0 z-20 flex h-full w-full -translate-y-full transform items-center justify-center bg-black text-center text-xs font-bold text-yellow-400 underline decoration-2 underline-offset-2 transition duration-150 focus:outline-none focus-visible:translate-y-0 md:text-sm xl:text-base print:hidden"
+        >Skip to main content</a
+      >
+      <a
+        href="/"
+        aria-label="Go to the home page"
+        class="group relative z-10 flex h-18 items-center justify-center border-6 border-transparent bg-yellow-400 px-2.5 text-black transition hover:text-blue-600 focus:outline-none focus-visible:border-blue-600 lg:px-3.5 print:h-17 print:px-3.5"
+      >
+        <LogoStacked
+          aria-hidden="true"
+          className="block h-10 lg:hidden print:hidden"
+        />
+        <Logo aria-hidden="true" className="hidden h-7 lg:block print:block" />
       </a>
     </div>
 

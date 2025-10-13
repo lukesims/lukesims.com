@@ -35,7 +35,7 @@ const mobileNav = await getNav("mobile");
     {mobileNav}
   />
   <div class="flex min-h-screen w-full flex-col pt-20 print:p-0">
-    <main class="grow px-6 sm:px-8 lg:px-12">
+    <main id="main" class="grow px-6 sm:px-8 lg:px-12">
       <slot />
     </main>
     <Footer className="items-center sm:justify-center" {qrCode} />

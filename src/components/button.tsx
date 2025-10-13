@@ -6,7 +6,7 @@ import type { ComponentProps } from "react";
 import { cn } from "~/utils/styles";
 
 const styles = cva(
-  "icon:pointer-events-none icon:shrink-0 border-border shadow-border inline-flex translate-x-0 translate-y-0 transform items-center justify-center gap-2 border-2 font-sans leading-none font-medium tracking-wide whitespace-nowrap shadow-md ring-offset-white transition-all select-none focus-visible:ring-4 focus-visible:ring-blue-400 focus-visible:outline-hidden active:translate-x-1 active:translate-y-1 active:shadow-none disabled:pointer-events-none disabled:translate-x-0.5 disabled:translate-y-0.5 disabled:opacity-50 disabled:shadow-none dark:font-normal [&.disabled]:pointer-events-none [&.disabled]:translate-x-0.5 [&.disabled]:translate-y-0.5 [&.disabled]:opacity-50 [&.disabled]:shadow-none",
+  "icon:pointer-events-none icon:shrink-0 border-border shadow-border inline-flex translate-x-0 translate-y-0 transform items-center justify-center gap-2 border-2 font-sans leading-none font-medium tracking-wide whitespace-nowrap shadow-md ring-offset-white transition-all select-none focus-visible:ring-4 focus-visible:ring-blue-600 focus-visible:outline-hidden active:translate-x-1 active:translate-y-1 active:shadow-none disabled:pointer-events-none disabled:translate-x-0.5 disabled:translate-y-0.5 disabled:opacity-50 disabled:shadow-none dark:font-normal [&.disabled]:pointer-events-none [&.disabled]:translate-x-0.5 [&.disabled]:translate-y-0.5 [&.disabled]:opacity-50 [&.disabled]:shadow-none",
   {
     variants: {
       size: {

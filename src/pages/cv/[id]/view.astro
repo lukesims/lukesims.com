@@ -9,7 +9,6 @@ import Experience from "~/components/cv/experience.astro";
 import { Header } from "~/components/cv/header";
 import { DesktopNav, MobileNav } from "~/components/cv/nav";
 import { Skills } from "~/components/cv/skills";
-import Summary from "~/components/cv/summary.astro";
 import Layout from "~/layouts/content.astro";
 import { getCv } from "~/utils/content";
 import { response } from "~/utils/http";
@@ -35,13 +34,16 @@ const qrCode = new URL(`/cv/${id}`, SITE_URL).toString();
   title="My CV"
 >
   <div
-    class="mx-auto flex w-full flex-col items-center gap-8 py-24 text-center text-pretty print:gap-4 print:py-0 print:pr-2"
+    class="mx-auto flex w-full flex-col items-center gap-8 pt-48 pb-24 text-center text-pretty print:gap-4 print:py-0 print:pr-2"
   >
     <MobileNav client:load {id} url={Astro.url} />
+    <DesktopNav {id} url={Astro.url} />
+
     <Header {title} />
     <ContactInfo />
-    <DesktopNav {id} url={Astro.url} />
-    <Summary {summary} />
+    <p class="mb-8 max-w-2xl text-xl print:mb-4 print:max-w-2xl print:text-sm">
+      {summary}
+    </p>
     <Skills {skills} />
 
     <div

@@ -14,7 +14,6 @@ import { cn } from "~/utils/styles";
 
 const sections = [
   { href: "#top", label: "Top" },
-  { href: "#summary", label: "Summary" },
   { href: "#skills", label: "Skills" },
   { href: "#experience", label: "Experience" },
   { href: "#education", label: "Education" },
@@ -39,7 +38,7 @@ export const DesktopNav = ({ id, url }: DesktopNavProps) => {
   downloadUrl.searchParams.set("url", url.toString());
 
   return (
-    <Root className="shadow-border sticky top-21 z-50 mb-16 hidden shadow-lg lg:block print:hidden">
+    <Root className="shadow-border fixed top-27 z-50 mb-16 hidden shadow-lg lg:block print:hidden">
       <List className="border-border flex items-center border-3">
         {sections.map(({ href, label }, i) => (
           <Item key={i}>
