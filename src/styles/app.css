@@ -1,7 +1,10 @@
 @import "tailwindcss";
+@import "tw-animate-css";
 
 @plugin "@tailwindcss/typography";
 @plugin "@iconify/tailwind4";
+
+@source "../../storage/content/skills/*.md";
 
 @custom-variant dark (&:where(.dark, .dark *));
 @custom-variant icon (& > [class*="icon-"]);

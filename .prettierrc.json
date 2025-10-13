@@ -20,5 +20,5 @@
   "importOrderSeparation": true,
   "importOrderSortSpecifiers": true,
 
-  "tailwindFunctions": ["cva"]
+  "tailwindFunctions": ["cn", "cva"]
 }

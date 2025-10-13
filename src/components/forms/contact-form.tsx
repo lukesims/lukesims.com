@@ -91,7 +91,7 @@ export function ContactForm() {
 
   return (
     <Form onClearServerErrors={onClearServerErrors} onSubmit={onSubmit}>
-      <div className="grid grid-cols-2 gap-6">
+      <div className="grid gap-6 md:grid-cols-2">
         <Field
           required
           name="name"
@@ -208,7 +208,7 @@ export function ContactForm() {
 
       <div className="flex items-center justify-center">
         <Submit asChild>
-          <Button disabled={loading} variant="primary" size="lg">
+          <Button disabled={loading} variant="primary">
             <i
               className={
                 loading

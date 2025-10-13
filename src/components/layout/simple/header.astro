@@ -1,0 +1,63 @@
+---
+import PrintHeader from "~/components/layout/print-header.astro";
+import { HeaderNav } from "~/components/layout/header-nav";
+import { Logo, LogoStacked } from "~/components/logo";
+import type { FlatEntry } from "~/utils/content";
+
+interface Props {
+  contactInfo?: FlatEntry<"contactInfo">;
+  errorCode?: string;
+  mainNav?: FlatEntry<"navs">;
+  mobileNav?: FlatEntry<"navs">;
+  printHeading?: string;
+}
+
+const { contactInfo, errorCode, mainNav, mobileNav, printHeading } =
+  Astro.props;
+---
+
+<header
+  class="print-color-exact fixed inset-x-0 top-[-6px] z-50 flex h-[45dvh] justify-center"
+>
+  <div class="relative flex w-full max-w-dvw items-center">
+    <div
+      class="border-border flex h-[45dvh] shrink-0 grow items-end justify-end overflow-hidden border-4 border-l-0 bg-yellow-400 p-0 pl-6"
+    >
+      <a
+        href="/"
+        class="-mr-px -mb-px text-black hover:text-blue-600 md:-mr-[2px] md:-mb-[2px] xl:-mr-[3px] xl:-mb-[3px]"
+      >
+        <LogoStacked className="block h-18 sm:h-24.5 lg:h-38 xl:hidden" />
+        <Logo className="hidden h-15 xl:block" />
+      </a>
+    </div>
+
+    <div
+      class:list={[
+        "relative flex h-[45dvh] grow items-end justify-start inset-shadow-[6px_0] sm:grow-2 print:hidden",
+        errorCode
+          ? "bg-red-500 inset-shadow-red-600/85"
+          : "bg-green-500 inset-shadow-green-600/85",
+      ]}
+    >
+      {
+        errorCode && (
+          <div class="absolute bottom-20 flex h-46 items-start overflow-hidden pl-4">
+            <div class="font-display text-[30dvh]/[0.69] font-extrabold text-red-600/85 select-none">
+              {errorCode}
+            </div>
+          </div>
+        )
+      }
+      <HeaderNav
+        client:load
+        {contactInfo}
+        currentPath={Astro.url.pathname}
+        {mainNav}
+        {mobileNav}
+      />
+    </div>
+
+    <PrintHeader>{printHeading}</PrintHeader>
+  </div>
+</header>

@@ -1,0 +1,41 @@
+---
+import Header from "~/components/layout/simple/header.astro";
+import Footer from "~/components/layout/footer.astro";
+import BaseLayout, { type Props as BaseProps } from "~/layouts/base.astro";
+import { getContactInfo, getNav } from "~/utils/content";
+
+interface Props extends BaseProps {
+  errorCode?: string;
+  printHeading?: string;
+  qrCode?: string;
+}
+
+const { errorCode, printHeading, qrCode, ...layoutProps } = Astro.props;
+
+const contactInfo = await getContactInfo("nav");
+const mainNav = await getNav("main");
+const mobileNav = await getNav("mobile");
+---
+
+<BaseLayout {...layoutProps}>
+  <Header
+    {contactInfo}
+    {errorCode}
+    {mainNav}
+    {mobileNav}
+    printHeading={printHeading ?? layoutProps.title}
+  />
+  <div
+    class="flex min-h-screen w-full flex-col pt-[calc(45dvh-6px)] sm:flex-row print:flex-col"
+  >
+    <main
+      class="border-border flex flex-col items-end px-8 py-6 inset-shadow-[0_6px] inset-shadow-gray-600/25 sm:grow sm:border-r-4 print:border-0"
+    >
+      <slot />
+    </main>
+    <Footer
+      className="sm:inset-shadow-lg grow flex-col items-center justify-start inset-shadow-[0_6px] sm:items-start sm:justify-end sm:border-0 print:mx-0 print:flex-row"
+      {qrCode}
+    />
+  </div>
+</BaseLayout>

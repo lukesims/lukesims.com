@@ -7,11 +7,11 @@ import ContactInfo from "~/components/cv/contact-info.astro";
 import Education from "~/components/cv/education.astro";
 import Experience from "~/components/cv/experience.astro";
 import { Header } from "~/components/cv/header";
-import { Nav } from "~/components/cv/nav";
+import { DesktopNav, MobileNav } from "~/components/cv/nav";
 import { Skills } from "~/components/cv/skills";
 import Summary from "~/components/cv/summary.astro";
 import Layout from "~/layouts/content.astro";
-import { getAugmentedCv } from "~/utils/content";
+import { getCv } from "~/utils/content";
 import { response } from "~/utils/http";
 
 const { id } = Astro.params;
@@ -20,34 +20,35 @@ if (!id) return Astro.rewrite("/404");
 const accessRequestId = Astro.url.searchParams.get("req");
 if (!accessRequestId || !accessRequestId.length) return response(400);
 
-const cv = await getAugmentedCv(id);
+const cv = await getCv(id);
 if (!cv) return Astro.rewrite("/404");
 
+const { education, experience, skills, summary, title } = cv;
 const qrCode = new URL(`/cv/${id}`, SITE_URL).toString();
 ---
 
-<Layout noindex bodyClass="print-color-exact" qrCode={qrCode} title="My CV">
+<Layout
+  bodyClass="print-color-exact"
+  noindex
+  printHeading={title}
+  {qrCode}
+  title="My CV"
+>
   <div
-    class:list={[
-      "mx-auto w-full py-24 print:py-0 print:pr-2",
-      "flex flex-col items-center gap-8 print:gap-4",
-      "text-center text-pretty",
-    ]}
+    class="mx-auto flex w-full flex-col items-center gap-8 py-24 text-center text-pretty print:gap-4 print:py-0 print:pr-2"
   >
-    <Header title={cv.data.title} />
+    <MobileNav client:load {id} url={Astro.url} />
+    <Header {title} />
     <ContactInfo />
-    <Nav id={cv.id} url={Astro.url} />
-    <Summary summary={cv.data.summary} />
-    <Skills skills={cv.relations.skills} />
+    <DesktopNav {id} url={Astro.url} />
+    <Summary {summary} />
+    <Skills {skills} />
 
     <div
-      class:list={[
-        "flex w-full flex-col items-center gap-8",
-        "print:block print:columns-2 print:gap-4",
-      ]}
+      class="flex w-full flex-col items-center gap-8 print:block print:columns-2 print:gap-4"
     >
-      <Experience experience={cv.relations.experience} />
-      <Education education={cv.relations.education} />
+      <Experience {experience} />
+      <Education {education} />
     </div>
   </div>
 </Layout>

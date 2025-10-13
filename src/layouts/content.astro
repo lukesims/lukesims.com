@@ -1,23 +1,43 @@
 ---
+import Header from "~/components/layout/content/header.astro";
 import Footer from "~/components/layout/footer.astro";
-import { Header } from "~/components/layout/header";
+import { MobileNav } from "~/components/layout/mobile-nav";
 import BaseLayout, { type Props as BaseProps } from "~/layouts/base.astro";
+import { getContactInfo, getNav } from "~/utils/content";
+import { response } from "~/utils/http";
 
 interface Props extends BaseProps {
+  printHeading?: string;
   qrCode?: string;
 }
 
-const { qrCode, ...layoutProps } = Astro.props;
+const { printHeading, qrCode, ...layoutProps } = Astro.props;
+
+const contactInfo = await getContactInfo("nav");
+const mainNav = await getNav("main");
+const mobileNav = await getNav("mobile");
 ---
 
 <BaseLayout {...layoutProps}>
-  <Header client:load currentPath={Astro.url.pathname} />
-  <div
-    class="inset-shadow-xl flex min-h-screen w-full flex-col pt-20 inset-shadow-gray-600/25 print:p-0 print:inset-shadow-none"
-  >
-    <main class="container mx-auto grow">
+  <Header
+    {contactInfo}
+    {mainNav}
+    {mobileNav}
+    printHeading={printHeading ?? layoutProps.title}
+  />
+  <MobileNav
+    buttonClass="fixed right-6 bottom-6 sm:right-8 sm:bottom-8 z-50 border-3 lg:hidden print:hidden"
+    buttonSize="lg"
+    buttonVariant="secondary"
+    client:load
+    {contactInfo}
+    currentPath={Astro.url.pathname}
+    {mobileNav}
+  />
+  <div class="flex min-h-screen w-full flex-col pt-20 print:p-0">
+    <main class="grow px-6 sm:px-8 lg:px-12">
       <slot />
     </main>
-    <Footer centered {qrCode} />
+    <Footer className="items-center sm:justify-center" {qrCode} />
   </div>
 </BaseLayout>

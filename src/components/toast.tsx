@@ -16,7 +16,7 @@ export const Toaster = () => {
       {toasts.map((toast) => (
         <Toast {...toast} key={toast.id} />
       ))}
-      <RadixToast.Viewport className="fixed top-24 left-1/2 z-100 flex w-100 max-w-screen -translate-x-1/2 transform list-none flex-col gap-3 bg-[red] outline-none" />
+      <RadixToast.Viewport className="fixed top-24 left-1/2 z-100 flex w-100 max-w-screen -translate-x-1/2 transform list-none flex-col gap-3 outline-none" />
     </RadixToast.Provider>
   );
 };

@@ -1,31 +1,27 @@
 ---
-import { contactInfo } from "~/config";
+import { getContactInfo } from "~/utils/content";
+
+const contactInfo = await getContactInfo("cv");
 ---
 
 <ul
   class="mb-16 flex w-full max-w-4xl items-center justify-center gap-6 print:hidden"
 >
   {
-    ["location", "website", "linkedin", "github"].map((key, i) => (
-      <li
-        class:list={[
-          "items-center gap-1",
-          key === "website" ? "hidden print:flex" : "flex",
-        ]}
-      >
-        <i class:list={[contactInfo[key].icon, "size-7 text-blue-600"]} />
+    contactInfo?.items.map(({ icon, text, url }, i) => (
+      <li class="flex items-center gap-1">
+        <i class:list={[icon, "size-7 text-blue-600"]} />
 
-        {contactInfo[key].url ? (
+        {url ? (
           <a
-            href={contactInfo[key].url}
+            href={url}
             class="text-foreground/100 font-display text-lg font-medium underline decoration-blue-600 decoration-2 underline-offset-1 hover:text-blue-600 hover:no-underline"
           >
-            {contactInfo[key].text ??
-              contactInfo[key].url.replace(/(^\w+:|^)\/\//, "")}
+            {text ?? url.replace(/(^\w+:|^)\/\//, "")}
           </a>
         ) : (
           <span class="text-foreground/100 font-display text-lg font-medium">
-            {contactInfo[key].text}
+            {text}
           </span>
         )}
       </li>

@@ -1,6 +1,9 @@
 import { file, glob } from "astro/loaders";
 import { defineCollection, reference, z } from "astro:content";
 
+/**
+ * Blog posts.
+ */
 const blog = defineCollection({
   loader: glob({ base: "./storage/content/blog", pattern: "**/*.{md,mdx}" }),
   schema: ({ image }) =>
@@ -14,6 +17,9 @@ const blog = defineCollection({
     }),
 });
 
+/**
+ * Categories for blog posts.
+ */
 const categories = defineCollection({
   loader: file("./storage/content/categories.json"),
   schema: z.object({
@@ -22,11 +28,29 @@ const categories = defineCollection({
   }),
 });
 
+/**
+ * Contact info for the contact page and print header.
+ */
+const contactInfo = defineCollection({
+  loader: glob({ base: "./storage/content/contact-info", pattern: "*.json" }),
+  schema: z.object({
+    items: z.array(
+      z.object({
+        icon: z.string(),
+        text: z.string(),
+        url: z.string().url().optional(),
+      }),
+    ),
+  }),
+});
+
+/**
+ * CV variations/versions.
+ */
 const cv = defineCollection({
   loader: glob({ base: "./storage/content/cv", pattern: "*.json" }),
   schema: z.object({
     education: z.array(reference("education")).optional(),
-    email: z.string().email(),
     experience: z.array(reference("experience")).optional(),
     expires: z.coerce.date().optional(),
     location: z.string(),
@@ -38,6 +62,9 @@ const cv = defineCollection({
   }),
 });
 
+/**
+ * Education history for CVs.
+ */
 const education = defineCollection({
   loader: glob({ base: "./storage/content/education", pattern: "*.md" }),
   schema: z.object({
@@ -50,6 +77,9 @@ const education = defineCollection({
   }),
 });
 
+/**
+ * Work experience for CVs.
+ */
 const experience = defineCollection({
   loader: glob({ base: "./storage/content/experience", pattern: "*.md" }),
   schema: z.object({
@@ -65,6 +95,24 @@ const experience = defineCollection({
   }),
 });
 
+/**
+ * Groups of navigation links to be used in different places.
+ */
+const navs = defineCollection({
+  loader: glob({ base: "./storage/content/navs", pattern: "*.json" }),
+  schema: z.object({
+    links: z.array(
+      z.object({
+        href: z.string(),
+        text: z.string(),
+      }),
+    ),
+  }),
+});
+
+/**
+ * Skills for CVs.
+ */
 const skills = defineCollection({
   loader: glob({ base: "./storage/content/skills", pattern: "*.md" }),
   schema: z.object({
@@ -80,8 +128,10 @@ const skills = defineCollection({
 export const collections = {
   blog,
   categories,
+  contactInfo,
   cv,
   education,
   experience,
+  navs,
   skills,
 };

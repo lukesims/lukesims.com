@@ -1,0 +1,35 @@
+---
+import { getContactInfo } from "~/utils/content";
+
+const contactInfo = await getContactInfo("print");
+---
+
+<div
+  class="border-border hidden h-18 grow items-end gap-3 border-4 border-l-0 bg-white px-3 print:flex print:h-full print:border-2 print:border-l-0"
+>
+  <div
+    class="font-display flex h-18 grow items-center font-bold text-balance text-blue-600"
+  >
+    <slot />
+  </div>
+  <div class="h-18 py-2 text-right text-balance">
+    {
+      contactInfo?.items.map(({ icon, text, url }) => {
+        const Comp = url ? "a" : "div";
+        return (
+          <Comp
+            class:list={[
+              "font-display my-1 ml-2 inline-flex items-center gap-1 text-sm",
+              url && "underline",
+            ]}
+            href={url}
+            target={url ? "_blank" : undefined}
+          >
+            <i class:list={[icon, "size-5 text-blue-600"]} />
+            <span>{url ? url.substring(8) : text}</span>
+          </Comp>
+        );
+      })
+    }
+  </div>
+</div>

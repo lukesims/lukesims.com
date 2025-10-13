@@ -1,12 +1,13 @@
 ---
 import { QRCode } from "~/components/qr-code";
+import { cn } from "~/utils/styles";
 
 interface Props {
-  centered?: boolean;
+  className?: string;
   qrCode?: string;
 }
 
-const { centered, qrCode } = Astro.props;
+const { className, qrCode } = Astro.props;
 
 const year = new Date().getFullYear();
 const years = year === 2025 ? "2025" : `2025&ndash;${year}`;
@@ -16,19 +17,15 @@ const qrData = qrCode || Astro.url.toString();
 
 <footer
   id="page-footer"
-  class:list={[
-    "grow print:mr-5 print:ml-4",
-    "flex gap-7 px-8 pt-7 pb-5 print:gap-5 print:p-0",
-    "inset-shadow-blue-700 print:inset-shadow-none",
-    "print:shadow-border print:shadow-md",
-    "border-border print:border-2",
-    "print-color-exact bg-blue-600 text-white",
-    centered
-      ? "inset-shadow-xl items-center justify-center border-t-4"
-      : "inset-shadow-lg items-start justify-start",
-  ]}
+  class={cn(
+    "print:shadow-border border-border print-color-exact inset-shadow-xl flex gap-7 border-t-4 bg-blue-600 px-6 py-5 text-white inset-shadow-blue-700 md:px-8 md:py-6 print:mr-5 print:ml-4 print:w-full print:gap-5 print:border-2 print:p-0 print:shadow-md print:inset-shadow-none",
+    className,
+  )}
 >
-  <p class="block print:hidden" set:html={`&copy; ${years} Luke Sims`} />
+  <p
+    class="block text-left text-sm md:text-base print:hidden"
+    set:html={`&copy;&nbsp;${years} Luke&nbsp;Sims`}
+  />
 
   <div class="ml-5 hidden grow items-center justify-between print:flex">
     <div class="font-display text-xs leading-relaxed font-semibold">

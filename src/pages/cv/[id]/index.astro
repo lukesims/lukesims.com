@@ -3,6 +3,7 @@ export const prerender = false;
 
 import { CvForm } from "~/components/forms/cv-form";
 import { Heading } from "~/components/heading";
+import Container from "~/components/layout/container.astro";
 import { Card } from "~/components/card";
 import Layout from "~/layouts/content.astro";
 import { getEntry } from "astro:content";
@@ -15,16 +16,16 @@ if (!cv) return Astro.rewrite("/404");
 ---
 
 <Layout captcha noindex title="My CV">
-  <div class="mx-auto flex w-full max-w-xl flex-col items-center gap-8 py-12">
-    <Heading>Curriculum Vitae</Heading>
+  <Container size="sm">
+    <Heading className="text-center">Curriculum Vitae</Heading>
 
     <p class="text-center text-balance">
       Thanks for checking out my CV! 😊 Please fill out the form below and a
       link will be emailed to you.
     </p>
 
-    <Card className="w-full px-6 pt-5 pb-7 shadow-lg">
+    <Card className="w-full p-5 pb-6 shadow-lg sm:p-7 sm:pb-8">
       <CvForm client:load id={id} />
     </Card>
-  </div>
+  </Container>
 </Layout>

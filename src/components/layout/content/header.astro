@@ -1,0 +1,53 @@
+---
+import PrintHeader from "~/components/layout/print-header.astro";
+import { HeaderNav } from "~/components/layout/header-nav";
+import { Logo, LogoStacked } from "~/components/logo";
+import type { FlatEntry } from "~/utils/content";
+
+interface Props {
+  contactInfo?: FlatEntry<"contactInfo">;
+  mainNav?: FlatEntry<"navs">;
+  mobileNav?: FlatEntry<"navs">;
+  printHeading?: string;
+}
+
+const { contactInfo, mainNav, mobileNav, printHeading } = Astro.props;
+---
+
+<header
+  id="page-header"
+  class="print-color-exact fixed inset-x-0 top-[-6px] z-50 flex h-20 justify-start px-6 sm:px-8 lg:justify-center lg:px-12 print:static print:m-5 print:mt-0 print:h-18 print:px-0"
+>
+  <div
+    class="pointer-events-none absolute inset-0 -bottom-12 mask-[linear-gradient(black,transparent)] backdrop-blur-[2px] lg:hidden print:hidden"
+  >
+  </div>
+  <div
+    class="from-background/50 pointer-events-none absolute inset-0 bg-linear-to-b to-transparent lg:hidden print:hidden"
+  >
+  </div>
+  <div
+    class="shadow-border relative flex max-w-7xl items-center shadow-md lg:w-full lg:shadow-lg print:shadow-md"
+  >
+    <div
+      class="border-border flex h-20 shrink-0 items-end justify-end border-4 bg-yellow-400 p-4 lg:px-5 lg:py-5.5 print:h-18 print:border-2 print:px-5 print:py-5"
+    >
+      <a href="/" class="text-black hover:text-blue-600">
+        <LogoStacked className="block h-10 lg:hidden print:hidden" />
+        <Logo className="hidden h-7 lg:block print:block" />
+      </a>
+    </div>
+
+    <div class="hidden h-20 grow items-end justify-start lg:flex print:hidden">
+      <HeaderNav
+        {contactInfo}
+        currentPath={Astro.url.pathname}
+        grow
+        {mainNav}
+        {mobileNav}
+      />
+    </div>
+
+    <PrintHeader>{printHeading}</PrintHeader>
+  </div>
+</header>

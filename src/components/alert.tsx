@@ -38,7 +38,7 @@ export function AlertTitle({ className, ...props }: ComponentProps<"div">) {
   return (
     <div
       className={cn(
-        "col-start-2 line-clamp-1 min-h-4 text-lg/7 font-medium tracking-wide",
+        "col-start-2 min-h-4 text-base/7 font-medium tracking-wide md:text-lg/7",
         className,
       )}
       data-slot="alert-title"

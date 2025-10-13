@@ -1,5 +1,6 @@
 ---
 import { SEO, type SEOProps } from "astro-seo";
+import Breakpoint from "~/components/layout/breakpoint.astro";
 
 import { Toaster } from "~/components/toast";
 import "~/styles/app.css";
@@ -25,7 +26,7 @@ const { bodyClass, captcha = false, ...seoProps } = Astro.props;
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <SEO
       {...seoProps}
       titleDefault="Software Developer in Essex, UK"
@@ -51,6 +52,7 @@ const { bodyClass, captcha = false, ...seoProps } = Astro.props;
   </head>
   <body class={bodyClass}>
     <slot />
+    <Breakpoint />
     <Toaster client:load />
   </body>
 </html>

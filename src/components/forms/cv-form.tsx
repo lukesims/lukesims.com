@@ -191,7 +191,7 @@ export function CvForm({ id }: CvFormProps) {
 
       <div className="flex items-center justify-center">
         <Submit asChild>
-          <Button disabled={loading} variant="primary" size="lg">
+          <Button disabled={loading} variant="primary">
             <i
               className={
                 loading

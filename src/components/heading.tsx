@@ -4,14 +4,14 @@ import type { ComponentProps, ElementType } from "react";
 
 import { cn } from "~/utils/styles";
 
-const styles = cva("text-heading font-display leading-[1.1] font-extrabold", {
+const styles = cva("text-heading font-display font-extrabold", {
   variants: {
     level: {
-      h1: "3xl:text-[3.75rem] text-[3.25rem]/[1.1] lg:text-[3.5rem] print:text-[3rem]",
-      h2: "3xl:text-[3rem] text-[2.5rem]/[1.1] lg:text-[2.75rem] print:text-[2rem]",
-      h3: "3xl:text-[2.25rem] text-[2rem]/[1.1] lg:text-[2.125rem] print:text-[1.5rem]",
-      h4: "3xl:text-[1.875rem] text-[1.625rem]/[1.1] lg:text-[1.75rem] print:text-[1.25rem]",
-      h5: "3xl:text-[1.5rem] text-[1.25rem]/[1.1] lg:text-[1.375rem] print:text-[1rem]",
+      h1: "text-4xl sm:text-5xl lg:text-6xl 2xl:text-7xl print:text-5xl",
+      h2: "text-3xl sm:text-4xl lg:text-5xl 2xl:text-6xl print:text-3xl",
+      h3: "text-2xl sm:text-3xl lg:text-4xl 2xl:text-5xl print:text-2xl",
+      h4: "text-xl sm:text-2xl lg:text-3xl 2xl:text-4xl print:text-xl",
+      h5: "text-lg sm:text-xl lg:text-2xl 2xl:text-3xl print:text-base",
     },
   },
   defaultVariants: {
