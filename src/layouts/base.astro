@@ -1,7 +1,8 @@
 ---
 import { SEO, type SEOProps } from "astro-seo";
-import Breakpoint from "~/components/layout/breakpoint.astro";
+import { Font } from "astro:assets";
 
+import Breakpoint from "~/components/layout/breakpoint.astro";
 import { Toaster } from "~/components/toast";
 import "~/styles/app.css";
 
@@ -39,7 +40,8 @@ const { bodyClass, captcha = false, ...seoProps } = Astro.props;
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <meta name="apple-mobile-web-app-title" content="Luke Sims" />
     <link rel="manifest" href="/site.webmanifest" />
-    <link rel="stylesheet" href="/fonts.css" />
+    <Font cssVariable="--font-bricolage-grotesque" preload />
+    <Font cssVariable="--font-public-sans" preload />
     {
       captcha && (
         <script

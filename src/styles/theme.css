@@ -107,12 +107,8 @@
   --default-transition-duration: 100ms;
   --default-transition-timing-function: var(--ease-out);
 
-  --font-display:
-    "Bricolage Grotesque Variable", "ui-sans-serif", "system-ui", "sans-serif",
-    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  --font-sans:
-    "Public Sans Variable", "ui-sans-serif", "system-ui", "sans-serif",
-    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-display: var(--font-bricolage-grotesque);
+  --font-sans: var(--font-public-sans);
 
   --text-3xl: 2rem;
   --text-3xl--line-height: 1.2;

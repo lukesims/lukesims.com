@@ -4,11 +4,7 @@ import { defineMiddleware } from "astro:middleware";
 /**
  * List of regexes defining the routes that do not require this middleware.
  */
-const ignoredRoutes = [
-  /^\/contact\/send$/,
-  /^\/cv\/[A-Za-z0-9]+\/access$/,
-  /^\/cv\/[A-Za-z0-9]+\/download$/,
-];
+const ignoredRoutes = [/^\/contact\/send$/, /^\/cv\/[A-Za-z0-9]+\/access$/];
 
 /**
  * Attempts to render an error page when the current route or another

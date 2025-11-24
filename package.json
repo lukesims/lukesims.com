@@ -27,7 +27,6 @@
     "nanoid": "^5.1.6",
     "nanostores": "^1.0.1",
     "nodemailer": "^7.0.6",
-    "puppeteer": "^24.22.3",
     "qr-code-styling": "^1.9.2",
     "radix-ui": "^1.4.3",
     "react": "^19.1.1",

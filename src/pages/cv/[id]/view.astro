@@ -38,8 +38,8 @@ const qrCode = new URL(`/cv/${id}`, SITE_URL).toString();
     class="text-center text-pretty lg:pt-42 2xl:pt-48 print:gap-5 print:py-0"
     size="lg"
   >
-    <MobileNav client:load {id} url={Astro.url} />
-    <DesktopNav {id} url={Astro.url} />
+    <MobileNav client:load />
+    <DesktopNav />
     <Header {title} />
     <ContactInfo />
     <div

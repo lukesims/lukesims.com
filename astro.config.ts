@@ -3,7 +3,7 @@ import node from "@astrojs/node";
 import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
 import tailwindcss from "@tailwindcss/vite";
-import { defineConfig, envField } from "astro/config";
+import { defineConfig, envField, fontProviders } from "astro/config";
 import { loadEnv } from "vite";
 
 const { SITE_URL } = loadEnv(
@@ -32,6 +32,20 @@ export default defineConfig({
         resources: ["'self'", "https://challenges.cloudflare.com"],
       },
     },
+    fonts: [
+      {
+        cssVariable: "--font-bricolage-grotesque",
+        name: "Bricolage Grotesque",
+        provider: fontProviders.google(),
+        weights: [400, 500, 600, 700, 800],
+      },
+      {
+        cssVariable: "--font-public-sans",
+        name: "Public Sans",
+        provider: fontProviders.google(),
+        weights: [400, 500, 600, 700],
+      },
+    ],
   },
 
   env: {
