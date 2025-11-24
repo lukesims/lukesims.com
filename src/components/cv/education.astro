@@ -1,11 +1,9 @@
 ---
-import { Heading } from "~/components/heading";
-import {
-  Timeline,
-  TimelineItem,
-  TimelineItemHeading,
-} from "~/components/timeline";
+import { Card } from "~/components/card";
+import { Chip } from "~/components/chip";
+import { styles as headingStyles } from "~/components/heading";
 import type { FlatEntry } from "~/utils/content";
+import { cn } from "~/utils/styles";
 
 interface Props {
   education: FlatEntry<"education">[];
@@ -14,35 +12,38 @@ interface Props {
 const { education } = Astro.props;
 ---
 
-<div class="w-full max-w-lg break-inside-avoid">
-  <Heading level="h2" className="relative mb-8 pt-16 md:pt-32 print:hidden">
-    <div id="education" class="absolute -top-20 lg:-top-24"></div>
+<section class="w-full max-w-lg">
+  <h2
+    class={cn(
+      headingStyles({ level: "h2" }),
+      "relative mb-8 break-after-avoid pt-16 md:pt-32",
+      "print:mb-3 print:pt-0 print:text-2xl",
+    )}
+  >
+    <div id="education" class="absolute -top-20 lg:-top-24 print:hidden"></div>
     Education
-  </Heading>
+  </h2>
 
-  <Heading level="h3" className="mb-3 hidden print:block">Education</Heading>
-
-  <Timeline>
+  <ol class="w-full">
     {
       education.map((item) => (
-        <TimelineItem
-          date={
-            (item.startYear === item.endYear ? "" : `${item.startYear}-`) +
-            item.endYear
-          }
-        >
-          <hgroup>
-            <TimelineItemHeading>{item.heading}</TimelineItemHeading>
-            <p class="font-display mb-4 text-base/7 font-bold print:mb-3 print:text-sm/7">
-              {item.subheading}
-            </p>
-          </hgroup>
-          <p
-            set:html={item.body}
-            class="text-foreground/70 text-base print:text-sm [&_li]:mb-1 [&_li]:last:mb-0 [&_p]:mb-2 [&_p]:last:mb-0 [&_ul]:mb-2 [&_ul]:list-outside [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:last:mb-0 [&_ul_ul]:mb-0 [&_ul_ul]:pt-1"
-          />
-        </TimelineItem>
+        <li class="mb-12 break-inside-avoid last:mb-0 print:mb-5">
+          <Card className="border-3 text-left print:border-2 print:p-3 print:shadow-md">
+            <hgroup class="font-display">
+              <h3 class="mb-1 text-xl/8 font-bold print:text-base/5">
+                {item.heading}
+              </h3>
+              <p class="mb-4 text-base/7 font-semibold text-blue-600 print:mb-2 print:text-sm/5">
+                {item.subheading}
+              </p>
+            </hgroup>
+            <div
+              set:html={item.body}
+              class="text-foreground text-base print:text-sm [&_li]:mb-1 [&_li]:last:mb-0 [&_p]:mb-2 [&_p]:last:mb-0 [&_ul]:mb-2 [&_ul]:list-outside [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:last:mb-0 [&_ul_ul]:mb-0 [&_ul_ul]:pt-1"
+            />
+          </Card>
+        </li>
       ))
     }
-  </Timeline>
-</div>
+  </ol>
+</section>

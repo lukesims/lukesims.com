@@ -4,7 +4,7 @@ import type { ComponentProps, ElementType } from "react";
 
 import { cn } from "~/utils/styles";
 
-const styles = cva("text-heading font-display font-extrabold", {
+export const styles = cva("text-heading font-display font-extrabold", {
   variants: {
     level: {
       h1: "text-4xl sm:text-5xl lg:text-6xl 2xl:text-7xl print:text-5xl",
