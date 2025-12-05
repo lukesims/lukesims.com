@@ -1,4 +1,3 @@
-import db from "@astrojs/db";
 import node from "@astrojs/node";
 import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
@@ -21,7 +20,7 @@ export default defineConfig({
     mode: "standalone",
   }),
 
-  integrations: [db(), react(), sitemap()],
+  integrations: [react(), sitemap()],
   vite: {
     plugins: [tailwindcss()],
   },

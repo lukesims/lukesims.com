@@ -4,13 +4,11 @@ import { useRef, useState } from "react";
 import { Button } from "~/components/button";
 import { type CaptchaHandle, CaptchaInput } from "~/components/captcha";
 import {
-  Field,
   FieldContainer,
   Form,
   type FormProps,
   Submit,
 } from "~/components/form";
-import { Input } from "~/components/input";
 import { toast } from "~/components/toast";
 
 export interface CvFormProps {
@@ -23,9 +21,6 @@ export function CvForm({ id }: CvFormProps) {
   const [serverErrors, setServerErrors] = useState<{
     [key: string]: string | undefined;
   }>({
-    company: undefined,
-    email: undefined,
-    name: undefined,
     captcha_token: undefined,
   });
 
@@ -54,9 +49,6 @@ export function CvForm({ id }: CvFormProps) {
       if (response.status === 422) {
         const errors = (await response.json()) as Record<string, string[]>;
         setServerErrors({
-          company: errors.company?.[0],
-          email: errors.email?.[0],
-          name: errors.name?.[0],
           captcha_token: errors.captcha_token?.[0],
         });
         if (errors.captcha_token?.includes("retry")) {
@@ -74,90 +66,17 @@ export function CvForm({ id }: CvFormProps) {
 
     form.reset();
     setLoading(false);
-    toast.success({
-      title: "Check your email!",
-      description: "I've sent you a link.",
-    });
+    window.location.href = await response.text();
   };
 
   const onClearServerErrors: FormProps["onClearServerErrors"] = () => {
     setServerErrors({
-      company: undefined,
-      email: undefined,
-      name: undefined,
       captcha_token: undefined,
     });
   };
 
   return (
     <Form onClearServerErrors={onClearServerErrors} onSubmit={onSubmit}>
-      <Field
-        required
-        name="name"
-        label="Name"
-        serverInvalid={!!serverErrors.name}
-        messages={[
-          {
-            match: "tooShort",
-            forceMatch: serverErrors.name === "tooShort",
-            message: "Please enter your name",
-          },
-          {
-            match: "valueMissing",
-            forceMatch: serverErrors.name === "valueMissing",
-            message: "Please enter your name",
-          },
-        ]}
-      >
-        <Input />
-      </Field>
-
-      <Field
-        required
-        name="email"
-        label="Email address"
-        serverInvalid={!!serverErrors.email}
-        messages={[
-          {
-            match: "valueMissing",
-            forceMatch: serverErrors.email === "valueMissing",
-            message: "Please enter your email address",
-          },
-          {
-            match: "tooShort",
-            forceMatch: serverErrors.email === "tooShort",
-            message: "Please enter a valid email address",
-          },
-          {
-            match: "typeMismatch",
-            forceMatch: serverErrors.email === "typeMismatch",
-            message: "Please enter a valid email address",
-          },
-        ]}
-      >
-        <Input type="email" />
-      </Field>
-
-      <Field
-        name="company"
-        label="Company"
-        serverInvalid={!!serverErrors.company}
-        messages={[
-          {
-            match: "tooShort",
-            forceMatch: serverErrors.company === "tooShort",
-            message: "Please enter your company's name",
-          },
-          {
-            match: "valueMissing",
-            forceMatch: serverErrors.company === "valueMissing",
-            message: "Please enter your company's name",
-          },
-        ]}
-      >
-        <Input />
-      </Field>
-
       <FieldContainer
         required
         name="captcha_token"

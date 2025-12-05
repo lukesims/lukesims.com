@@ -12,13 +12,9 @@ import { Skills } from "~/components/cv/skills";
 import Container from "~/components/layout/container.astro";
 import Layout from "~/layouts/content.astro";
 import { getCv } from "~/utils/content";
-import { response } from "~/utils/http";
 
 const { id } = Astro.params;
 if (!id) return Astro.rewrite("/404");
-
-const accessRequestId = Astro.url.searchParams.get("req");
-if (!accessRequestId || !accessRequestId.length) return response(400);
 
 const cv = await getCv(id);
 if (!cv) return Astro.rewrite("/404");
