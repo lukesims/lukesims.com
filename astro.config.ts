@@ -56,6 +56,17 @@ export default defineConfig({
         url: true,
       }),
 
+      HMAC_KEY: envField.string({
+        access: "secret",
+        context: "server",
+        optional: false,
+      }),
+      HMAC_ALGO: envField.string({
+        access: "public",
+        context: "server",
+        optional: false,
+      }),
+
       MAILGUN_API_KEY: envField.string({
         access: "secret",
         context: "server",

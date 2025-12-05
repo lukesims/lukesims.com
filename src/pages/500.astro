@@ -3,50 +3,36 @@ export const prerender = false;
 
 import { Heading } from "~/components/heading";
 import Layout from "~/layouts/simple.astro";
+import {
+  ExpiredSignatureError,
+  InvalidSignatureError,
+} from "~/utils/signatures";
 
 interface Props {
   error: unknown;
 }
 
 const { error } = Astro.props;
-const { originPathname } = Astro;
+let content: string;
 
-const statusParam = Astro.url.searchParams.get("status");
-const errorParam = Astro.url.searchParams.get("error");
-const messageParam = Astro.url.searchParams.get("message");
-
-let content, errorCode, heading, title;
-
-if (statusParam) {
-  errorCode = statusParam;
-  heading = errorParam ?? "Error";
-  content = messageParam ?? "An error occurred";
-  title = `Error ${statusParam}: ${errorParam}`;
-} else if (error instanceof Error) {
-  errorCode = "500";
-  content = error.message ?? "An error occurred";
-  heading = error.name ?? "Error";
-  title = `Error: ${error.name}`;
+if (error instanceof ExpiredSignatureError) {
+  Astro.response.status = 410;
+  Astro.response.statusText = "Page Expired";
+  content = "That link is no longer usable.";
+} else if (error instanceof InvalidSignatureError) {
+  Astro.response.status = 403;
+  Astro.response.statusText = "Invalid Signature";
+  content = "The URL cannot be modified.";
 } else {
-  return Astro.rewrite("/404");
+  Astro.response.status = 500;
+  Astro.response.statusText = "Internal Error";
+  content = "Please try again later.";
 }
+
+const title = `Error ${Astro.response.status} • ${Astro.response.statusText}`;
 ---
 
-<Layout noindex errorCode={errorCode} title={title}>
-  <Heading>{heading}</Heading>
-  <p class="mt-6 mb-2 text-2xl leading-relaxed text-pretty">{content}</p>
-  {
-    errorCode === "410" &&
-      originPathname.match(/^\/cv\/[A-Za-z0-9]+\/view$/) && (
-        <p class="text-2xl leading-relaxed text-pretty">
-          <a
-            class="inline-block underline hover:text-blue-600 hover:no-underline"
-            href={originPathname.substring(0, originPathname.length - 5)}
-          >
-            {"Click here"}
-          </a>
-          to request a new one.
-        </p>
-      )
-  }
+<Layout noindex errorCode={`${Astro.response.status}`} {title}>
+  <Heading>{Astro.response.statusText}</Heading>
+  <p class="mt-4 text-2xl leading-relaxed text-pretty">{content}</p>
 </Layout>

@@ -12,15 +12,16 @@ import { Skills } from "~/components/cv/skills";
 import Container from "~/components/layout/container.astro";
 import Layout from "~/layouts/content.astro";
 import { getCv } from "~/utils/content";
+import { assertUrlIsValid } from "~/utils/signatures";
 
-const { id } = Astro.params;
-if (!id) return Astro.rewrite("/404");
+assertUrlIsValid(Astro.url);
 
-const cv = await getCv(id);
+if (!Astro.params.id) return Astro.rewrite("/404");
+const cv = await getCv(Astro.params.id);
 if (!cv) return Astro.rewrite("/404");
 
 const { education, experience, skills, summary, title } = cv;
-const qrCode = new URL(`/cv/${id}`, SITE_URL).toString();
+const qrCode = new URL(`/cv/${Astro.params.id}`, SITE_URL).toString();
 ---
 
 <Layout

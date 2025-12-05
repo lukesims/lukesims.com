@@ -1,22 +1,15 @@
 import type { APIRoute } from "astro";
 import { SITE_URL } from "astro:env/client";
 import { CONTACT_EMAIL } from "astro:env/server";
-import { z, ZodError } from "zod";
+import { z } from "zod";
 
 import { email, string } from "~/schemas/validation";
 import { sendEmail } from "~/utils/email";
-import {
-  internalErrorResponse,
-  retryCaptchaResponse,
-  validationErrorResponse,
-} from "~/utils/http";
-import { TurnstileError, validateTurnstile } from "~/utils/turnstile";
+import { validateTurnstile } from "~/utils/turnstile";
 
 export const prerender = false;
 
-// Schema for validating the request body
-export type ContactEndpointRequest = z.infer<typeof contactEndpointSchema>;
-export const contactEndpointSchema = z.object({
+const requestSchema = z.object({
   name: string(),
   email: email(),
   phone: z.string().optional(),
@@ -28,58 +21,29 @@ export const contactEndpointSchema = z.object({
  * Request handler for: `POST /contact/send`
  */
 export const POST: APIRoute = async ({ clientAddress, request, site }) => {
-  const data: Record<string, string> = {};
-  (await request.formData()).forEach(
-    (value, key) => (data[key] = value.toString()),
+  const data = await request.json();
+  const validated = requestSchema.parse(data);
+
+  await validateTurnstile(
+    validated.captcha_token,
+    clientAddress,
+    "contact",
+    site?.hostname,
   );
 
-  let validated: ContactEndpointRequest;
-  try {
-    validated = contactEndpointSchema.parse(data);
-  } catch (error) {
-    if (error instanceof ZodError) {
-      return validationErrorResponse(error);
-    }
-    // @todo report
-    console.error(error);
-    return internalErrorResponse();
-  }
+  const mailgunResponse = await sendEmail({
+    to: CONTACT_EMAIL,
+    subject: `Contact form submission from ${validated.name}`,
+    text:
+      `Message received via the ${SITE_URL} contact form:\n\n` +
+      `Name:  ${validated.name}\n` +
+      `Email:  ${validated.email}\n` +
+      `Phone:  ${validated.phone}\n\n` +
+      `------ Message ------\n\n` +
+      validated.message,
+  });
 
-  try {
-    await validateTurnstile(
-      validated.captcha_token,
-      clientAddress,
-      "contact",
-      site?.hostname,
-    );
-  } catch (error) {
-    if (error instanceof TurnstileError && error.shouldRetry) {
-      return retryCaptchaResponse();
-    }
-    // @todo report
-    console.error(error);
-    return internalErrorResponse();
-  }
+  console.debug("Sent contact form email:", mailgunResponse);
 
-  try {
-    const mailgunResponse = await sendEmail({
-      to: CONTACT_EMAIL,
-      subject: `Contact form submission from ${validated.name}`,
-      text:
-        `Message received via the ${SITE_URL} contact form:\n\n` +
-        `Name:  ${validated.name}\n` +
-        `Email:  ${validated.email}\n` +
-        `Phone:  ${validated.phone}\n\n` +
-        `------ Message ------\n\n` +
-        validated.message,
-    });
-
-    console.debug("Sent contact form email:", mailgunResponse);
-  } catch (error) {
-    // @todo report
-    console.error(error);
-    return internalErrorResponse();
-  }
-
-  return new Response();
+  return new Response("", { status: 200 });
 };

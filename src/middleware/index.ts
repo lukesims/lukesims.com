@@ -1,6 +1,8 @@
 import { sequence } from "astro:middleware";
 
-import { renderHttpErrors } from "./render-http-errors";
-import { verifySignature } from "./verify-signature";
+import { renderErrors } from "./render-errors";
 
-export const onRequest = sequence(renderHttpErrors, verifySignature);
+export const onRequest = sequence(
+  renderErrors, // <-- Must be first
+  // ...
+);

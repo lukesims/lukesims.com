@@ -29,12 +29,14 @@ export function CvForm({ id }: CvFormProps) {
     setLoading(true);
 
     const form = event.currentTarget;
+    // This will need updating if any multiple/array fields are added
+    const body = JSON.stringify(Object.fromEntries(new FormData(form)));
 
     let response: Response;
     try {
       response = await fetch(new URL(`/cv/${id}/access`, SITE_URL), {
-        body: JSON.stringify(Object.fromEntries(new FormData(form))),
         method: "POST",
+        body,
       });
     } catch (err) {
       toast.danger({
