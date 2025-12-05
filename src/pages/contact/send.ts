@@ -3,8 +3,8 @@ import { SITE_URL } from "astro:env/client";
 import { CONTACT_EMAIL } from "astro:env/server";
 import { z, ZodError } from "zod";
 
+import { email, string } from "~/schemas/validation";
 import { sendEmail } from "~/utils/email";
-import { email, string } from "~/utils/form-validation";
 import {
   internalErrorResponse,
   retryCaptchaResponse,

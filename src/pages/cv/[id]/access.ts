@@ -5,8 +5,8 @@ import { SITE_URL } from "astro:env/client";
 import { nanoid } from "nanoid";
 import { z, ZodError } from "zod";
 
+import { email, string } from "~/schemas/validation";
 import { sendEmail } from "~/utils/email";
-import { email, string } from "~/utils/form-validation";
 import {
   internalErrorResponse,
   notFoundResponse,
