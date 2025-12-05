@@ -1,7 +1,6 @@
 import type { APIRoute } from "astro";
 import { SITE_URL } from "astro:env/client";
 import { CONTACT_EMAIL } from "astro:env/server";
-// import type { SentMessageInfo } from "nodemailer";
 import { z, ZodError } from "zod";
 
 import { sendEmail } from "~/utils/email";
@@ -62,23 +61,20 @@ export const POST: APIRoute = async ({ clientAddress, request, site }) => {
     return internalErrorResponse();
   }
 
-  // let emailInfo: SentMessageInfo;
   try {
-    /* emailInfo = */ await sendEmail({
+    const mailgunResponse = await sendEmail({
       to: CONTACT_EMAIL,
       subject: `Contact form submission from ${validated.name}`,
       text:
-        "Message received via the " +
-        SITE_URL +
-        " contact form:\n\n Name:  " +
-        validated.name +
-        "\nEmail:  " +
-        validated.email +
-        "\nPhone:  " +
-        validated.phone +
-        "\n\n------ Message ------\n\n" +
+        `Message received via the ${SITE_URL} contact form:\n\n` +
+        `Name:  ${validated.name}\n` +
+        `Email:  ${validated.email}\n` +
+        `Phone:  ${validated.phone}\n\n` +
+        `------ Message ------\n\n` +
         validated.message,
     });
+
+    console.debug("Sent contact form email:", mailgunResponse);
   } catch (error) {
     // @todo report
     console.error(error);

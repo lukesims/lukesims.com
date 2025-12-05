@@ -1,35 +1,31 @@
 import {
-  SMTP_FROM,
-  SMTP_HOST,
-  SMTP_PASS,
-  SMTP_PORT,
-  SMTP_SECURE,
-  SMTP_USER,
+  FROM_EMAIL,
+  MAILGUN_API_KEY,
+  MAILGUN_BASE_URL,
+  MAILGUN_DOMAIN,
 } from "astro:env/server";
-import { createTransport } from "nodemailer";
+import Mailgun from "mailgun.js";
 
-const transport = createTransport({
-  debug: import.meta.env.DEV === true,
-  logger: import.meta.env.DEV === true,
-
-  host: SMTP_HOST,
-  port: SMTP_PORT,
-  secure: SMTP_SECURE,
-
-  auth: {
-    user: SMTP_USER,
-    pass: SMTP_PASS,
-  },
+const mailgun = new Mailgun(FormData);
+const mg = mailgun.client({
+  key: MAILGUN_API_KEY,
+  url: MAILGUN_BASE_URL,
+  useFetch: true,
+  username: "api",
 });
 
-type SendEmailOptions = {
-  from?: string;
+export function sendEmail(email: {
   to: string;
+  from?: string;
   subject: string;
   text: string;
   html?: string;
-};
-
-export function sendEmail({ from, ...options }: SendEmailOptions) {
-  return transport.sendMail({ from: from || SMTP_FROM, ...options });
+}) {
+  return mg.messages.create(MAILGUN_DOMAIN, {
+    to: [email.to],
+    from: email.from || FROM_EMAIL,
+    subject: email.subject,
+    text: email.text,
+    html: email.html,
+  });
 }

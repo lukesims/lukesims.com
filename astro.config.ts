@@ -56,40 +56,30 @@ export default defineConfig({
         optional: false,
         url: true,
       }),
-      CONTACT_EMAIL: envField.string({
-        access: "public",
+
+      MAILGUN_API_KEY: envField.string({
+        access: "secret",
+        context: "server",
+        optional: false,
+      }),
+      MAILGUN_BASE_URL: envField.string({
+        access: "secret",
+        context: "server",
+        optional: false,
+      }),
+      MAILGUN_DOMAIN: envField.string({
+        access: "secret",
         context: "server",
         optional: false,
       }),
 
-      SMTP_HOST: envField.string({
-        access: "public",
+      CONTACT_EMAIL: envField.string({
+        access: "secret",
         context: "server",
         optional: false,
       }),
-      SMTP_PORT: envField.number({
-        access: "public",
-        context: "server",
-        optional: false,
-      }),
-      SMTP_USER: envField.string({
+      FROM_EMAIL: envField.string({
         access: "secret",
-        context: "server",
-        optional: true,
-      }),
-      SMTP_PASS: envField.string({
-        access: "secret",
-        context: "server",
-        optional: true,
-      }),
-      SMTP_SECURE: envField.boolean({
-        access: "public",
-        context: "server",
-        default: false,
-        optional: true,
-      }),
-      SMTP_FROM: envField.string({
-        access: "public",
         context: "server",
         optional: false,
       }),

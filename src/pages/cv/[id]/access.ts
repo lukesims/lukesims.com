@@ -3,7 +3,6 @@ import { getEntry } from "astro:content";
 import { accessRequests, db, eq, visitors } from "astro:db";
 import { SITE_URL } from "astro:env/client";
 import { nanoid } from "nanoid";
-// import type { SentMessageInfo } from "nodemailer";
 import { z, ZodError } from "zod";
 
 import { sendEmail } from "~/utils/email";
@@ -88,9 +87,8 @@ export const POST: APIRoute = async ({
     })
     .returning();
 
-  // let emailInfo: SentMessageInfo;
   try {
-    /* emailInfo = */ await sendEmail({
+    const mailgunResponse = await sendEmail({
       to: data.email,
       subject: "Luke Sims' CV",
       text: `Access the CV here: ${createTemporaryUrl(
@@ -98,6 +96,8 @@ export const POST: APIRoute = async ({
         7,
       )}`,
     });
+
+    console.debug("Sent CV access email:", mailgunResponse);
   } catch (error) {
     // @todo report
     console.error(error);
