@@ -21,6 +21,8 @@ export type Skill = Omit<FlatEntry<"skills">, "children"> & {
   children?: Skill[];
 };
 
+export class ExpiredCvError extends Error {}
+
 /**
  * Get a particular `cv` entry by ID, along with its related
  * `education`, `experience` and `skills` entries eager-loaded.

@@ -3,6 +3,7 @@ export const prerender = false;
 
 import { Heading } from "~/components/heading";
 import Layout from "~/layouts/simple.astro";
+import { ExpiredCvError } from "~/utils/content";
 import {
   ExpiredSignatureError,
   InvalidSignatureError,
@@ -15,7 +16,11 @@ interface Props {
 const { error } = Astro.props;
 let content: string;
 
-if (error instanceof ExpiredSignatureError) {
+if (error instanceof ExpiredCvError) {
+  Astro.response.status = 410;
+  Astro.response.statusText = "CV Expired";
+  content = "Please contact me for an updated version.";
+} else if (error instanceof ExpiredSignatureError) {
   Astro.response.status = 410;
   Astro.response.statusText = "Page Expired";
   content = "That link is no longer usable.";

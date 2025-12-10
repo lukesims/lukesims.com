@@ -7,12 +7,26 @@ import { CvForm } from "~/components/forms/cv-form";
 import { Heading } from "~/components/heading";
 import Container from "~/components/layout/container.astro";
 import Layout from "~/layouts/content.astro";
+import { ExpiredCvError } from "~/utils/content";
 
 const { id } = Astro.params;
-if (!id) return Astro.rewrite("/404");
+
+if (!id) {
+  return Astro.rewrite("/404");
+}
 
 const cv = await getEntry("cv", id);
-if (!cv) return Astro.rewrite("/404");
+
+if (!cv) {
+  return Astro.rewrite("/404");
+}
+
+const today = new Date();
+today.setHours(0, 0, 0, 0);
+
+if (cv.data.expires && cv.data.expires <= today) {
+  throw new ExpiredCvError();
+}
 ---
 
 <Layout captcha noindex title="My CV">

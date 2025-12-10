@@ -11,14 +11,34 @@ import { DesktopNav, MobileNav } from "~/components/cv/nav";
 import { Skills } from "~/components/cv/skills";
 import Container from "~/components/layout/container.astro";
 import Layout from "~/layouts/content.astro";
-import { getCv } from "~/utils/content";
-import { assertUrlIsValid } from "~/utils/signatures";
+import { ExpiredCvError, getCv } from "~/utils/content";
+import { assertUrlIsValid, ExpiredSignatureError } from "~/utils/signatures";
 
-assertUrlIsValid(Astro.url);
+if (!Astro.params.id) {
+  return Astro.rewrite("/404");
+}
 
-if (!Astro.params.id) return Astro.rewrite("/404");
+try {
+  assertUrlIsValid(Astro.url);
+} catch (error) {
+  if (error instanceof ExpiredSignatureError) {
+    return Astro.redirect(`/cv/${Astro.params.id}`);
+  }
+  throw error;
+}
+
 const cv = await getCv(Astro.params.id);
-if (!cv) return Astro.rewrite("/404");
+
+if (!cv) {
+  return Astro.rewrite("/404");
+}
+
+const today = new Date();
+today.setHours(0, 0, 0, 0);
+
+if (cv.expires && cv.expires <= today) {
+  throw new ExpiredCvError();
+}
 
 const { education, experience, skills, summary, title } = cv;
 const qrCode = new URL(`/cv/${Astro.params.id}`, SITE_URL).toString();
