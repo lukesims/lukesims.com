@@ -99,7 +99,7 @@ export function CaptchaInput({
         onTimeout={onTimeout}
         onSuccess={(token) => {
           setValue(token);
-          onSuccess && onSuccess(token);
+          if (onSuccess) onSuccess(token);
         }}
         ref={ref}
       />

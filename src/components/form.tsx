@@ -2,7 +2,7 @@ import * as RadixForm from "@radix-ui/react-form";
 
 export const Submit = RadixForm.Submit;
 
-export interface FormProps extends RadixForm.FormProps {}
+export type FormProps = RadixForm.FormProps;
 
 export function Form({ children, ...props }: FormProps) {
   return (

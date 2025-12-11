@@ -8,7 +8,7 @@ const contactInfo = await getContactInfo("cv");
   class="flex w-full max-w-4xl items-center justify-center gap-6 print:hidden"
 >
   {
-    contactInfo?.items.map(({ icon, text, url }, i) => (
+    contactInfo?.items.map(({ icon, text, url }) => (
       <li class="flex items-center">
         <i class:list={[icon, "size-7 text-blue-600"]} />
 

@@ -26,7 +26,7 @@ export function MobileNav({
   buttonSize,
   buttonVariant,
   contactInfo,
-  currentPath,
+  // currentPath,
   mobileNav,
 }: MobileNavProps) {
   return (

@@ -26,19 +26,18 @@ export function Pagination({
       role="navigation"
       {...props}
     >
-      <PaginationLink
-        children="Previous"
-        label="Go to the previous page"
-        url={url.prev}
-      />
+      <PaginationLink label="Go to the previous page" url={url.prev}>
+        Previous
+      </PaginationLink>
 
       <PaginationLink
         square
-        children="1"
         current={currentPage === 1}
         label="Go to page 1"
         url={baseUrl}
-      />
+      >
+        1
+      </PaginationLink>
 
       {lastPage > numCurrentPages + 2
         ? // If there are more pages than we want to show, they need to be truncated
@@ -60,11 +59,12 @@ export function Pagination({
                 )}
                 <PaginationLink
                   square
-                  children={pageNum}
                   current={currentPage === pageNum}
                   label={`Go to page ${pageNum}`}
                   url={`${baseUrl}/${pageNum}`}
-                />
+                >
+                  {pageNum}
+                </PaginationLink>
                 {i === numCurrentPages - 1 && pageNum < lastPage - 1 && (
                   <div className="flex h-11 w-11 items-center justify-center">
                     <span className="icon-[ri--more-fill] ml-0.5 size-7" />
@@ -79,30 +79,30 @@ export function Pagination({
             return (
               <PaginationLink
                 square
-                children={pageNum}
                 current={currentPage === pageNum}
                 key={i}
                 label={`Go to page ${pageNum}`}
                 url={`${baseUrl}/${pageNum}`}
-              />
+              >
+                {pageNum}
+              </PaginationLink>
             );
           })}
 
       {lastPage > 1 && (
         <PaginationLink
           square
-          children={lastPage}
           current={currentPage === lastPage}
           label={`Go to page ${lastPage}`}
           url={`${baseUrl}/${lastPage}`}
-        />
+        >
+          {lastPage}
+        </PaginationLink>
       )}
 
-      <PaginationLink
-        children="Next"
-        label="Go to the next page"
-        url={url.next}
-      />
+      <PaginationLink label="Go to the next page" url={url.next}>
+        Next
+      </PaginationLink>
     </nav>
   );
 }
