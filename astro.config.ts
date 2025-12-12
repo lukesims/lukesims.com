@@ -1,4 +1,4 @@
-import node from "@astrojs/node";
+import cloudflare from "@astrojs/cloudflare";
 import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
 import tailwindcss from "@tailwindcss/vite";
@@ -16,8 +16,9 @@ export default defineConfig({
   site: PUBLIC_SITE_URL,
   trailingSlash: "never",
 
-  adapter: node({
-    mode: "standalone",
+  adapter: cloudflare({
+    cloudflareModules: false,
+    imageService: "cloudflare",
   }),
 
   experimental: {
