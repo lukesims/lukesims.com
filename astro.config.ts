@@ -94,12 +94,6 @@ export default defineConfig({
         optional: false,
       }),
 
-      STORAGE_PATH: envField.string({
-        access: "public",
-        context: "server",
-        optional: false,
-      }),
-
       TURNSTILE_SITE_KEY: envField.string({
         access: "public",
         context: "client",
