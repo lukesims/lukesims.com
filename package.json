@@ -10,7 +10,8 @@
     "astro": "astro",
     "lint": "eslint .",
     "style:check": "prettier --check .",
-    "style:write": "prettier --write ."
+    "style:write": "prettier --write .",
+    "test": "echo \"TODO\" && exit 0"
   },
   "dependencies": {
     "@astrojs/node": "^9.4.4",
