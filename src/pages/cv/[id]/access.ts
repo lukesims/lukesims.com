@@ -1,6 +1,5 @@
 import type { APIRoute } from "astro";
 import { getEntry } from "astro:content";
-import { SITE_URL } from "astro:env/client";
 import { z } from "zod";
 
 import { string } from "~/schemas/validation";
@@ -39,7 +38,10 @@ export const POST: APIRoute = async ({
   }
 
   return new Response(
-    createSignedUrl(new URL(`/cv/${cv.id}/view`, SITE_URL), 7).toString(),
+    createSignedUrl(
+      new URL(`/cv/${cv.id}/view`, import.meta.env.PUBLIC_SITE_URL),
+      7,
+    ).toString(),
     { status: 200 },
   );
 };

@@ -1,5 +1,4 @@
 import * as RadixForm from "@radix-ui/react-form";
-import { TURNSTILE_SITE_KEY } from "astro:env/client";
 import {
   type ComponentProps,
   type Ref,
@@ -36,7 +35,7 @@ export function Captcha({
     if (element.current && !widgetId) {
       const id = turnstile.render(element.current, {
         action,
-        sitekey: TURNSTILE_SITE_KEY,
+        sitekey: import.meta.env.PUBLIC_TURNSTILE_SITE_KEY,
 
         "response-field": false,
         size: "flexible",

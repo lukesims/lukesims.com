@@ -1,15 +1,9 @@
-import {
-  FROM_EMAIL,
-  MAILGUN_API_KEY,
-  MAILGUN_BASE_URL,
-  MAILGUN_DOMAIN,
-} from "astro:env/server";
 import Mailgun from "mailgun.js";
 
 const mailgun = new Mailgun(FormData);
 const mg = mailgun.client({
-  key: MAILGUN_API_KEY,
-  url: MAILGUN_BASE_URL,
+  key: import.meta.env.MAILGUN_API_KEY,
+  url: import.meta.env.MAILGUN_BASE_URL,
   useFetch: true,
   username: "api",
 });
@@ -21,9 +15,9 @@ export function sendEmail(email: {
   text: string;
   html?: string;
 }) {
-  return mg.messages.create(MAILGUN_DOMAIN, {
+  return mg.messages.create(import.meta.env.MAILGUN_DOMAIN, {
     to: [email.to],
-    from: email.from || FROM_EMAIL,
+    from: email.from || import.meta.env.FROM_EMAIL,
     subject: email.subject,
     text: email.text,
     html: email.html,

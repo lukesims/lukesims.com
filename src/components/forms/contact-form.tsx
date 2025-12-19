@@ -1,4 +1,3 @@
-import { SITE_URL } from "astro:env/client";
 import { useRef, useState } from "react";
 
 import { Button } from "~/components/button";
@@ -37,10 +36,10 @@ export function ContactForm() {
 
     let response: Response;
     try {
-      response = await fetch(new URL("/contact/send", SITE_URL), {
-        method: "POST",
-        body,
-      });
+      response = await fetch(
+        new URL("/contact/send", import.meta.env.PUBLIC_SITE_URL),
+        { method: "POST", body },
+      );
     } catch (err) {
       toast.danger({
         title: "Internal Error",

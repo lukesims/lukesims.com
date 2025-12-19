@@ -1,7 +1,6 @@
-import { TURNSTILE_SECRET_KEY } from "astro:env/server";
 import { randomUUID } from "node:crypto";
 
-const maxAttempts = 3;
+import config from "~/config";
 
 // https://developers.cloudflare.com/turnstile/get-started/server-side-validation/#response-fields
 type TurnstileResponse =
@@ -32,7 +31,7 @@ export async function validateTurnstile(
   expectedHostname?: string,
 ) {
   const body = new FormData();
-  body.append("secret", TURNSTILE_SECRET_KEY);
+  body.append("secret", import.meta.env.TURNSTILE_SECRET_KEY);
   body.append("response", token);
   body.append("remoteip", remoteip);
   body.append("idempotency_key", randomUUID());
@@ -42,23 +41,26 @@ export async function validateTurnstile(
     "error-codes": ["internal-error"],
   };
 
-  for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+  for (let attempt = 1; attempt <= config.turnstile.maxAttempts; attempt++) {
     try {
       const response = await fetch(
         "https://challenges.cloudflare.com/turnstile/v0/siteverify",
         { body, method: "POST" },
       );
-      if (response.ok || attempt === maxAttempts) {
+      if (response.ok || attempt === config.turnstile.maxAttempts) {
         result = await response.json();
         break;
       }
     } catch (error) {
-      if (attempt === maxAttempts) {
+      if (attempt === config.turnstile.maxAttempts) {
         break;
       }
     }
     await new Promise((resolve) =>
-      setTimeout(resolve, Math.pow(2, attempt) * 1000),
+      setTimeout(
+        resolve,
+        Math.pow(2, attempt) * config.turnstile.timeoutFactor,
+      ),
     );
   }
 

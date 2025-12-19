@@ -1,4 +1,3 @@
-import { SITE_URL } from "astro:env/client";
 import { useRef, useState } from "react";
 
 import { Button } from "~/components/button";
@@ -34,10 +33,10 @@ export function CvForm({ id }: CvFormProps) {
 
     let response: Response;
     try {
-      response = await fetch(new URL(`/cv/${id}/access`, SITE_URL), {
-        method: "POST",
-        body,
-      });
+      response = await fetch(
+        new URL(`/cv/${id}/access`, import.meta.env.PUBLIC_SITE_URL),
+        { method: "POST", body },
+      );
     } catch (err) {
       toast.danger({
         title: "Internal Error",
