@@ -6,17 +6,16 @@ import Breakpoint from "~/components/layout/breakpoint.astro";
 import { Toaster } from "~/components/toast";
 import "~/styles/app.css";
 
-export interface Props
-  extends Pick<
-    SEOProps,
-    | "canonical"
-    | "description"
-    | "extend"
-    | "nofollow"
-    | "noindex"
-    | "openGraph"
-    | "title"
-  > {
+export interface Props extends Pick<
+  SEOProps,
+  | "canonical"
+  | "description"
+  | "extend"
+  | "nofollow"
+  | "noindex"
+  | "openGraph"
+  | "title"
+> {
   bodyClass?: string;
   captcha?: boolean;
 }
