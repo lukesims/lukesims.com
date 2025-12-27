@@ -10,7 +10,7 @@ export const prerender = false;
 const requestSchema = z.object({
   name: string(),
   email: email(),
-  phone: z.string().optional(),
+  phone: z.string().trim().optional(),
   message: string(),
   captcha_token: string(),
 });
