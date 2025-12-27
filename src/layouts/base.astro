@@ -21,10 +21,9 @@ export interface Props extends Pick<
   | "title"
 > {
   bodyClass?: string;
-  captcha?: boolean;
 }
 
-const { bodyClass, captcha = false, ...seoProps } = Astro.props;
+const { bodyClass, ...seoProps } = Astro.props;
 ---
 
 <html lang="en">
@@ -57,15 +56,6 @@ const { bodyClass, captcha = false, ...seoProps } = Astro.props;
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <meta name="apple-mobile-web-app-title" content="Luke Sims" />
     <link rel="manifest" href="/site.webmanifest" />
-    {
-      captcha && (
-        <script
-          defer
-          is:inline
-          src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit"
-        />
-      )
-    }
   </head>
   <body class={bodyClass}>
     <slot />

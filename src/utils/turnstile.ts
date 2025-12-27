@@ -65,7 +65,13 @@ export async function validateTurnstile(
   }
 
   if (result.success) {
-    if (process.env.NODE_ENV === "production") {
+    // When using Cloudflare's test keys in development/testing, the Turnstile
+    // widget always generates a dummy token and it doesn't bother to track the
+    // action or hostname, so these checks will always fail.
+    if (
+      process.env.NODE_ENV === "production" &&
+      import.meta.env.MODE === "production"
+    ) {
       if (expectedAction && result.action !== expectedAction) {
         throw new TurnstileError(
           "Unexpected action in Turnstile response: " +
