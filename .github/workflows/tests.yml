@@ -20,6 +20,15 @@ jobs:
   test:
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    services:
+      mailpit:
+        image: axllent/mailpit:latest
+        env:
+          MP_SMTP_AUTH_ACCEPT_ANY: 1
+          MP_SMTP_AUTH_ALLOW_INSECURE: 1
+        ports:
+          - 1025:1025
+          - 8025:8025
     steps:
       - name: Checkout the repo
         uses: actions/checkout@v6
@@ -41,6 +50,8 @@ jobs:
         run: pnpm test:unit
       - name: Install browsers for e2e tests
         run: pnpm playwright install --with-deps
+      - name: Build the application
+        run: pnpm build --mode test
       - name: Run e2e tests
         run: pnpm test:e2e
       - name: Upload e2e test report
