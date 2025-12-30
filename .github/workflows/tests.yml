@@ -32,6 +32,8 @@ jobs:
     steps:
       - name: Checkout the repo
         uses: actions/checkout@v6
+      - name: Create .env file
+        run: cp .env.test .env
       - name: Install PNPM
         uses: pnpm/action-setup@v4
         with:
@@ -52,10 +54,10 @@ jobs:
         run: pnpm lint:style
       - name: Run unit/integration tests
         run: pnpm test:unit
-      - name: Install browsers for e2e tests
-        run: pnpm playwright install --with-deps
       - name: Build the application
         run: pnpm build --mode test
+      - name: Install browsers for e2e tests
+        run: pnpm playwright install --with-deps
       - name: Run e2e tests
         run: pnpm test:e2e
       - name: Upload e2e test report
