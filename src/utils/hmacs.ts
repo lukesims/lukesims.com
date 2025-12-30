@@ -21,7 +21,7 @@ export function verifyHmac(data: string, hmac: string): boolean {
   }
   try {
     return timingSafeEqual(Buffer.from(createHmac(data)), Buffer.from(hmac));
-  } catch (error) {
+  } catch (_) {
     return false;
   }
 }

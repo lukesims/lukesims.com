@@ -51,7 +51,7 @@ export async function validateTurnstile(
         result = await response.json();
         break;
       }
-    } catch (error) {
+    } catch (_) {
       if (attempt === config.turnstile.maxAttempts) {
         break;
       }

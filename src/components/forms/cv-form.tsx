@@ -37,7 +37,7 @@ export function CvForm({ id }: CvFormProps) {
         new URL(`/cv/${id}/access`, import.meta.env.PUBLIC_SITE_URL),
         { method: "POST", body },
       );
-    } catch (err) {
+    } catch (_) {
       toast.danger({
         title: "Internal Error",
         description: "Please try again later.",
