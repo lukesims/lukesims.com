@@ -30,7 +30,7 @@ export const POST: APIRoute = async ({ clientAddress, request, site }) => {
   );
 
   const mailgunResponse = await sendEmail({
-    to: import.meta.env.CONTACT_EMAIL,
+    to: [import.meta.env.CONTACT_EMAIL],
     subject: `Contact form submission from ${validated.name}`,
     text:
       `Message received via the ${import.meta.env.PUBLIC_SITE_URL} contact form:\n\n` +

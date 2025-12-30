@@ -302,6 +302,7 @@ describe("validateTurnstile", () => {
 
   it("throws error when action doesn't match in production", async () => {
     vi.stubEnv("NODE_ENV", "production");
+    vi.stubEnv("MODE", "production");
     vi.mocked(global.fetch).mockResolvedValueOnce({
       ok: true,
       json: vi.fn().mockResolvedValue({
@@ -326,6 +327,7 @@ describe("validateTurnstile", () => {
 
   it("throws error when hostname doesn't match in production", async () => {
     vi.stubEnv("NODE_ENV", "production");
+    vi.stubEnv("MODE", "production");
     vi.mocked(global.fetch).mockResolvedValueOnce({
       ok: true,
       json: vi.fn().mockResolvedValue({
