@@ -44,8 +44,12 @@ jobs:
           node-version-file: ".node-version"
       - name: Install dependencies
         run: pnpm install
-      - name: Run static analysis
-        run: pnpm lint
+      - name: Check types
+        run: pnpm lint:types --mode test
+      - name: Lint source code
+        run: pnpm lint:issues
+      - name: Check formatting
+        run: pnpm lint:style
       - name: Run unit/integration tests
         run: pnpm test:unit
       - name: Install browsers for e2e tests
