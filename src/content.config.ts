@@ -12,44 +12,67 @@ import {
   skillsSchema,
 } from "~/schemas/content";
 
+const contentPath = (path: string) => `${import.meta.env.CONTENT_PATH}/${path}`;
+
 export const collections = {
   blog: defineCollection({
-    loader: glob({ base: "content/blog", pattern: "**/*.{md,mdx}" }),
+    loader: glob({
+      base: contentPath("blog"),
+      pattern: "**/*.{md,mdx}",
+    }),
     schema: blogSchema,
   }),
 
   categories: defineCollection({
-    loader: file("content/categories.json"),
+    loader: file(contentPath("categories.json")),
     schema: categoriesSchema,
   }),
 
   contactInfo: defineCollection({
-    loader: glob({ base: "content/contact-info", pattern: "*.json" }),
+    loader: glob({
+      base: contentPath("contact-info"),
+      pattern: "*.json",
+    }),
     schema: contactInfoSchema,
   }),
 
   cv: defineCollection({
-    loader: glob({ base: "content/cv", pattern: "*.json" }),
+    loader: glob({
+      base: contentPath("cv"),
+      pattern: "*.json",
+    }),
     schema: cvSchema,
   }),
 
   education: defineCollection({
-    loader: glob({ base: "content/education", pattern: "*.md" }),
+    loader: glob({
+      base: contentPath("education"),
+      pattern: "*.md",
+    }),
     schema: educationSchema,
   }),
 
   experience: defineCollection({
-    loader: glob({ base: "content/experience", pattern: "*.md" }),
+    loader: glob({
+      base: contentPath("experience"),
+      pattern: "*.md",
+    }),
     schema: experienceSchema,
   }),
 
   navs: defineCollection({
-    loader: glob({ base: "content/navs", pattern: "*.json" }),
+    loader: glob({
+      base: contentPath("navs"),
+      pattern: "*.json",
+    }),
     schema: navsSchema,
   }),
 
   skills: defineCollection({
-    loader: glob({ base: "content/skills", pattern: "*.md" }),
+    loader: glob({
+      base: contentPath("skills"),
+      pattern: "*.md",
+    }),
     schema: skillsSchema,
   }),
 };

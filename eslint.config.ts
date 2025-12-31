@@ -26,7 +26,10 @@ export default defineConfig([
 
   {
     rules: {
-      "@typescript-eslint/no-unused-vars": ["error", { caughtErrors: "none" }],
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        { caughtErrorsIgnorePattern: "^_", ignoreRestSiblings: true },
+      ],
       "react/react-in-jsx-scope": "off",
     },
   },

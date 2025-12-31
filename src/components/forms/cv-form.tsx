@@ -1,8 +1,6 @@
-import { SITE_URL } from "astro:env/client";
 import { useRef, useState } from "react";
 
 import { Button } from "~/components/button";
-import { type CaptchaHandle, CaptchaInput } from "~/components/captcha";
 import {
   FieldContainer,
   Form,
@@ -10,13 +8,14 @@ import {
   Submit,
 } from "~/components/form";
 import { toast } from "~/components/toast";
+import { Turnstile, type TurnstileInstance } from "~/components/turnstile";
 
 export interface CvFormProps {
   id: string;
 }
 
 export function CvForm({ id }: CvFormProps) {
-  const captchaRef = useRef<CaptchaHandle | null>(null);
+  const captchaRef = useRef<TurnstileInstance | null>(null);
   const [loading, setLoading] = useState(false);
   const [serverErrors, setServerErrors] = useState<{
     [key: string]: string | undefined;
@@ -34,11 +33,11 @@ export function CvForm({ id }: CvFormProps) {
 
     let response: Response;
     try {
-      response = await fetch(new URL(`/cv/${id}/access`, SITE_URL), {
-        method: "POST",
-        body,
-      });
-    } catch (err) {
+      response = await fetch(
+        new URL(`/cv/${id}/access`, import.meta.env.PUBLIC_SITE_URL),
+        { method: "POST", body },
+      );
+    } catch (_) {
       toast.danger({
         title: "Internal Error",
         description: "Please try again later.",
@@ -102,12 +101,7 @@ export function CvForm({ id }: CvFormProps) {
           },
         ]}
       >
-        <CaptchaInput
-          required
-          action="contact"
-          name="captcha_token"
-          ref={captchaRef}
-        />
+        <Turnstile options={{ action: "cv" }} ref={captchaRef} />
       </FieldContainer>
 
       <div className="flex items-center justify-center">

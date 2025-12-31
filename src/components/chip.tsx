@@ -27,7 +27,8 @@ const styles = cva(
 );
 
 export interface ChipProps
-  extends Omit<HTMLAttributes<HTMLSpanElement>, "color">,
+  extends
+    Omit<HTMLAttributes<HTMLSpanElement>, "color">,
     VariantProps<typeof styles> {}
 
 export function Chip({ children, className, color, size }: ChipProps) {

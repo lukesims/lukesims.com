@@ -42,8 +42,7 @@ const styles = cva(
 );
 
 export interface ButtonProps
-  extends ComponentProps<"button">,
-    VariantProps<typeof styles> {
+  extends ComponentProps<"button">, VariantProps<typeof styles> {
   asChild?: boolean;
 }
 

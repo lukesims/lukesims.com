@@ -1,8 +1,6 @@
-import { SITE_URL } from "astro:env/client";
 import { useRef, useState } from "react";
 
 import { Button } from "~/components/button";
-import { type CaptchaHandle, CaptchaInput } from "~/components/captcha";
 import {
   Field,
   FieldContainer,
@@ -13,9 +11,10 @@ import {
 import { Input } from "~/components/input";
 import { TextArea } from "~/components/textarea";
 import { toast } from "~/components/toast";
+import { Turnstile, type TurnstileInstance } from "~/components/turnstile";
 
 export function ContactForm() {
-  const captchaRef = useRef<CaptchaHandle | null>(null);
+  const captchaRef = useRef<TurnstileInstance | null>(null);
   const [loading, setLoading] = useState(false);
   const [serverErrors, setServerErrors] = useState<{
     [key: string]: string | undefined;
@@ -37,11 +36,11 @@ export function ContactForm() {
 
     let response: Response;
     try {
-      response = await fetch(new URL("/contact/send", SITE_URL), {
-        method: "POST",
-        body,
-      });
-    } catch (err) {
+      response = await fetch(
+        new URL("/contact/send", import.meta.env.PUBLIC_SITE_URL),
+        { method: "POST", body },
+      );
+    } catch (_) {
       toast.danger({
         title: "Internal Error",
         description: "Please try again later.",
@@ -112,7 +111,7 @@ export function ContactForm() {
             },
           ]}
         >
-          <Input />
+          <Input disabled={loading} />
         </Field>
 
         <Field
@@ -126,7 +125,7 @@ export function ContactForm() {
             },
           ]}
         >
-          <Input type="tel" />
+          <Input type="tel" disabled={loading} />
         </Field>
       </div>
 
@@ -153,7 +152,7 @@ export function ContactForm() {
           },
         ]}
       >
-        <Input type="email" />
+        <Input type="email" disabled={loading} />
       </Field>
 
       <Field
@@ -174,7 +173,7 @@ export function ContactForm() {
           },
         ]}
       >
-        <TextArea minLength={20} rows={6} />
+        <TextArea disabled={loading} minLength={20} rows={6} />
       </Field>
 
       <FieldContainer
@@ -200,12 +199,7 @@ export function ContactForm() {
           },
         ]}
       >
-        <CaptchaInput
-          required
-          action="contact"
-          name="captcha_token"
-          ref={captchaRef}
-        />
+        <Turnstile options={{ action: "contact" }} ref={captchaRef} />
       </FieldContainer>
 
       <div className="flex items-center justify-center">

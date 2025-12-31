@@ -20,8 +20,7 @@ export const styles = cva("text-heading font-display font-extrabold", {
 });
 
 export interface HeadingProps
-  extends ComponentProps<"h1">,
-    VariantProps<typeof styles> {
+  extends ComponentProps<"h1">, VariantProps<typeof styles> {
   asChild?: boolean;
 }
 

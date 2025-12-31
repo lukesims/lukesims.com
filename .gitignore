@@ -10,6 +10,11 @@ node_modules/
 .env.production
 
 # logs
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+/playwright/.auth/
 pnpm-debug.log*
 
 # OS-specific files

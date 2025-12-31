@@ -11,7 +11,7 @@ import { TurnstileError } from "~/utils/turnstile";
  * Must be first in the sequence of middlewares to ensure that it can handle
  * errors from other middlewares.
  */
-export const renderErrors = defineMiddleware(async (context, next) => {
+export const renderErrors = defineMiddleware(async (_, next) => {
   let response: Response;
 
   try {
@@ -32,6 +32,8 @@ export const renderErrors = defineMiddleware(async (context, next) => {
         status: 422,
       });
     }
+
+    // ...
 
     // All other errors can be handled by Astro rendering the 500 page
     throw error;

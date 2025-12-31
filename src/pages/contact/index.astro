@@ -1,5 +1,4 @@
 ---
-import { Alert, AlertTitle } from "~/components/alert";
 import { Card } from "~/components/card";
 import { ContactForm } from "~/components/forms/contact-form";
 import { Heading } from "~/components/heading";
@@ -7,14 +6,9 @@ import Container from "~/components/layout/container.astro";
 import Layout from "~/layouts/content.astro";
 ---
 
-<Layout captcha title="Luke Sims">
+<Layout title="Get in Touch">
   <Container size="sm">
     <Heading className="text-center">Get in Touch</Heading>
-
-    <Alert className="shadow-lg" variant="info">
-      <span class="icon- text-lg/6">😊</span>
-      <AlertTitle>I'm available for contract/freelance work!</AlertTitle>
-    </Alert>
 
     <Card className="w-full p-5 pb-6 shadow-lg md:px-9 md:pt-7 md:pb-9">
       <ContactForm client:load />

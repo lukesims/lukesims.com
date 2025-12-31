@@ -1,6 +1,4 @@
 import type { APIRoute } from "astro";
-import { SITE_URL } from "astro:env/client";
-import { CONTACT_EMAIL } from "astro:env/server";
 import { z } from "zod";
 
 import { email, string } from "~/schemas/validation";
@@ -12,7 +10,7 @@ export const prerender = false;
 const requestSchema = z.object({
   name: string(),
   email: email(),
-  phone: z.string().optional(),
+  phone: z.string().trim().optional(),
   message: string(),
   captcha_token: string(),
 });
@@ -32,10 +30,10 @@ export const POST: APIRoute = async ({ clientAddress, request, site }) => {
   );
 
   const mailgunResponse = await sendEmail({
-    to: CONTACT_EMAIL,
+    to: [import.meta.env.CONTACT_EMAIL],
     subject: `Contact form submission from ${validated.name}`,
     text:
-      `Message received via the ${SITE_URL} contact form:\n\n` +
+      `Message received via the ${import.meta.env.PUBLIC_SITE_URL} contact form:\n\n` +
       `Name:  ${validated.name}\n` +
       `Email:  ${validated.email}\n` +
       `Phone:  ${validated.phone}\n\n` +

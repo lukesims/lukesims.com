@@ -1,27 +1,29 @@
 ---
 import { SEO, type SEOProps } from "astro-seo";
-import { Font } from "astro:assets";
+import bricolageGrotesque from "@fontsource-variable/bricolage-grotesque/files/bricolage-grotesque-latin-wght-normal.woff2?url";
+import publicSans from "@fontsource-variable/public-sans/files/public-sans-latin-wght-normal.woff2?url";
 
 import Breakpoint from "~/components/layout/breakpoint.astro";
 import { Toaster } from "~/components/toast";
+
+import "@fontsource-variable/bricolage-grotesque";
+import "@fontsource-variable/public-sans";
 import "~/styles/app.css";
 
-export interface Props
-  extends Pick<
-    SEOProps,
-    | "canonical"
-    | "description"
-    | "extend"
-    | "nofollow"
-    | "noindex"
-    | "openGraph"
-    | "title"
-  > {
+export interface Props extends Pick<
+  SEOProps,
+  | "canonical"
+  | "description"
+  | "extend"
+  | "nofollow"
+  | "noindex"
+  | "openGraph"
+  | "title"
+> {
   bodyClass?: string;
-  captcha?: boolean;
 }
 
-const { bodyClass, captcha = false, ...seoProps } = Astro.props;
+const { bodyClass, ...seoProps } = Astro.props;
 ---
 
 <html lang="en">
@@ -33,6 +35,20 @@ const { bodyClass, captcha = false, ...seoProps } = Astro.props;
       titleDefault="Software Developer in Essex, UK"
       titleTemplate="%s • Luke Sims"
     />
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href={bricolageGrotesque}
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href={publicSans}
+      crossorigin="anonymous"
+    />
     <link rel="sitemap" href="/sitemap-index.xml" />
     <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -40,17 +56,6 @@ const { bodyClass, captcha = false, ...seoProps } = Astro.props;
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <meta name="apple-mobile-web-app-title" content="Luke Sims" />
     <link rel="manifest" href="/site.webmanifest" />
-    <Font cssVariable="--font-bricolage-grotesque" preload />
-    <Font cssVariable="--font-public-sans" preload />
-    {
-      captcha && (
-        <script
-          defer
-          is:inline
-          src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit"
-        />
-      )
-    }
   </head>
   <body class={bodyClass}>
     <slot />

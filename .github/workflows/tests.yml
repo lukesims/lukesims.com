@@ -2,26 +2,68 @@ name: Run tests
 
 on:
   pull_request:
-    branches:
-      - main
+    paths-ignore:
+      - ".vscode/**"
   push:
-    branches:
-      - main
+    branches: [main]
+
+# Ensure existing in-progress jobs on the same branch are cancelled
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
+
+env:
+  ASTRO_TELEMETRY_DISABLED: true
+  FORCE_COLOR: true
 
 jobs:
   test:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
+    services:
+      mailpit:
+        image: axllent/mailpit:latest
+        env:
+          MP_SMTP_AUTH_ACCEPT_ANY: 1
+          MP_SMTP_AUTH_ALLOW_INSECURE: 1
+        ports:
+          - 1025:1025
+          - 8025:8025
     steps:
-      - uses: actions/checkout@v6
-      - uses: pnpm/action-setup@v4
+      - name: Checkout the repo
+        uses: actions/checkout@v6
+      - name: Create .env file
+        run: cp .env.test .env
+      - name: Install PNPM
+        uses: pnpm/action-setup@v4
         with:
           version: 10
-      - uses: actions/setup-node@v6
+      - name: Install Node
+        uses: actions/setup-node@v6
         with:
           cache: "pnpm"
           cache-dependency-path: "pnpm-lock.yaml"
           node-version-file: ".node-version"
-      - run: pnpm install
-      - run: pnpm style:check
-      - run: pnpm lint
-      - run: pnpm test
+      - name: Install dependencies
+        run: pnpm install
+      - name: Check types
+        run: pnpm lint:types --mode test
+      - name: Lint source code
+        run: pnpm lint:issues
+      - name: Check formatting
+        run: pnpm lint:style
+      - name: Run unit/integration tests
+        run: pnpm test:unit
+      - name: Build the application
+        run: pnpm build --mode test
+      - name: Install browsers for e2e tests
+        run: pnpm playwright install --with-deps
+      - name: Run e2e tests
+        run: pnpm test:e2e
+      - name: Upload e2e test report
+        uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30
