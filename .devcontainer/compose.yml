@@ -1,0 +1,16 @@
+services:
+  app:
+    build:
+      context: ..
+      dockerfile: .devcontainer/Dockerfile
+    # Override default command so things don't shut down after the process ends
+    command: sleep infinity
+    # Run app on the same network as the mailpit container,
+    # to allow "forwardPorts" in the devcontainer.json.
+    network_mode: service:mailpit
+    # Mount the project folder to `/workspace`
+    volumes:
+      - ..:/workspaces/lukesims.com:cached
+  mailpit:
+    image: "axllent/mailpit:latest"
+    restart: unless-stopped

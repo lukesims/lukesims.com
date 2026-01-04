@@ -1,0 +1,15 @@
+{
+  "name": "lukesims.com",
+
+  "dockerComposeFile": "compose.yml",
+  "service": "app",
+  "workspaceFolder": "/workspaces/lukesims.com/",
+
+  "containerUser": "node",
+  "containerEnv": {
+    "PLAYWRIGHT_BROWSERS_PATH": "/playwright-browsers"
+  },
+
+  "forwardPorts": [1025, 8025, 8787],
+  "postCreateCommand": "npm install && npx astro telemetry disable"
+}
