@@ -26,7 +26,7 @@ export default defineConfig({
   },
 
   webServer: {
-    command: "pnpm run preview",
+    command: "npm run preview",
     reuseExistingServer: !process.env.CI,
     url: PUBLIC_SITE_URL,
   },

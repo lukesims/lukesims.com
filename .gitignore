@@ -16,7 +16,7 @@ node_modules/
 /blob-report/
 /playwright/.cache/
 /playwright/.auth/
-pnpm-debug.log*
+npm-debug.log*
 
 # OS-specific files
 .DS_Store
