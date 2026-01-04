@@ -5,6 +5,7 @@
   "compilerOptions": {
     "jsx": "react-jsx",
     "jsxImportSource": "react",
+    "types": ["./worker-configuration.d.ts", "node"],
     "baseUrl": ".",
     "paths": {
       "~/*": ["src/*"]

@@ -204,8 +204,8 @@ describe("isExpiredUrl", () => {
   it("returns false for URLs with future expiry date", () => {
     const url = new URL("https://example.com/api/resource");
     const now = new Date();
-    // 1ms in the future
-    url.searchParams.set(expiryParam, now.getTime() + 1 + "");
+    // 5ms in the future
+    url.searchParams.set(expiryParam, now.getTime() + 5 + "");
     expect(isExpiredUrl(url)).toBe(false);
     // 1 year in the future
     url.searchParams.set(expiryParam, addDays(now, 365).getTime() + "");

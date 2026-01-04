@@ -31,7 +31,21 @@ export default defineConfig({
 
   integrations: [react(), sitemap()],
 
+  server: {
+    host: true,
+    port: 8787,
+  },
+
   vite: {
     plugins: [tailwindcss()],
+    ssr: {
+      external: [
+        "node:buffer",
+        "node:crypto",
+        "node:fs/promises",
+        "node:path",
+        "node:url",
+      ],
+    },
   },
 });
