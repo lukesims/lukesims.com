@@ -35,5 +35,10 @@ export default defineConfig([
   },
 
   prettierConfig,
-  globalIgnores([".astro/*", "dist/*"]),
+  globalIgnores([
+    ".astro/*",
+    ".wrangler/*",
+    "dist/*",
+    "worker-configuration.d.ts",
+  ]),
 ]);

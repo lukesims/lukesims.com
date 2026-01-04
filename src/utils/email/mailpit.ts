@@ -21,7 +21,7 @@ export async function sendEmailViaMailpit(
     throw new Error(`Mailpit API Error (${res.status}): ${await res.text()}`);
   }
   return {
-    id: (await res.json()).ID,
+    id: ((await res.json()) as { ID: string }).ID,
     status: 200,
   };
 }
