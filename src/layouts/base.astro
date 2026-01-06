@@ -59,7 +59,7 @@ const { bodyClass, ...seoProps } = Astro.props;
   </head>
   <body class={bodyClass}>
     <slot />
-    <Breakpoint />
+    {import.meta.env.DEV && <Breakpoint />}
     <Toaster client:load />
   </body>
 </html>
