@@ -4,8 +4,7 @@ export const prerender = true;
 
 const getRobotsTxt = (sitemapURL: URL) => `\
 User-agent: *
-Allow: /
-
+Disallow: /cv/
 Sitemap: ${sitemapURL.href}
 `;
 
