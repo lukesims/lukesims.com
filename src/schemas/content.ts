@@ -1,5 +1,17 @@
 import { reference, type SchemaContext, z } from "astro:content";
 
+//==== Pages ===========================
+
+export const pagesSchema = z.object({
+  bodyClass: z.string().optional(),
+  canonical: z.string().url().optional(),
+  container: z.enum(["sm", "md", "lg"]).optional(),
+  description: z.string().optional(),
+  nofollow: z.boolean().optional().default(false),
+  noindex: z.boolean().optional().default(false),
+  title: z.string(),
+});
+
 //==== Blog ============================
 
 export const blogSchema = ({ image }: SchemaContext) =>

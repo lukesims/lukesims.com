@@ -9,6 +9,7 @@ import {
   educationSchema,
   experienceSchema,
   navsSchema,
+  pagesSchema,
   skillsSchema,
 } from "~/schemas/content";
 
@@ -66,6 +67,14 @@ export const collections = {
       pattern: "*.json",
     }),
     schema: navsSchema,
+  }),
+
+  pages: defineCollection({
+    loader: glob({
+      base: contentPath("pages"),
+      pattern: "**/*.{md,mdx}",
+    }),
+    schema: pagesSchema,
   }),
 
   skills: defineCollection({

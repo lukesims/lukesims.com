@@ -1,4 +1,5 @@
 import cloudflare from "@astrojs/cloudflare";
+import mdx from "@astrojs/mdx";
 import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
 import tailwindcss from "@tailwindcss/vite";
@@ -29,7 +30,7 @@ export default defineConfig({
     },
   },
 
-  integrations: [react(), sitemap()],
+  integrations: [mdx(), react(), sitemap()],
 
   server: {
     host: true,

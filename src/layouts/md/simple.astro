@@ -1,0 +1,20 @@
+---
+import type { MarkdownLayoutProps } from "astro";
+import type { CollectionEntry } from "astro:content";
+
+import BaseLayout from "~/layouts/simple.astro";
+
+type Props = MarkdownLayoutProps<CollectionEntry<"pages">["data"]>;
+
+const {
+  frontmatter: { file, url, container, ...frontmatter },
+} = Astro.props;
+---
+
+<BaseLayout {...frontmatter}>
+  <div
+    class="prose md:prose-lg dark:prose-invert text-center text-balance sm:text-right print:text-center"
+  >
+    <slot />
+  </div>
+</BaseLayout>

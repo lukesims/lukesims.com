@@ -1,0 +1,39 @@
+---
+export const prerender = true;
+
+import { type GetStaticPaths } from "astro";
+import { type CollectionEntry, getCollection, render } from "astro:content";
+import { createElement, type ComponentProps } from "react";
+import { Heading } from "~/components/heading";
+
+export const getStaticPaths = (async () => {
+  const pages = await getCollection("pages");
+  return pages.map((page) => ({
+    params: {
+      slug: page.id === "home" ? undefined : page.id,
+    },
+    props: page,
+  }));
+}) satisfies GetStaticPaths;
+
+type Props = CollectionEntry<"pages">;
+
+const { Content } = await render(Astro.props);
+---
+
+<Content
+  components={{
+    h1: ({ children, ...props }: ComponentProps<"h1">) =>
+      createElement(Heading, { className: "text-center", ...props }, children),
+    h2: ({ children, ...props }: ComponentProps<"h2">) =>
+      createElement(Heading, { level: "h2", ...props }, children),
+    h3: ({ children, ...props }: ComponentProps<"h3">) =>
+      createElement(Heading, { level: "h3", ...props }, children),
+    h4: ({ children, ...props }: ComponentProps<"h4">) =>
+      createElement(Heading, { level: "h4", ...props }, children),
+    h5: ({ children, ...props }: ComponentProps<"h5">) =>
+      createElement(Heading, { level: "h5", ...props }, children),
+    h6: ({ children, ...props }: ComponentProps<"h6">) =>
+      createElement(Heading, { level: "h5", ...props }, children),
+  }}
+/>

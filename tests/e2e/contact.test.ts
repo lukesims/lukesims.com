@@ -112,7 +112,7 @@ const test = base.extend<{ contactPage: ContactPage }>({
 
 test.describe("Contact Page", () => {
   test("renders successfully", async ({ contactPage }) => {
-    await expect(contactPage.page).toHaveTitle(/Get in Touch/);
+    await expect(contactPage.page).toHaveTitle(/Contact me/);
     await expect(contactPage.fields.email.error).not.toBeVisible();
     await expect(contactPage.fields.email.input).toBeVisible();
     await expect(contactPage.fields.email.label).toBeVisible();

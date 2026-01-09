@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "@astrojs/cloudflare": "^12.6.12",
+    "@astrojs/mdx": "^4.3.13",
     "@astrojs/sitemap": "^3.6.0",
     "@fontsource-variable/bricolage-grotesque": "^5.2.10",
     "@fontsource-variable/public-sans": "^5.2.7",

@@ -4,7 +4,9 @@
 @plugin "@tailwindcss/typography";
 @plugin "@iconify/tailwind4";
 
+@source "../../storage/content/blog/**/*.{md,mdx}";
 @source "../../storage/content/contact-info/*.json";
+@source "../../storage/content/pages/**/*.{md,mdx}";
 @source "../../storage/content/skills/*.md";
 
 @custom-variant dark (&:where(.dark, .dark *));
