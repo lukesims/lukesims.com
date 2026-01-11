@@ -8,3 +8,20 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
+    groups:
+      astro:
+        patterns: ["@astrojs/*", "astro*"]
+      eslint:
+        patterns: ["*eslint*"]
+      prettier:
+        patterns: ["@trivago/prettier-plugin-sort-imports", "prettier*"]
+      radix:
+        patterns: ["@radix-ui/*", "radix-ui"]
+      react:
+        patterns: ["react*"]
+      tailwind:
+        patterns: ["@tailwindcss/*", "tailwindcss"]
+      types:
+        patterns: ["@types/*", "globals"]
+      vitest:
+        patterns: ["@vitest/*", "vitest*"]
