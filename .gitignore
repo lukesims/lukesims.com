@@ -24,3 +24,4 @@ npm-debug.log*
 # IDE-specific files
 .idea/
 .todo
+.vscode/settings.json
