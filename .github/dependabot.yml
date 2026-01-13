@@ -19,6 +19,8 @@ updates:
         patterns: ["@radix-ui/*", "radix-ui"]
       react:
         patterns: ["react*"]
+      sentry:
+        patterns: ["@sentry/*"]
       tailwind:
         patterns: ["@tailwindcss/*", "tailwindcss"]
       types:

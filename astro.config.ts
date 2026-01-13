@@ -2,11 +2,12 @@ import cloudflare from "@astrojs/cloudflare";
 import mdx from "@astrojs/mdx";
 import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
+import sentry from "@sentry/astro";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "astro/config";
 import { loadEnv } from "vite";
 
-const { PUBLIC_SITE_URL } = loadEnv(
+const { PUBLIC_SITE_URL, SENTRY_ENABLED } = loadEnv(
   process.env.NODE_ENV || "production",
   process.cwd(),
   "",
@@ -30,7 +31,12 @@ export default defineConfig({
     },
   },
 
-  integrations: [mdx(), react(), sitemap()],
+  integrations: [
+    mdx(),
+    react(),
+    sentry({ enabled: SENTRY_ENABLED === "true" }),
+    sitemap(),
+  ],
 
   server: {
     host: true,
