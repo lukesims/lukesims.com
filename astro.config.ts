@@ -44,7 +44,10 @@ export default defineConfig({
   },
 
   vite: {
-    plugins: [tailwindcss()],
+    plugins: [
+      // @ts-expect-error types are wrong
+      tailwindcss(),
+    ],
     ssr: {
       external: [
         "node:buffer",
