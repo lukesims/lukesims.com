@@ -7,7 +7,7 @@ import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "astro/config";
 import { loadEnv } from "vite";
 
-const { PUBLIC_SITE_URL, SENTRY_ENABLED } = loadEnv(
+const { ALLOWED_DOMAINS, PUBLIC_SITE_URL, SENTRY_ENABLED } = loadEnv(
   process.env.NODE_ENV || "production",
   process.cwd(),
   "",
@@ -40,6 +40,16 @@ export default defineConfig({
 
   security: {
     checkOrigin: true,
+    allowedDomains: ALLOWED_DOMAINS
+      ? ALLOWED_DOMAINS.split(",").map((d) => {
+          const url = new URL(d);
+          return {
+            hostname: url.hostname,
+            protocol: url.protocol.replace(":", ""),
+            port: url.port || (url.protocol === "https:" ? "443" : "80"),
+          };
+        })
+      : undefined,
   },
 
   server: {
