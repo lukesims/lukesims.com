@@ -11,6 +11,7 @@ const requestSchema = z.object({
   name: string(),
   email: email(),
   phone: z.string().trim().optional(),
+  subject: z.string().optional(),
   message: string(),
   captcha_token: string(),
 });
@@ -28,6 +29,11 @@ export const POST: APIRoute = async ({ clientAddress, request, site }) => {
   // updating if any multiple/array fields are added to the form
   const formData = Object.fromEntries(await request.formData());
   const validated = requestSchema.parse(formData);
+
+  // Honeypot field was filled in
+  if (validated.subject) {
+    return new Response(null, { status: 200 });
+  }
 
   await validateTurnstile(
     validated.captcha_token,

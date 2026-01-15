@@ -24,6 +24,7 @@ class ContactPage {
     message: FieldGroup;
     name: FieldGroup;
     phone: FieldGroup;
+    subject: FieldGroup;
   };
 
   constructor(page: Page) {
@@ -57,7 +58,12 @@ class ContactPage {
     phone.input = page.getByRole("textbox", { name: "Phone number" });
     phone.error = phone.label.locator("..").locator(">span");
 
-    this.fields = { captcha, email, message, name, phone };
+    const subject = {} as FieldGroup;
+    subject.label = page.getByText("Subject");
+    subject.input = page.getByRole("textbox", { name: "Subject" });
+    subject.error = subject.label.locator("..").locator(">span");
+
+    this.fields = { captcha, email, message, name, phone, subject };
 
     this.numApiRequests = 0;
     page.on("request", (request) => {
@@ -125,6 +131,9 @@ test.describe("Contact Page", () => {
     await expect(contactPage.fields.phone.error).not.toBeVisible();
     await expect(contactPage.fields.phone.input).toBeVisible();
     await expect(contactPage.fields.phone.label).toBeVisible();
+    await expect(contactPage.fields.subject.error).not.toBeVisible();
+    await expect(contactPage.fields.subject.input).not.toBeVisible();
+    await expect(contactPage.fields.subject.label).not.toBeVisible();
     await expect(contactPage.fields.captcha.input).not.toBeVisible();
     await expect(contactPage.successMsg).not.toBeVisible();
     await expect(contactPage.submitBtn).toBeVisible();
@@ -258,6 +267,33 @@ test.describe("Contact Page", () => {
     await contactPage.fields.phone.input.fill("0123456789");
     await contactPage.fields.email.input.fill("doe@example.com");
     await contactPage.fields.message.input.fill("Lorem ipsum dolor sit amet.");
+    await contactPage.expectTurnstileDone();
+    await contactPage.submitBtn.click();
+
+    const response = await responsePromise;
+    expect(contactPage.numApiRequests).toBe(1);
+    expect(response.status()).toBe(200);
+    await expect(contactPage.successMsg).toBeVisible();
+    await expect(contactPage.successMsg).toHaveText(/Sent!/);
+  });
+
+  test("appears to submit successfully when honeypot field is filled", async ({
+    contactPage,
+    page,
+  }) => {
+    const responsePromise = contactPage.waitForApiResponse();
+    await contactPage.fields.name.input.fill("J. Doe");
+    await contactPage.fields.phone.input.fill("0123456789");
+    await contactPage.fields.email.input.fill("doe@example.com");
+    await contactPage.fields.message.input.fill("Lorem ipsum dolor sit amet.");
+    await page.evaluate(() => {
+      const input = document.querySelector<HTMLInputElement>(
+        "main form input[name=subject]",
+      );
+      if (input) {
+        input.value = "Lorem ipsum dolor sit amet.";
+      }
+    });
     await contactPage.expectTurnstileDone();
     await contactPage.submitBtn.click();
 

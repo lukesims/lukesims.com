@@ -2,11 +2,13 @@ import { useRef, useState } from "react";
 
 import { Button } from "~/components/button";
 import {
+  Field,
   FieldContainer,
   Form,
   type FormProps,
   Submit,
 } from "~/components/form";
+import { Input } from "~/components/input";
 import { toast } from "~/components/toast";
 import { Turnstile, type TurnstileInstance } from "~/components/turnstile";
 
@@ -76,6 +78,10 @@ export function CvForm({ id }: CvFormProps) {
 
   return (
     <Form onClearServerErrors={onClearServerErrors} onSubmit={onSubmit}>
+      <Field name="email" label="Email address" className="form-field">
+        <Input autoComplete="one-time-code" tabIndex={-1} />
+      </Field>
+
       <FieldContainer
         required
         name="captcha_token"

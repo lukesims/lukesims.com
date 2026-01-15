@@ -9,6 +9,7 @@ import { validateTurnstile } from "~/utils/turnstile";
 export const prerender = false;
 
 const requestSchema = z.object({
+  email: z.string().optional(),
   captcha_token: string(),
 });
 
@@ -30,6 +31,11 @@ export const POST: APIRoute = async ({
   // updating if any multiple/array fields are added to the form
   const formData = Object.fromEntries(await request.formData());
   const validated = requestSchema.parse(formData);
+
+  // Honeypot field was filled in
+  if (validated.email) {
+    return new Response(null, { status: 200 });
+  }
 
   await validateTurnstile(
     validated.captcha_token,

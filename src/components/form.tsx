@@ -1,5 +1,7 @@
 import * as RadixForm from "@radix-ui/react-form";
 
+import { cn } from "~/utils/styles";
+
 export const Submit = RadixForm.Submit;
 
 export type FormProps = RadixForm.FormProps;
@@ -17,6 +19,7 @@ export function Form({ children, ...props }: FormProps) {
 
 export interface FieldProps {
   children: React.ReactNode;
+  className?: string;
   label: string;
   name: RadixForm.FormFieldProps["name"];
   required?: boolean;
@@ -41,6 +44,7 @@ export function Field({ children, required = false, ...props }: FieldProps) {
 
 export function FieldContainer({
   children,
+  className,
   label,
   messages = [],
   name,
@@ -49,7 +53,7 @@ export function FieldContainer({
 }: FieldProps) {
   return (
     <RadixForm.Field
-      className="grid gap-1"
+      className={cn("grid gap-1", className)}
       name={name}
       serverInvalid={serverInvalid}
     >

@@ -1,3 +1,8 @@
+/* Honeypot fields */
+@utility form-field {
+  display: none !important;
+}
+
 @utility print-color-exact {
   -webkit-print-color-adjust: exact;
   print-color-adjust: exact;

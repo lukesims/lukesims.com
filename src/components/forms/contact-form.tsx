@@ -153,6 +153,10 @@ export function ContactForm() {
         <Input type="email" disabled={loading} />
       </Field>
 
+      <Field name="subject" label="Subject" className="form-field">
+        <Input autoComplete="one-time-code" tabIndex={-1} />
+      </Field>
+
       <Field
         required
         name="message"
