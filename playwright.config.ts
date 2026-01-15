@@ -13,10 +13,10 @@ export default defineConfig({
   workers: process.env.CI ? 1 : undefined,
 
   projects: [
+    // { name: "firefox", use: { ...devices["Desktop Firefox"] } },
     { name: "chromium", use: { ...devices["Desktop Chrome"] } },
-    { name: "firefox", use: { ...devices["Desktop Firefox"] } },
-    { name: "webkit", use: { ...devices["Desktop Safari"] } },
     { name: "chromium-mobile", use: { ...devices["Galaxy S24"] } },
+    { name: "webkit", use: { ...devices["Desktop Safari"] } },
     { name: "webkit-mobile", use: { ...devices["iPhone 15"] } },
   ],
 
