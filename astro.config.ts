@@ -38,6 +38,10 @@ export default defineConfig({
     sitemap(),
   ],
 
+  security: {
+    checkOrigin: true,
+  },
+
   server: {
     host: true,
     port: 8787,

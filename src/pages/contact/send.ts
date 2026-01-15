@@ -19,8 +19,15 @@ const requestSchema = z.object({
  * Request handler for: `POST /contact/send`
  */
 export const POST: APIRoute = async ({ clientAddress, request, site }) => {
-  const data = await request.json();
-  const validated = requestSchema.parse(data);
+  const contentType = request.headers.get("content-type");
+  if (!contentType || !/^multipart\/form-data(?:;.*)?$/.test(contentType)) {
+    return new Response(null, { status: 400 });
+  }
+
+  // The method used for converting FormData to a POJO will need
+  // updating if any multiple/array fields are added to the form
+  const formData = Object.fromEntries(await request.formData());
+  const validated = requestSchema.parse(formData);
 
   await validateTurnstile(
     validated.captcha_token,
@@ -43,5 +50,5 @@ export const POST: APIRoute = async ({ clientAddress, request, site }) => {
 
   console.debug("Sent contact form email:", mailgunResponse);
 
-  return new Response("", { status: 200 });
+  return new Response(null, { status: 200 });
 };

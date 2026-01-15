@@ -21,8 +21,15 @@ export const POST: APIRoute = async ({
   request,
   site,
 }) => {
-  const data = await request.json();
-  const validated = requestSchema.parse(data);
+  const contentType = request.headers.get("content-type");
+  if (!contentType || !/^multipart\/form-data(?:;.*)?$/.test(contentType)) {
+    return new Response(null, { status: 400 });
+  }
+
+  // The method used for converting FormData to a POJO will need
+  // updating if any multiple/array fields are added to the form
+  const formData = Object.fromEntries(await request.formData());
+  const validated = requestSchema.parse(formData);
 
   await validateTurnstile(
     validated.captcha_token,

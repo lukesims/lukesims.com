@@ -31,14 +31,12 @@ export function ContactForm() {
     setLoading(true);
 
     const form = event.currentTarget;
-    // This will need updating if any multiple/array fields are added
-    const body = JSON.stringify(Object.fromEntries(new FormData(form)));
-
     let response: Response;
+
     try {
       response = await fetch(
         new URL("/contact/send", import.meta.env.PUBLIC_SITE_URL),
-        { method: "POST", body },
+        { method: "POST", body: new FormData(form) },
       );
     } catch (_) {
       toast.danger({
