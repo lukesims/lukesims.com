@@ -1,0 +1,63 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+
+  "main": "dist/_worker.js/index.js",
+  "name": "<WORKER_NAME>",
+
+  "compatibility_date": "<COMPATIBILITY_DATE>",
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+
+  "version_metadata": {
+    "binding": "CF_VERSION_METADATA"
+  },
+
+  "assets": {
+    "binding": "ASSETS",
+    "directory": "./dist",
+    "html_handling": "drop-trailing-slash",
+    "not_found_handling": "404-page"
+  },
+
+  "observability": {
+    "enabled": true
+  },
+
+  "env": {
+    "production": {
+      "routes": [{ "pattern": "<PRODUCTION_DOMAIN>", "custom_domain": true }],
+      "vars": {
+        "PUBLIC_SITE_URL": "<PUBLIC_SITE_URL>",
+        "ALLOWED_DOMAINS": "<ALLOWED_DOMAINS>",
+
+        "MAILGUN_BASE_URL": "<MAILGUN_BASE_URL>",
+        "MAILGUN_DOMAIN": "<MAILGUN_DOMAIN>",
+        "FROM_EMAIL": "<FROM_EMAIL>",
+
+        "SENTRY_ENABLED": "true",
+        "PUBLIC_SENTRY_DEBUG": "false",
+        "PUBLIC_SENTRY_ENV": "production",
+        "PUBLIC_SENTRY_DSN": "<PUBLIC_SENTRY_DSN>",
+
+        "PUBLIC_TURNSTILE_SITE_KEY": "<PUBLIC_TURNSTILE_SITE_KEY>"
+      }
+    },
+    "staging": {
+      "routes": [{ "pattern": "<STAGING_DOMAIN>", "custom_domain": true }],
+      "vars": {
+        "PUBLIC_SITE_URL": "<PUBLIC_SITE_URL>",
+        "ALLOWED_DOMAINS": "<ALLOWED_DOMAINS>",
+
+        "MAILGUN_BASE_URL": "<MAILGUN_BASE_URL>",
+        "MAILGUN_DOMAIN": "<MAILGUN_DOMAIN>",
+        "FROM_EMAIL": "<FROM_EMAIL>",
+
+        "SENTRY_ENABLED": "true",
+        "PUBLIC_SENTRY_DEBUG": "false",
+        "PUBLIC_SENTRY_ENV": "staging",
+        "PUBLIC_SENTRY_DSN": "<PUBLIC_SENTRY_DSN>",
+
+        "PUBLIC_TURNSTILE_SITE_KEY": "<PUBLIC_TURNSTILE_SITE_KEY>"
+      }
+    }
+  }
+}
