@@ -3,9 +3,10 @@ name: Run tests
 on:
   pull_request:
     paths-ignore:
+      - ".devcontainer/**"
       - ".vscode/**"
   push:
-    branches: [main]
+    branches: [dev, main]
 
 # Ensure existing in-progress jobs on the same branch are cancelled
 concurrency:
