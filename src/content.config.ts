@@ -13,7 +13,8 @@ import {
   skillsSchema,
 } from "~/schemas/content";
 
-const contentPath = (path: string) => `${import.meta.env.CONTENT_PATH}/${path}`;
+const contentPath = (path: string) =>
+  (import.meta.env.CONTENT_PATH || "content") + "/" + path;
 
 export const collections = {
   blog: defineCollection({

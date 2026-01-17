@@ -59,13 +59,20 @@ describe("createHmac", () => {
     expect(result).toMatch(/^[0-9a-f]{64}$/);
   });
 
-  it("uses HMAC_ALGO as the digest algorithm", () => {
+  it("uses HMAC_ALGO as the digest algorithm when defined", () => {
     vi.stubEnv("HMAC_ALGO", "md5");
     expect(createHmac("foo").length).toBe(32);
     vi.stubEnv("HMAC_ALGO", "sha1");
     expect(createHmac("foo").length).toBe(40);
     vi.stubEnv("HMAC_ALGO", "sha256");
     expect(createHmac("foo").length).toBe(64);
+  });
+
+  it("uses sha256 as the default digest algorithm", () => {
+    const defaultHmac = createHmac("foo");
+    vi.stubEnv("HMAC_ALGO", "sha256");
+    const sha256Hmac = createHmac("foo");
+    expect(defaultHmac).toBe(sha256Hmac);
   });
 
   it("uses HMAC_KEY as the secret key", () => {
@@ -86,13 +93,6 @@ describe("createHmac", () => {
       expect(hmac).not.toContain(key);
       expect(hmac).not.toContain(data);
     }
-  });
-
-  it("throws when HMAC_ALGO is not set", () => {
-    vi.stubEnv("HMAC_ALGO", "");
-    expect(() => createHmac("test")).toThrow("HMAC_ALGO must be set");
-    vi.stubEnv("HMAC_ALGO", undefined);
-    expect(() => createHmac("test")).toThrow("HMAC_ALGO must be set");
   });
 
   it("throws when HMAC_KEY is not set", () => {
