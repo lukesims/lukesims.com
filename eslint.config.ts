@@ -22,6 +22,11 @@ export default defineConfig([
     ...reactPlugin.configs.flat.recommended,
     settings: { react: { version: "detect" } },
     ignores: ["**/*.astro"],
+    rules: {
+      ...reactPlugin.configs.flat.recommended.rules,
+      "react/jsx-no-target-blank": ["error", { allowReferrer: true }],
+      "react/react-in-jsx-scope": "off",
+    },
   },
 
   {
@@ -30,8 +35,6 @@ export default defineConfig([
         "error",
         { caughtErrorsIgnorePattern: "^_", ignoreRestSiblings: true },
       ],
-      "react/jsx-no-target-blank": ["error", { allowReferrer: true }],
-      "react/react-in-jsx-scope": "off",
     },
   },
 
