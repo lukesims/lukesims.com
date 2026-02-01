@@ -19,7 +19,7 @@ export function HeaderNav({
   mobileNav,
 }: HeaderNavProps) {
   return (
-    <nav className="border-border bg-elevation-7 flex h-20 w-full items-center border-y-4">
+    <nav className="border-border bg-elevation-7 relative flex h-20 w-full items-center border-y-4">
       <div
         className={cn(
           "flex items-center gap-3 pl-4 lg:gap-5 lg:pl-5",

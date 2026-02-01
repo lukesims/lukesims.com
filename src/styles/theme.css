@@ -10,7 +10,7 @@
   --bg-elevation-7: oklch(96% var(--bg-chroma) var(--bg-hue));
   --bg-elevation-8: oklch(100% var(--bg-chroma) var(--bg-hue));
 
-  --background: var(--bg-elevation-4);
+  --background: var(--bg-elevation-5);
   --foreground: oklch(0 0 0);
   --border: oklch(0 0 0);
   --shadow: var(--border);
@@ -138,6 +138,17 @@
     var(--tw-shadow-color);
   --shadow-xl: var(--shadow-xl-size) var(--shadow-xl-size)
     var(--tw-shadow-color);
+
+  --text-shadow-xs: var(--shadow-xs-size) var(--shadow-xs-size)
+    var(--tw-text-shadow-color);
+  --text-shadow-sm: var(--shadow-sm-size) var(--shadow-sm-size)
+    var(--tw-text-shadow-color);
+  --text-shadow-md: var(--shadow-md-size) var(--shadow-md-size)
+    var(--tw-text-shadow-color);
+  --text-shadow-lg: var(--shadow-lg-size) var(--shadow-lg-size)
+    var(--tw-text-shadow-color);
+  --text-shadow-xl: var(--shadow-xl-size) var(--shadow-xl-size)
+    var(--tw-text-shadow-color);
 
   --animate-hide: hide 0.1s ease-in;
   --animate-slide-in-down: slide-in-down 0.15s cubic-bezier(0.16, 1, 0.3, 1);

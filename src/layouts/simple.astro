@@ -18,25 +18,25 @@ const mobileNav = await getNav("mobile");
 ---
 
 <BaseLayout {...layoutProps}>
-  <Header
-    {contactInfo}
-    {errorCode}
-    {mainNav}
-    {mobileNav}
-    printHeading={printHeading ?? layoutProps.title}
-  />
-  <div
-    class="flex min-h-screen w-full flex-col pt-[calc(45dvh-6px)] sm:flex-row print:flex-col"
-  >
-    <main
-      id="main"
-      class="border-border flex flex-col items-end px-8 py-7 inset-shadow-[0_6px] inset-shadow-gray-600/25 sm:grow sm:border-r-4 print:border-0"
-    >
-      <slot />
-    </main>
-    <Footer
-      className="sm:inset-shadow-lg grow flex-col items-center justify-start inset-shadow-[0_6px] sm:items-start sm:justify-end sm:border-0 print:mx-0 print:flex-row"
-      {qrCode}
+  <div class="border-border flex min-h-screen flex-col border-12 xl:border-20">
+    <Header
+      {contactInfo}
+      {errorCode}
+      {mainNav}
+      {mobileNav}
+      printHeading={printHeading ?? layoutProps.title}
     />
+    <div class="flex grow flex-col sm:flex-row print:flex-col">
+      <main
+        id="main"
+        class="border-border inset-shadow-lg xl:inset-shadow-xl flex flex-col items-stretch p-8 pt-10 inset-shadow-gray-600/25 sm:grow sm:items-end sm:border-r-4 print:border-0"
+      >
+        <slot />
+      </main>
+      <Footer
+        className="grow flex-col items-center justify-start sm:items-start sm:justify-end sm:border-0 print:mx-0 print:flex-row"
+        {qrCode}
+      />
+    </div>
   </div>
 </BaseLayout>

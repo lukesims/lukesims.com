@@ -38,6 +38,12 @@ const title = `Error ${Astro.response.status} • ${Astro.response.statusText}`;
 ---
 
 <Layout noindex errorCode={`${Astro.response.status}`} {title}>
-  <Heading>{Astro.response.statusText}</Heading>
-  <p class="mt-4 text-2xl leading-relaxed text-pretty">{content}</p>
+  <div class="text-center sm:text-right">
+    <Heading className="font-mono font-bold">
+      {Astro.response.statusText}
+    </Heading>
+    <p class="mt-6 mb-2 text-xl leading-relaxed text-pretty xl:text-2xl">
+      {content}
+    </p>
+  </div>
 </Layout>

@@ -6,8 +6,10 @@ import Layout from "~/layouts/simple.astro";
 ---
 
 <Layout noindex errorCode="404" title="Error 404 • Page Not Found">
-  <Heading>Page Not Found</Heading>
-  <p class="mt-6 mb-2 text-2xl leading-relaxed text-pretty">
-    Sorry &ndash; that page doesn't exist 🙁
-  </p>
+  <div class="text-center sm:text-right">
+    <Heading className="font-mono font-bold">Page Not Found</Heading>
+    <p class="mt-6 mb-2 text-xl leading-relaxed text-pretty xl:text-2xl">
+      Sorry &ndash; that page doesn't exist 🙁
+    </p>
+  </div>
 </Layout>
