@@ -1,9 +1,26 @@
-import { getEntry } from "astro:content";
+import { getCollection, getEntry } from "astro:content";
 
 import { flatten } from "~/utils/content/flatten";
 
 export * from "~/utils/content/cv";
 export * from "~/utils/content/flatten";
+
+/**
+ * Get all blog posts that should be rendered (i.e. listed on
+ * the blog index page and have an individual route/page created).
+ */
+export function getRenderableBlogPosts() {
+  return getCollection(
+    "blog",
+    (entry) =>
+      // In development load all posts regardless of whether they're published
+      import.meta.env.MODE === "development" ||
+      // In all other modes, check that the publish date is in the past
+      (entry.data.published &&
+        entry.data.published.getTime() > 0 &&
+        entry.data.published <= new Date()),
+  );
+}
 
 /**
  * Get a particular `contactInfo` entry by ID.

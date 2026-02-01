@@ -2,19 +2,24 @@
 export const prerender = true;
 
 import type { InferGetStaticPropsType, GetStaticPaths } from "astro";
-import { getCollection } from "astro:content";
 
 import { Heading } from "~/components/heading";
 import Container from "~/components/layout/container.astro";
 import { Pagination } from "~/components/pagination";
 import PostCard from "~/components/post-card.astro";
 import Layout from "~/layouts/content.astro";
+import { getRenderableBlogPosts } from "~/utils/content";
 
 export const getStaticPaths = (async ({ paginate }) => {
-  const posts = (await getCollection("blog")).sort(
-    (a, b) => b.data.published.valueOf() - a.data.published.valueOf(),
-  );
-  return paginate(posts, { pageSize: 10 });
+  const posts = (await getRenderableBlogPosts()).sort((a, b) => {
+    // Put posts without a publish date (drafts) to the front
+    if (!a.data.published && !b.data.published) return 0;
+    if (!a.data.published) return -1;
+    if (!b.data.published) return 1;
+    // Otherwise sort by publish date descending
+    return b.data.published.getTime() - a.data.published.getTime();
+  });
+  return paginate(posts, { pageSize: 9 });
 }) satisfies GetStaticPaths;
 
 type Props = InferGetStaticPropsType<typeof getStaticPaths>;

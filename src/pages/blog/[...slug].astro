@@ -2,22 +2,17 @@
 export const prerender = true;
 
 import type { GetStaticPaths } from "astro";
-import {
-  type CollectionEntry,
-  getCollection,
-  getEntries,
-  render,
-} from "astro:content";
+import { type CollectionEntry, getEntries, render } from "astro:content";
 
 import Container from "~/components/layout/container.astro";
 import PostHeader from "~/components/post-header.astro";
 import Prose from "~/components/prose.astro";
 import Layout from "~/layouts/content.astro";
+import { getRenderableBlogPosts } from "~/utils/content";
 import { useMdxComponents } from "~/utils/mdx";
 
 export const getStaticPaths = (async () => {
-  const posts = await getCollection("blog");
-  return posts.map((post) => ({
+  return (await getRenderableBlogPosts()).map((post) => ({
     params: { slug: post.id },
     props: post,
   }));
