@@ -1,0 +1,70 @@
+---
+import { Image } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+
+import { Chip } from "~/components/chip";
+import FormattedDate from "~/components/formatted-date.astro";
+import { Heading } from "~/components/heading";
+
+interface Props {
+  categories: CollectionEntry<"categories">[];
+  post: CollectionEntry<"blog">;
+}
+
+const { categories, post } = Astro.props;
+const { description, hero, published, title, updated } = post.data;
+---
+
+<header class="flex w-full flex-col items-center gap-8">
+  {
+    hero && (
+      <div class="w-full">
+        <Image
+          priority
+          src={"url" in hero ? hero.url : hero}
+          alt=""
+          layout="full-width"
+          class="border-border shadow-border h-80 w-full border-4 object-cover shadow-lg"
+        />
+        {"credit" in hero && hero.credit && (
+          <div class="mt-1.5 -mr-1.5 text-right text-sm text-stone-600">
+            Photo by{" "}
+            <a
+              href={hero.credit.url}
+              target="_blank"
+              class="underline hover:text-black hover:no-underline"
+            >
+              {hero.credit.name}
+            </a>
+          </div>
+        )}
+      </div>
+    )
+  }
+  <hgroup class="flex flex-col items-center pb-8 text-center text-balance">
+    <div class="flex gap-2">
+      {categories.map((c) => <Chip size="sm">{c.data.title}</Chip>)}
+    </div>
+    <Heading className="my-4">{title}</Heading>
+    <div>
+      {
+        published ? (
+          <>
+            Published{" "}
+            <FormattedDate className="font-semibold" date={published} />
+          </>
+        ) : (
+          "DRAFT"
+        )
+      }
+      {
+        updated && (
+          <>
+            &mdash; Last Updated{" "}
+            <FormattedDate className="font-semibold" date={updated} />
+          </>
+        )
+      }
+    </div>
+  </hgroup>
+</header>

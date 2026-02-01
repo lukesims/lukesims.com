@@ -7,11 +7,11 @@ import { cn } from "~/utils/styles";
 export const styles = cva("text-heading font-display font-extrabold", {
   variants: {
     level: {
-      h1: "text-4xl sm:text-5xl lg:text-6xl 2xl:text-7xl print:text-5xl",
-      h2: "text-3xl sm:text-4xl lg:text-5xl 2xl:text-6xl print:text-3xl",
-      h3: "text-2xl sm:text-3xl lg:text-4xl 2xl:text-5xl print:text-2xl",
-      h4: "text-xl sm:text-2xl lg:text-3xl 2xl:text-4xl print:text-xl",
-      h5: "text-lg sm:text-xl lg:text-2xl 2xl:text-3xl print:text-base",
+      h1: "text-4xl md:text-5xl xl:text-6xl print:text-5xl",
+      h2: "text-2xl md:text-3xl xl:text-4xl print:text-3xl",
+      h3: "text-xl md:text-2xl xl:text-3xl print:text-2xl",
+      h4: "text-base md:text-lg xl:text-xl print:text-xl",
+      h5: "text-sm uppercase md:text-base xl:text-lg print:text-base print:normal-case",
     },
   },
   defaultVariants: {

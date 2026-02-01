@@ -2,6 +2,7 @@
 import type { MarkdownLayoutProps } from "astro";
 import type { CollectionEntry } from "astro:content";
 
+import Prose from "~/components/prose.astro";
 import BaseLayout from "~/layouts/simple.astro";
 
 type Props = MarkdownLayoutProps<CollectionEntry<"pages">["data"]>;
@@ -12,9 +13,7 @@ const {
 ---
 
 <BaseLayout {...frontmatter}>
-  <div
-    class="prose md:prose-lg dark:prose-invert text-center text-balance sm:text-right print:text-center"
-  >
+  <Prose class="text-center text-balance sm:text-right print:text-center">
     <slot />
-  </div>
+  </Prose>
 </BaseLayout>

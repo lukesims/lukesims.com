@@ -2,7 +2,6 @@
 export const prerender = true;
 
 import type { GetStaticPaths } from "astro";
-import { Image } from "astro:assets";
 import {
   type CollectionEntry,
   getCollection,
@@ -10,10 +9,11 @@ import {
   render,
 } from "astro:content";
 
-import { Chip } from "~/components/chip";
-import FormattedDate from "~/components/formatted-date.astro";
-import { Heading } from "~/components/heading";
+import Container from "~/components/layout/container.astro";
+import PostHeader from "~/components/post-header.astro";
+import Prose from "~/components/prose.astro";
 import Layout from "~/layouts/content.astro";
+import { useMdxComponents } from "~/utils/mdx";
 
 export const getStaticPaths = (async () => {
   const posts = await getCollection("blog");
@@ -31,42 +31,10 @@ const categories = (await getEntries(post.data.categories)).filter((c) => c);
 ---
 
 <Layout title={post.data.title}>
-  <article class="container mx-auto flex flex-col items-center gap-8 py-12">
-    <header class="flex w-full flex-col items-center gap-8">
-      <Image
-        src={post.data.hero}
-        alt=""
-        layout="constrained"
-        class="border-border shadow-border h-80 w-full border-4 object-cover shadow-lg"
-      />
-      <hgroup class="flex flex-col items-center py-4 text-center text-balance">
-        <div class="flex gap-2">
-          {categories.map((c) => <Chip size="sm">{c.data.title}</Chip>)}
-        </div>
-        <Heading className="my-4">{post.data.title}</Heading>
-        <div>
-          Published <FormattedDate
-            className="font-semibold"
-            date={post.data.published}
-          />
-          {
-            post.data.updated && (
-              <>
-                &mdash; Last Updated{" "}
-                <FormattedDate
-                  className="font-semibold"
-                  date={post.data.updated}
-                />
-              </>
-            )
-          }
-        </div>
-      </hgroup>
-    </header>
-    <div
-      class="prose lg:prose-lg xl:prose-xl prose-stone prose-headings:font-display"
-    >
-      <Content />
-    </div>
-  </article>
+  <Container as="article" size="xl" class="pt-6!">
+    <PostHeader {categories} {post} />
+    <Prose>
+      <Content components={useMdxComponents()} />
+    </Prose>
+  </Container>
 </Layout>

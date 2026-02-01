@@ -117,21 +117,6 @@
     "Public Sans Variable", "ui-sans-serif", "system-ui", "sans-serif",
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 
-  --text-3xl: 2rem;
-  --text-3xl--line-height: 1.2;
-  --text-4xl: 2.5rem;
-  --text-4xl--line-height: 1.1;
-  --text-5xl: 3rem;
-  --text-5xl--line-height: 1;
-  --text-6xl: 3.5rem;
-  --text-6xl--line-height: 1;
-  --text-7xl: 4rem;
-  --text-7xl--line-height: 1;
-  --text-8xl: 4.5rem;
-  --text-8xl--line-height: 1;
-  --text-9xl: 5rem;
-  --text-9xl--line-height: 1;
-
   --inset-shadow-xs: inset var(--shadow-xs-size) var(--shadow-xs-size)
     var(--tw-inset-shadow-color);
   --inset-shadow-sm: inset var(--shadow-sm-size) var(--shadow-sm-size)

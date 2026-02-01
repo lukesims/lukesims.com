@@ -1,0 +1,21 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import { cn } from "~/utils/styles";
+
+interface Props extends HTMLAttributes<"div"> {}
+
+const { class: className, ...props } = Astro.props;
+---
+
+<div
+  class={cn(
+    "prose md:prose-lg xl:prose-xl xl:prose-pre:border-4 prose-stone prose-pre:rounded-none prose-pre:shadow-md xl:prose-pre:shadow-lg prose-pre:shadow-border prose-pre:border-3 prose-pre:border-border prose-hr:border-t-12 prose-hr:border-black/10 prose-hr:border-dashed",
+    className,
+  )}
+  style={{
+    "--tw-prose-bullets": "var(--color-blue-600)",
+  }}
+  {...props}
+>
+  <slot />
+</div>

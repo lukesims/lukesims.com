@@ -3,6 +3,7 @@ import type { MarkdownLayoutProps } from "astro";
 import type { CollectionEntry } from "astro:content";
 
 import Container from "~/components/layout/container.astro";
+import Prose from "~/components/prose.astro";
 import BaseLayout from "~/layouts/content.astro";
 
 type Props = MarkdownLayoutProps<CollectionEntry<"pages">["data"]>;
@@ -14,8 +15,8 @@ const {
 
 <BaseLayout {...frontmatter}>
   <Container size={container}>
-    <div class="prose md:prose-lg dark:prose-invert w-full max-w-none">
+    <Prose class="w-full max-w-none">
       <slot />
-    </div>
+    </Prose>
   </Container>
 </BaseLayout>

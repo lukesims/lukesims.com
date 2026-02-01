@@ -1,0 +1,32 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import { cn } from "~/utils/styles";
+
+type Props = HTMLAttributes<"blockquote">;
+
+const { class: className, ...props } = Astro.props;
+---
+
+<blockquote
+  {...props}
+  class={cn(
+    "font-display bg-elevation-3 border-border relative border-3 p-8! pb-6! text-black inset-shadow-[6px_6px] inset-shadow-stone-400 xl:border-4 xl:p-10! xl:pb-8! xl:inset-shadow-[8px_8px] [&_p]:before:content-[''] [&_p]:first-of-type:mt-0 [&_p]:last-of-type:mb-0",
+    className,
+  )}
+>
+  <div
+    class="bg-border absolute -top-0.75 -left-0.75 flex size-6 items-center justify-center shadow-[6px_6px] shadow-stone-400 xl:-top-1 xl:-left-1 xl:size-7 xl:shadow-[8px_8px]"
+  >
+    <div class="icon-[ri--double-quotes-l] size-5 bg-yellow-400 xl:size-5.5">
+    </div>
+  </div>
+
+  <slot />
+
+  <div
+    class="bg-border absolute -right-0.75 -bottom-0.75 flex size-6 items-center justify-center xl:-right-1 xl:-bottom-1 xl:size-7"
+  >
+    <div class="icon-[ri--double-quotes-r] size-5 bg-yellow-400 xl:size-5.5">
+    </div>
+  </div>
+</blockquote>

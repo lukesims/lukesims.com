@@ -1,0 +1,17 @@
+---
+import type { ComponentProps } from "astro/types";
+import { Image } from "astro:assets";
+import { cn } from "~/utils/styles";
+
+type Props = ComponentProps<typeof Image>;
+
+const { class: className, ...props } = Astro.props;
+---
+
+<Image
+  {...props}
+  class={cn(
+    "border-border shadow-border border-3 shadow-md xl:border-4 xl:shadow-lg",
+    className,
+  )}
+/>

@@ -38,6 +38,13 @@ export default defineConfig({
     sitemap(),
   ],
 
+  markdown: {
+    shikiConfig: {
+      theme: "plastic",
+      wrap: true,
+    },
+  },
+
   security: {
     checkOrigin: true,
     allowedDomains: ALLOWED_DOMAINS
