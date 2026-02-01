@@ -59,8 +59,8 @@ export function MobileNav({
           <div className="flex justify-end gap-4">
             {contactInfo?.items.map(({ icon, text, url }, i) => (
               <Button asChild square key={i}>
-                <a href={url}>
-                  <span className={cn(icon, "!size-6 xl:!size-7")}></span>
+                <a href={url} target="_blank" rel="noopener">
+                  <span className={cn(icon, "size-6! xl:size-7!")}></span>
                   <span className="sr-only">{text}</span>
                 </a>
               </Button>

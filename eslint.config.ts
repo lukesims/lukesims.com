@@ -30,6 +30,7 @@ export default defineConfig([
         "error",
         { caughtErrorsIgnorePattern: "^_", ignoreRestSiblings: true },
       ],
+      "react/jsx-no-target-blank": ["error", { allowReferrer: true }],
       "react/react-in-jsx-scope": "off",
     },
   },

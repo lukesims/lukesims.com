@@ -53,8 +53,8 @@ export function HeaderNav({
             key={i}
             className="hidden h-9 w-9 shrink-0 lg:inline-flex xl:h-11 xl:w-11"
           >
-            <a href={url}>
-              <span className={cn(icon, "!size-6 xl:!size-7")}></span>
+            <a href={url} target="_blank" rel="noopener">
+              <span className={cn(icon, "size-6! xl:size-7!")}></span>
               <span className="sr-only">{text}</span>
             </a>
           </Button>
