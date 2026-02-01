@@ -4,9 +4,10 @@ export const prerender = true;
 import type { InferGetStaticPropsType, GetStaticPaths } from "astro";
 import { getCollection } from "astro:content";
 
+import { Heading } from "~/components/heading";
+import Container from "~/components/layout/container.astro";
 import { Pagination } from "~/components/pagination";
 import PostCard from "~/components/post-card.astro";
-import { Heading } from "~/components/heading";
 import Layout from "~/layouts/content.astro";
 
 export const getStaticPaths = (async ({ paginate }) => {
@@ -22,15 +23,15 @@ const { page } = Astro.props;
 ---
 
 <Layout title="Blog">
-  <div class="container mx-auto flex flex-col items-center gap-12 py-12">
+  <Container size="xl" class="gap-10">
     <Heading>Blog</Heading>
 
-    <section class="mx-auto flex w-full max-w-4xl flex-col gap-8">
+    <section class="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3">
       {page.data.map((post) => <PostCard post={post} />)}
     </section>
 
-    <section class="mt-12">
+    <section>
       <Pagination page={page} baseUrl="/blog" />
     </section>
-  </div>
+  </Container>
 </Layout>
