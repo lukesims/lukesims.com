@@ -16,12 +16,23 @@ export const pagesSchema = z.object({
 
 export const blogSchema = ({ image }: SchemaContext) =>
   z.object({
-    categories: z.array(reference("categories")),
-    description: z.string(),
-    hero: image(),
-    published: z.coerce.date(),
     title: z.string(),
+    description: z.string(),
+    categories: z.array(reference("categories")),
+    published: z.coerce.date().optional(),
     updated: z.coerce.date().optional(),
+
+    hero: z.optional(
+      z.union([
+        image(),
+        z.object({
+          url: image(),
+          credit: z.optional(
+            z.object({ name: z.string(), url: z.string().url() }),
+          ),
+        }),
+      ]),
+    ),
   });
 
 export const categoriesSchema = z.object({
