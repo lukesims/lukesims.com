@@ -12,5 +12,13 @@
     "directory": "./dist",
     "html_handling": "drop-trailing-slash",
     "not_found_handling": "404-page"
-  }
+  },
+
+  "ratelimits": [
+    {
+      "namespace_id": "1001",
+      "name": "EMAIL_RATE_LIMITER",
+      "simple": { "limit": 1, "period": 60 }
+    }
+  ]
 }

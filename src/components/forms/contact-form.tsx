@@ -60,6 +60,11 @@ export function ContactForm() {
         if (errors.captcha_token?.includes("retry")) {
           captchaRef.current?.reset();
         }
+      } else if (response.status === 429) {
+        toast.danger({
+          title: "Too Many Requests",
+          description: "Please try again later.",
+        });
       } else {
         toast.danger({
           title: "Internal Error",

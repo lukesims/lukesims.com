@@ -16,7 +16,7 @@ export const Toaster = () => {
       {toasts.map((toast) => (
         <Toast {...toast} key={toast.id} />
       ))}
-      <RadixToast.Viewport className="fixed top-24 left-1/2 z-100 flex w-100 max-w-screen -translate-x-1/2 transform list-none flex-col gap-3 outline-none" />
+      <RadixToast.Viewport className="fixed top-28 left-1/2 z-100 flex w-100 max-w-screen -translate-x-1/2 transform list-none flex-col gap-3 outline-none" />
     </RadixToast.Provider>
   );
 };
@@ -35,7 +35,7 @@ export const Toast = ({
     onOpenChange={() => removeToast(id)}
   >
     <Alert
-      className="data-[state=closed]:animate-hide data-[state=open]:animate-slide-in-down data-[swipe=end]:animate-toast-swipe data-[swipe=cancel]:translate-y-0 data-[swipe=cancel]:transition-[transform_200ms_ease-out] data-[swipe=move]:translate-y-[var(--radix-toast-swipe-move-y)]"
+      className="data-[state=closed]:animate-hide data-[state=open]:animate-slide-in-down data-[swipe=end]:animate-toast-swipe data-[swipe=cancel]:translate-y-0 data-[swipe=cancel]:transition-[transform_200ms_ease-out] data-[swipe=move]:translate-y-(--radix-toast-swipe-move-y)"
       variant={variant}
     >
       {icon && <span className={icon}></span>}

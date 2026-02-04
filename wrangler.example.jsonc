@@ -22,6 +22,14 @@
     "enabled": true
   },
 
+  "ratelimits": [
+    {
+      "namespace_id": "1001",
+      "name": "EMAIL_RATE_LIMITER",
+      "simple": { "limit": 1, "period": 60 }
+    }
+  ],
+
   "env": {
     "production": {
       "routes": [{ "pattern": "<PRODUCTION_DOMAIN>", "custom_domain": true }],

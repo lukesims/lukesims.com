@@ -1,3 +1,4 @@
+import { captureMessage } from "@sentry/astro";
 import type { APIRoute } from "astro";
 import { z } from "zod";
 
@@ -19,10 +20,31 @@ const requestSchema = z.object({
 /**
  * Request handler for: `POST /contact/send`
  */
-export const POST: APIRoute = async ({ clientAddress, request, site }) => {
+export const POST: APIRoute = async ({
+  clientAddress,
+  locals,
+  request,
+  site,
+  url,
+}) => {
+  if (import.meta.env.MODE !== "test") {
+    if (!locals.runtime.env.EMAIL_RATE_LIMITER) {
+      const msg = "EMAIL_RATE_LIMITER binding not available";
+      console.error(msg);
+      captureMessage(msg);
+      return new Response("Internal Server Error", { status: 500 });
+    }
+    const { success } = await locals.runtime.env.EMAIL_RATE_LIMITER.limit({
+      key: clientAddress + url.pathname,
+    });
+    if (!success) {
+      return new Response("Too Many Requests", { status: 429 });
+    }
+  }
+
   const contentType = request.headers.get("content-type");
   if (!contentType || !/^multipart\/form-data(?:;.*)?$/.test(contentType)) {
-    return new Response(null, { status: 400 });
+    return new Response("Bad Request", { status: 400 });
   }
 
   // The method used for converting FormData to a POJO will need
