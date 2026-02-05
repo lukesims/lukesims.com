@@ -9,9 +9,15 @@ import {
 export type { SendEmailConfig, SendEmailResponse };
 
 export function sendEmail(email: SendEmailConfig) {
-  sendEmailConfigSchema.parse(email);
+  const { data, error, success } = sendEmailConfigSchema.safeParse(email);
+
+  if (!success) {
+    throw new Error("Invalid email object passed to sendEmail function", {
+      cause: error,
+    });
+  }
 
   return import.meta.env.MODE === "test"
-    ? sendEmailViaMailpit(email)
-    : sendEmailViaMailgun(email);
+    ? sendEmailViaMailpit(data)
+    : sendEmailViaMailgun(data);
 }

@@ -64,7 +64,7 @@ export const POST: APIRoute = async ({
     }
   }
 
-  const mailgunResponse = await sendEmail({
+  const sendEmailResponse = await sendEmail({
     to: [import.meta.env.CONTACT_EMAIL],
     subject: `Contact form submission from ${validated.name}`,
     text:
@@ -76,7 +76,7 @@ export const POST: APIRoute = async ({
       validated.message,
   });
 
-  console.debug("Sent contact form email:", mailgunResponse);
+  console.debug("Sent contact form email:", sendEmailResponse);
 
   return new Response(null, { status: 200 });
 };
