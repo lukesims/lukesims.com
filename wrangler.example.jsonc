@@ -47,7 +47,17 @@
         "PUBLIC_SENTRY_DSN": "<PUBLIC_SENTRY_DSN>",
 
         "PUBLIC_TURNSTILE_SITE_KEY": "<PUBLIC_TURNSTILE_SITE_KEY>"
-      }
+      },
+      "version_metadata": {
+        "binding": "CF_VERSION_METADATA"
+      },
+      "ratelimits": [
+        {
+          "namespace_id": "1001",
+          "name": "EMAIL_RATE_LIMITER",
+          "simple": { "limit": 1, "period": 60 }
+        }
+      ]
     },
     "staging": {
       "routes": [{ "pattern": "<STAGING_DOMAIN>", "custom_domain": true }],
@@ -65,7 +75,17 @@
         "PUBLIC_SENTRY_DSN": "<PUBLIC_SENTRY_DSN>",
 
         "PUBLIC_TURNSTILE_SITE_KEY": "<PUBLIC_TURNSTILE_SITE_KEY>"
-      }
+      },
+      "version_metadata": {
+        "binding": "CF_VERSION_METADATA"
+      },
+      "ratelimits": [
+        {
+          "namespace_id": "1001",
+          "name": "EMAIL_RATE_LIMITER",
+          "simple": { "limit": 1, "period": 60 }
+        }
+      ]
     }
   }
 }
