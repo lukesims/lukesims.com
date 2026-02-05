@@ -27,21 +27,6 @@ export const POST: APIRoute = async ({
   site,
   url,
 }) => {
-  if (import.meta.env.MODE !== "test") {
-    if (!locals.runtime.env.EMAIL_RATE_LIMITER) {
-      const msg = "EMAIL_RATE_LIMITER binding not available";
-      console.error(msg);
-      captureMessage(msg);
-      return new Response("Internal Server Error", { status: 500 });
-    }
-    const { success } = await locals.runtime.env.EMAIL_RATE_LIMITER.limit({
-      key: clientAddress + url.pathname,
-    });
-    if (!success) {
-      return new Response("Too Many Requests", { status: 429 });
-    }
-  }
-
   const contentType = request.headers.get("content-type");
   if (!contentType || !/^multipart\/form-data(?:;.*)?$/.test(contentType)) {
     return new Response("Bad Request", { status: 400 });
@@ -63,6 +48,21 @@ export const POST: APIRoute = async ({
     "contact",
     site?.hostname,
   );
+
+  if (import.meta.env.MODE !== "test") {
+    if (!locals.runtime.env.EMAIL_RATE_LIMITER) {
+      const msg = "EMAIL_RATE_LIMITER binding not available";
+      console.error(msg);
+      captureMessage(msg);
+      return new Response("Internal Server Error", { status: 500 });
+    }
+    const { success } = await locals.runtime.env.EMAIL_RATE_LIMITER.limit({
+      key: clientAddress + url.pathname,
+    });
+    if (!success) {
+      return new Response("Too Many Requests", { status: 429 });
+    }
+  }
 
   const mailgunResponse = await sendEmail({
     to: [import.meta.env.CONTACT_EMAIL],
