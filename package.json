@@ -59,7 +59,7 @@
     "@types/node": "^25.0.9",
     "@types/react": "^19.2.8",
     "@types/react-dom": "^19.2.3",
-    "@typescript-eslint/parser": "^8.49.0",
+    "@typescript-eslint/parser": "^8.54.0",
     "@vitest/browser": "^4.0.17",
     "astro": "^5.16.9",
     "concurrently": "^9.2.1",
@@ -73,7 +73,7 @@
     "prettier-plugin-astro": "^0.14.1",
     "prettier-plugin-tailwindcss": "^0.7.2",
     "tailwindcss": "^4.1.18",
-    "typescript-eslint": "^8.53.0",
+    "typescript-eslint": "^8.54.0",
     "vitest": "^4.0.15",
     "vitest-browser-react": "^2.0.2",
     "wrangler": "^4.59.2"
