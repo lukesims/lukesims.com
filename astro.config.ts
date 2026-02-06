@@ -25,6 +25,7 @@ export default defineConfig({
 
   experimental: {
     csp: {
+      directives: ["connect-src 'self' https://*.sentry.io"],
       scriptDirective: {
         resources: ["'self'", "https://challenges.cloudflare.com"],
       },
