@@ -76,6 +76,7 @@ export function ContactForm() {
     }
 
     form.reset();
+    captchaRef.current?.reset();
     setLoading(false);
     toast.success({
       title: "Sent!",
