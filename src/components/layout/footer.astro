@@ -1,4 +1,5 @@
 ---
+import { Link } from "~/components/link";
 import { QRCode } from "~/components/qr-code";
 import { cn } from "~/utils/styles";
 
@@ -13,6 +14,14 @@ const year = new Date().getFullYear();
 const years = year === 2025 ? "2025" : `2025&ndash;${year}`;
 
 const qrData = qrCode || Astro.url.toString();
+
+const links: { href: string; icon: string; text: string }[] = [
+  {
+    href: import.meta.env.PUBLIC_REPO_URL,
+    icon: "icon-[ri--code-s-slash-fill]",
+    text: "View Source",
+  },
+];
 ---
 
 <footer
@@ -22,10 +31,24 @@ const qrData = qrCode || Astro.url.toString();
     className,
   )}
 >
-  <p
-    class="block text-left text-sm md:text-base print:hidden"
-    set:html={`&copy;&nbsp;${years} Luke&nbsp;Sims`}
-  />
+  <div
+    class="flex flex-col items-center gap-4 text-sm md:text-base print:hidden"
+  >
+    <div class="flex items-center gap-2">
+      {
+        links.map(({ href, icon, text }) => (
+          <Link
+            href={href}
+            className="text-white decoration-white/40 visited:text-white inline-flex items-center gap-1.5 hover:[&>i]:bg-yellow-400"
+          >
+            <i class={cn("size-[1.25em] bg-white", icon)} />
+            {text}
+          </Link>
+        ))
+      }
+    </div>
+    <p set:html={`&copy;&nbsp;${years} Luke&nbsp;Sims`} />
+  </div>
 
   <div class="ml-5 hidden grow items-center justify-between print:flex">
     <div class="font-display text-xs leading-relaxed font-semibold">

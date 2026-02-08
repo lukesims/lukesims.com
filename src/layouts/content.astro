@@ -40,6 +40,9 @@ const mobileNav = await getNav("mobile");
     >
       <slot />
     </main>
-    <Footer className="items-center sm:justify-center" {qrCode} />
+    <Footer
+      className="items-center *:first:items-start sm:justify-center sm:*:first:items-center"
+      {qrCode}
+    />
   </div>
 </BaseLayout>

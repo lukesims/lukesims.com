@@ -36,6 +36,7 @@
       "vars": {
         "PUBLIC_SITE_URL": "<PUBLIC_SITE_URL>",
         "ALLOWED_DOMAINS": "<ALLOWED_DOMAINS>",
+        "PUBLIC_REPO_URL": "<PUBLIC_REPO_URL>",
 
         "MAILGUN_BASE_URL": "<MAILGUN_BASE_URL>",
         "MAILGUN_DOMAIN": "<MAILGUN_DOMAIN>",
@@ -64,6 +65,7 @@
       "vars": {
         "PUBLIC_SITE_URL": "<PUBLIC_SITE_URL>",
         "ALLOWED_DOMAINS": "<ALLOWED_DOMAINS>",
+        "PUBLIC_REPO_URL": "<PUBLIC_REPO_URL>",
 
         "MAILGUN_BASE_URL": "<MAILGUN_BASE_URL>",
         "MAILGUN_DOMAIN": "<MAILGUN_DOMAIN>",
