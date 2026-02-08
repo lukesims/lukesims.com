@@ -24,7 +24,7 @@ export default defineConfig({
     csp: {
       directives: [
         "base-uri 'self'",
-        `connect-src 'self' ${new URL(PUBLIC_SENTRY_DSN).origin}`,
+        `connect-src 'self' ${PUBLIC_SENTRY_DSN ? new URL(PUBLIC_SENTRY_DSN).origin : ""}`,
         "form-action 'self'",
         "frame-src 'self' https://challenges.cloudflare.com",
         "object-src 'none'",
