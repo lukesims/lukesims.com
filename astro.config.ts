@@ -7,11 +7,8 @@ import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "astro/config";
 import { loadEnv } from "vite";
 
-const { ALLOWED_DOMAINS, PUBLIC_SITE_URL, SENTRY_ENABLED } = loadEnv(
-  process.env.NODE_ENV || "production",
-  process.cwd(),
-  "",
-);
+const { ALLOWED_DOMAINS, PUBLIC_SENTRY_DSN, PUBLIC_SITE_URL, SENTRY_ENABLED } =
+  loadEnv(process.env.NODE_ENV || "production", process.cwd(), "");
 
 // https://astro.build/config
 export default defineConfig({
@@ -25,7 +22,14 @@ export default defineConfig({
 
   experimental: {
     csp: {
-      directives: ["connect-src 'self' https://*.sentry.io"],
+      directives: [
+        "base-uri 'self'",
+        `connect-src 'self' ${new URL(PUBLIC_SENTRY_DSN).origin}`,
+        "form-action 'self'",
+        "frame-src 'self' https://challenges.cloudflare.com",
+        "object-src 'none'",
+        "upgrade-insecure-requests",
+      ],
       scriptDirective: {
         resources: ["'self'", "https://challenges.cloudflare.com"],
       },
