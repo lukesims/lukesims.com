@@ -28,7 +28,7 @@ export default defineConfig({
         "form-action 'self'",
         "frame-src 'self' https://challenges.cloudflare.com",
         "object-src 'none'",
-        "upgrade-insecure-requests",
+        // "upgrade-insecure-requests",
       ],
       scriptDirective: {
         resources: ["'self'", "https://challenges.cloudflare.com"],
