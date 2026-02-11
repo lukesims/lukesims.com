@@ -24,7 +24,7 @@ const { hero, published, title, updated } = post.data;
           src={"url" in hero ? hero.url : hero}
           alt=""
           layout="full-width"
-          class="border-border shadow-border h-80 w-full border-4 object-cover shadow-lg"
+          class="border-border shadow-border h-80 w-full border-4 object-cover shadow-lg md:h-90 lg:h-100 xl:h-110 2xl:h-120"
         />
         {"credit" in hero && hero.credit && (
           <div class="mt-1.5 -mr-1.5 text-right text-sm text-stone-600">
