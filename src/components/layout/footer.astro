@@ -39,7 +39,7 @@ const links: { href: string; icon: string; text: string }[] = [
         links.map(({ href, icon, text }) => (
           <Link
             href={href}
-            className="text-white decoration-white/40 visited:text-white inline-flex items-center gap-1.5 hover:[&>i]:bg-yellow-400"
+            className="text-white decoration-white/40 visited:text-white inline-flex items-center gap-1.5 hover:[&>i]:bg-yellow-400 active:[&>i]:bg-black"
           >
             <i class={cn("size-[1.25em] bg-white", icon)} />
             {text}
