@@ -24,7 +24,7 @@ export function Link({
   return (
     <Comp
       className={cn(
-        "decoration-elevation-2 relative z-1 inline-block text-blue-600 underline decoration-[0.15em] underline-offset-2 before:pointer-events-none before:absolute before:-inset-x-[0.25em] before:top-1/2 before:-z-1 before:h-[1.4em] before:-translate-y-1/2 before:transform visited:text-purple-700 hover:text-yellow-400 hover:no-underline hover:before:bg-black focus:text-yellow-400 focus:no-underline focus:outline-none focus:before:bg-black active:text-black active:before:bg-yellow-400",
+        "decoration-elevation-2 relative z-1 -mx-1 px-1 text-blue-600 underline decoration-[0.15em] underline-offset-2 visited:text-purple-700 hover:bg-black hover:text-yellow-400 hover:no-underline focus:bg-black focus:text-yellow-400 focus:no-underline focus:outline-none active:bg-yellow-400 active:text-black",
         className,
       )}
       href={href}
