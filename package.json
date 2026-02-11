@@ -60,7 +60,7 @@
     "@types/react": "^19.2.8",
     "@types/react-dom": "^19.2.3",
     "@typescript-eslint/parser": "^8.49.0",
-    "@vitest/browser": "^4.0.17",
+    "@vitest/browser": "^4.0.18",
     "astro": "^5.17.1",
     "concurrently": "^9.2.1",
     "eslint": "^9.39.2",
@@ -75,7 +75,7 @@
     "tailwindcss": "^4.1.18",
     "typescript-eslint": "^8.53.0",
     "vitest": "^4.0.15",
-    "vitest-browser-react": "^2.0.2",
+    "vitest-browser-react": "^2.0.5",
     "wrangler": "^4.59.2"
   }
 }
