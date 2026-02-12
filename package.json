@@ -61,7 +61,7 @@
     "@types/react-dom": "^19.2.3",
     "@typescript-eslint/parser": "^8.55.0",
     "@vitest/browser": "^4.0.18",
-    "astro": "^5.17.1",
+    "astro": "^5.17.2",
     "concurrently": "^9.2.1",
     "eslint": "^9.39.2",
     "eslint-config-prettier": "^10.1.8",
