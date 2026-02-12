@@ -17,7 +17,7 @@ export function Link({
   const Comp = asChild ? Slot.Root : "a";
   const external =
     typeof href === "string" &&
-    href !== "#" &&
+    !href.startsWith("#") &&
     !href.startsWith("/") &&
     !href.startsWith(import.meta.env.PUBLIC_SITE_URL + "/");
 
