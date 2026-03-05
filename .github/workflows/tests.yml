@@ -33,6 +33,9 @@ jobs:
     steps:
       - name: Checkout the repo
         uses: actions/checkout@v6
+        with:
+          submodules: true
+          token: ${{ secrets.CONTENT_REPO_PAT }}
       - name: Create .env file
         run: cp .env.test .env
       - name: Install Node
