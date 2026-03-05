@@ -1,0 +1,14 @@
+---
+import { excerptFromHtml } from "~/utils/content";
+
+interface Props {
+  maxLength: number;
+}
+
+const { maxLength } = Astro.props;
+
+const html = await Astro.slots.render("default");
+const excerpt = excerptFromHtml(html, maxLength);
+---
+
+{excerpt}

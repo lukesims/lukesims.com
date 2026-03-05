@@ -3,6 +3,7 @@ import { getCollection, getEntry } from "astro:content";
 import { flatten } from "~/utils/content/flatten";
 
 export * from "~/utils/content/cv";
+export * from "~/utils/content/excerpt";
 export * from "~/utils/content/flatten";
 
 /**

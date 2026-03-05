@@ -1,6 +1,7 @@
 ---
-import { getEntries, type CollectionEntry } from "astro:content";
+import { getEntries, render, type CollectionEntry } from "astro:content";
 
+import Excerpt from "~/components/excerpt.astro";
 import FormattedDate from "~/components/formatted-date.astro";
 import { Card } from "~/components/card";
 import { Chip } from "~/components/chip";
@@ -12,6 +13,7 @@ interface Props {
 
 const { post } = Astro.props;
 const categories = (await getEntries(post.data.categories)).filter((c) => c);
+const { Content } = await render(post);
 ---
 
 <article class="relative flex">
@@ -29,7 +31,9 @@ const categories = (await getEntries(post.data.categories)).filter((c) => c);
       >
 
       <div class="line-clamp-3 text-balance">
-        {post.data.description}
+        <Excerpt maxLength={150}>
+          {post.body ? <Content /> : post.data.description}
+        </Excerpt>
       </div>
 
       <div>

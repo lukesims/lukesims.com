@@ -21,11 +21,12 @@ export const getStaticPaths = (async () => {
 type Props = CollectionEntry<"blog">;
 
 const post = Astro.props as Props;
+const { description, title, categories: categoryRefs } = post.data;
 const { Content } = await render(post);
-const categories = (await getEntries(post.data.categories)).filter((c) => c);
+const categories = (await getEntries(categoryRefs)).filter((c) => c);
 ---
 
-<Layout title={post.data.title}>
+<Layout {title} {description}>
   <Container as="article" size="xl" class="pt-6!">
     <PostHeader {categories} {post} />
     <Prose>
