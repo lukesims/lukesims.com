@@ -7,6 +7,8 @@ import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "astro/config";
 import { loadEnv } from "vite";
 
+import { annotatePreTransformer } from "./src/utils/shiki";
+
 const { ALLOWED_DOMAINS, PUBLIC_SENTRY_DSN, PUBLIC_SITE_URL, SENTRY_ENABLED } =
   loadEnv(process.env.NODE_ENV || "production", process.cwd(), "");
 
@@ -37,7 +39,11 @@ export default defineConfig({
   },
 
   integrations: [
-    mdx(),
+    mdx({
+      shikiConfig: {
+        transformers: [annotatePreTransformer],
+      },
+    }),
     react(),
     sentry({ enabled: SENTRY_ENABLED === "true" }),
     sitemap(),

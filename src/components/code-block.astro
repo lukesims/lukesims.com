@@ -1,0 +1,54 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import { htmlToText } from "html-to-text";
+
+import { CopyButton } from "~/components/copy-button";
+import { cn } from "~/utils/styles";
+
+type Props = HTMLAttributes<"pre">;
+
+const { class: className, title, ...props } = Astro.props;
+
+const slotContent = await Astro.slots.render("default");
+const copyText = htmlToText(slotContent, {
+  selectors: [{ selector: "span.line", format: "pre" }],
+  wordwrap: false,
+}).replace(/\n+$/gm, "");
+---
+
+<div
+  class="group border-border shadow-border not-prose relative my-6 border-3 shadow-md md:my-8 xl:my-9 xl:border-4 xl:shadow-lg"
+>
+  <div
+    class:list={[
+      "absolute top-1.25 right-1.25 size-5.5",
+      title ? "block" : "hidden group-hover:block",
+    ]}
+  >
+    <CopyButton
+      client:load
+      square
+      className="flex size-5.5 translate-none border-0 shadow-none active:translate-none"
+      copyText={copyText}
+      size="sm"
+      variant="secondary"
+    />
+  </div>
+
+  {
+    title && (
+      <div class="bg-border text-background flex items-center justify-between gap-3 truncate pt-2 pr-9.5 pb-2.5 pl-2.5 font-mono text-xs">
+        {title}
+      </div>
+    )
+  }
+
+  <pre
+    {...props}
+    set:html={slotContent}
+    class={cn(
+      className,
+      "px-4 py-3 text-sm leading-loose md:px-6 md:py-4 xl:px-6 xl:py-5 xl:text-base xl:leading-loose",
+    )}
+  />
+</div>

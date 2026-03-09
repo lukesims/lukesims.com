@@ -20,7 +20,8 @@ const styles = cva(
       variant: {
         default: "bg-button text-button-foreground hover:bg-button-hover",
         primary: "bg-yellow-400 text-black",
-        secondary: "bg-white text-black hover:bg-yellow-400 hover:text-black",
+        secondary:
+          "bg-white text-black hover:bg-yellow-400 hover:text-black active:bg-yellow-500",
       },
     },
     compoundVariants: [
