@@ -13,7 +13,7 @@ const slotContent = await Astro.slots.render("default");
 const copyText = htmlToText(slotContent, {
   selectors: [{ selector: "span.line", format: "pre" }],
   wordwrap: false,
-}).replace(/\n+$/gm, "");
+}).replace(/\n\n/g, "\n");
 ---
 
 <div
@@ -48,7 +48,9 @@ const copyText = htmlToText(slotContent, {
     set:html={slotContent}
     class={cn(
       className,
-      "px-4 py-3 text-sm leading-loose md:px-6 md:py-4 xl:px-6 xl:py-5 xl:text-base xl:leading-loose",
+      "[--code-padding:calc(var(--spacing)*4)] md:[--code-padding:calc(var(--spacing)*6)]",
+      "px-(--code-padding) py-3 md:py-4 xl:py-5",
+      "text-sm leading-loose xl:text-base xl:leading-loose",
     )}
   />
 </div>

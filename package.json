@@ -13,7 +13,7 @@
     "fix:issues": "eslint --fix .",
     "fix:style": "prettier --write .",
     "test": "concurrently --group --names unit,e2e 'npm run test:unit' 'npm run test:e2e'",
-    "test:unit": "vitest",
+    "test:unit": "vitest run",
     "test:e2e": "playwright test"
   },
   "dependencies": {
@@ -53,6 +53,7 @@
   "devDependencies": {
     "@eslint/js": "^9.39.2",
     "@playwright/test": "^1.58.2",
+    "@shikijs/transformers": "^4.0.2",
     "@tailwindcss/vite": "^4.2.1",
     "@trivago/prettier-plugin-sort-imports": "^6.0.2",
     "@types/cloudflare-turnstile": "^0.2.2",

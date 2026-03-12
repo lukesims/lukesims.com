@@ -1,0 +1,53 @@
+.astro-code {
+  code {
+    display: block;
+    width: 100%;
+  }
+
+  .diff,
+  .highlighted {
+    position: relative;
+    display: inline-block;
+    width: calc(100% + 2 * var(--code-padding));
+    margin-inline: calc(var(--code-padding) * -1);
+    padding-inline: var(--code-padding);
+  }
+
+  .diff {
+    &::before {
+      position: absolute;
+      display: inline-block;
+      width: var(--code-padding);
+      left: 0;
+      font-size: 1rem;
+      line-height: 1.75rem;
+      text-align: center;
+    }
+
+    /**
+     * Colours matched to the git decoration color from the Plastic theme.
+     * Will need to be updated if the theme changes in astro.config.ts.
+     */
+    &.add {
+      background: #cbf6ac1a;
+      &::before {
+        content: "+";
+        color: #98c379;
+      }
+    }
+    &.remove {
+      background: #ff9fa80d;
+      &::before {
+        content: "-";
+        color: #e06c75;
+      }
+      > * {
+        opacity: 0.5;
+      }
+    }
+  }
+
+  .highlighted {
+    background: #ffffff1a;
+  }
+}

@@ -3,11 +3,15 @@ import mdx from "@astrojs/mdx";
 import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
 import sentry from "@sentry/astro";
+import {
+  transformerNotationDiff,
+  transformerNotationHighlight,
+} from "@shikijs/transformers";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "astro/config";
 import { loadEnv } from "vite";
 
-import { annotatePreTransformer } from "./src/utils/shiki";
+import { transformerMetaTitle } from "./src/utils/shiki";
 
 const { ALLOWED_DOMAINS, PUBLIC_SENTRY_DSN, PUBLIC_SITE_URL, SENTRY_ENABLED } =
   loadEnv(process.env.NODE_ENV || "production", process.cwd(), "");
@@ -41,7 +45,11 @@ export default defineConfig({
   integrations: [
     mdx({
       shikiConfig: {
-        transformers: [annotatePreTransformer],
+        transformers: [
+          transformerMetaTitle,
+          transformerNotationDiff(),
+          transformerNotationHighlight(),
+        ],
       },
     }),
     react(),
