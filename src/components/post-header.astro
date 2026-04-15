@@ -5,6 +5,7 @@ import type { CollectionEntry } from "astro:content";
 import { Chip } from "~/components/chip";
 import FormattedDate from "~/components/formatted-date.astro";
 import { Heading } from "~/components/heading";
+import StyledDate from "~/components/styled-date.astro";
 import { cn } from "~/utils/styles";
 
 interface Props {
@@ -19,7 +20,7 @@ const heroImage = hero && ("url" in hero ? hero.url : hero);
 const heroImageClass = hero && "url" in hero ? hero.class : undefined;
 ---
 
-<header class="flex w-full flex-col items-center gap-8">
+<header class="flex w-full flex-col items-center">
   {
     hero && (
       <div class="w-full">
@@ -48,30 +49,31 @@ const heroImageClass = hero && "url" in hero ? hero.class : undefined;
       </div>
     )
   }
-  <hgroup class="flex flex-col items-center pb-8 text-center text-balance">
-    <div class="flex gap-2">
-      {categories.map((c) => <Chip size="sm">{c.data.title}</Chip>)}
-    </div>
-    <Heading className="my-4">{title}</Heading>
-    <div>
+  <hgroup class="flex flex-col items-center gap-8 pt-12">
+    <div class="flex items-center justify-center gap-8">
       {
-        published ? (
-          <>
-            Published{" "}
-            <FormattedDate className="font-semibold" date={published} />
-          </>
-        ) : (
-          "DRAFT"
+        categories.length > 0 && (
+          <div class="flex gap-2">
+            {categories.map((c) => (
+              <Chip size="sm">{c.data.title}</Chip>
+            ))}
+          </div>
         )
       }
       {
-        updated && (
-          <>
-            &mdash; Last Updated{" "}
-            <FormattedDate className="font-semibold" date={updated} />
-          </>
+        categories.length > 0 && published && (
+          <span class="font-display text-3xl leading-none opacity-10">✱</span>
+        )
+      }
+      {
+        published && (
+          <div class="flex items-center justify-center gap-4">
+            <StyledDate date={published} title="Published" />
+            {updated && <StyledDate date={updated} title="Updated" />}
+          </div>
         )
       }
     </div>
+    <Heading className="text-center text-balance">{title}</Heading>
   </hgroup>
 </header>

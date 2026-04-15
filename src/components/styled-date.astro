@@ -1,0 +1,36 @@
+---
+import { cn } from "~/utils/styles";
+
+interface Props {
+  className?: string;
+  date: Date;
+  title?: string;
+}
+
+const { className, date, title } = Astro.props;
+
+const day = date.getDate();
+const month = date.toLocaleString("en-gb", { month: "short" });
+const year = date.getFullYear();
+---
+
+<time class={className} datetime={date.toISOString()}>
+  {
+    title && (
+      <div class="text-muted-foreground text-center text-[0.75em] leading-none font-semibold uppercase">
+        {title}
+      </div>
+    )
+  }
+  <div class="flex items-center justify-center gap-1">
+    <div class="text-[2em] leading-none font-extrabold">
+      {day}
+    </div>
+    <div class="flex flex-col items-center">
+      <div class="text-[0.85em] leading-none font-bold uppercase">
+        {month}
+      </div>
+      <div class="text-[0.85em] leading-none font-bold">{year}</div>
+    </div>
+  </div>
+</time>
