@@ -4,6 +4,10 @@ export const prerender = true;
 import type { GetStaticPaths } from "astro";
 import { type CollectionEntry, getEntries, render } from "astro:content";
 
+import {
+  TableOfContents,
+  type BlogHeading,
+} from "~/components/blog/table-of-contents";
 import Container from "~/components/layout/container.astro";
 import PostHeader from "~/components/post-header.astro";
 import Prose from "~/components/prose.astro";
@@ -22,13 +26,17 @@ type Props = CollectionEntry<"blog">;
 
 const post = Astro.props as Props;
 const { description, title, categories: categoryRefs } = post.data;
-const { Content } = await render(post);
+const { Content, headings } = await render(post);
 const categories = (await getEntries(categoryRefs)).filter((c) => c);
+const blogHeadings: BlogHeading[] = headings
+  .filter((heading) => heading.depth === 2 || heading.depth === 3)
+  .map(({ depth, slug, text }) => ({ depth: depth as 2 | 3, slug, text }));
 ---
 
 <Layout {title} {description}>
   <Container as="article" size="xl" class="pt-6!">
     <PostHeader {categories} {post} />
+    <TableOfContents client:load className="my-16" headings={blogHeadings} />
     <Prose>
       <Content components={useMdxComponents()} />
     </Prose>
