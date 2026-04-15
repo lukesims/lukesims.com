@@ -27,6 +27,7 @@ export const blogSchema = ({ image }: SchemaContext) =>
         image(),
         z.object({
           url: image(),
+          class: z.string().optional(),
           credit: z.optional(
             z.object({ name: z.string(), url: z.string().url() }),
           ),

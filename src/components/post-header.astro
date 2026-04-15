@@ -5,6 +5,7 @@ import type { CollectionEntry } from "astro:content";
 import { Chip } from "~/components/chip";
 import FormattedDate from "~/components/formatted-date.astro";
 import { Heading } from "~/components/heading";
+import { cn } from "~/utils/styles";
 
 interface Props {
   categories: CollectionEntry<"categories">[];
@@ -13,6 +14,9 @@ interface Props {
 
 const { categories, post } = Astro.props;
 const { hero, published, title, updated } = post.data;
+
+const heroImage = hero && ("url" in hero ? hero.url : hero);
+const heroImageClass = hero && "url" in hero ? hero.class : undefined;
 ---
 
 <header class="flex w-full flex-col items-center gap-8">
@@ -21,10 +25,13 @@ const { hero, published, title, updated } = post.data;
       <div class="w-full">
         <Image
           priority
-          src={"url" in hero ? hero.url : hero}
+          src={heroImage!}
           alt=""
           layout="full-width"
-          class="border-border shadow-border h-80 w-full border-4 object-cover shadow-lg md:h-90 lg:h-100 xl:h-110 2xl:h-120"
+          class={cn(
+            "border-border shadow-border h-80 w-full border-4 object-cover shadow-lg md:h-90 lg:h-100 xl:h-110 2xl:h-120",
+            heroImageClass,
+          )}
         />
         {"credit" in hero && hero.credit && (
           <div class="mt-1.5 -mr-1.5 text-right text-sm text-stone-600">
