@@ -54,7 +54,7 @@ const qrCode = new URL(
 >
   <Container
     class="text-center text-pretty lg:pt-42 2xl:pt-48 print:gap-5 print:py-0"
-    size="lg"
+    size="xl"
   >
     <MobileNav client:load />
     <DesktopNav />
@@ -73,4 +73,9 @@ const qrCode = new URL(
       <Education {education} />
     </div>
   </Container>
+  <Fragment slot="footer-text">
+    Some details omitted for brevity. To view the<br />
+    full document scan the QR code or go to<br />
+    <a href={qrCode} class="text-white underline">{qrCode}</a>
+  </Fragment>
 </Layout>

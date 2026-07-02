@@ -35,9 +35,7 @@ export const Skill = ({ level = 0, skill }: SkillProps) => {
           <HeadingComponent>{skill.name}</HeadingComponent>
         </Heading>
         {years && (
-          <Chip className={cn(chipClass, "print:text-xs print:shadow-none")}>
-            {years}+ years
-          </Chip>
+          <Chip className={cn(chipClass, "print:text-xs")}>{years}+ years</Chip>
         )}
       </div>
 
@@ -57,7 +55,8 @@ export const Skill = ({ level = 0, skill }: SkillProps) => {
                 className={cn(
                   chipClass,
                   skill.tags[id].print === false && "print:hidden",
-                  "mr-2 mb-2 print:text-xs print:shadow-none",
+                  // "mr-2 mb-2 print:text-xs print:shadow-none",
+                  "mr-2 mb-2 print:text-xs",
                 )}
                 key={id}
               >
