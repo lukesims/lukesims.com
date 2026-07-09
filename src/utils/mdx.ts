@@ -4,7 +4,6 @@ import { type ComponentProps, createElement } from "react";
 import Blockquote from "~/components/blockquote.astro";
 import { BlogHeading } from "~/components/blog/heading";
 import CodeBlock from "~/components/code-block.astro";
-import { Heading } from "~/components/heading";
 import { Link } from "~/components/link";
 
 export const useMdxComponents: UseMdxComponents = () => ({
