@@ -12,13 +12,13 @@ import { ExpiredCvError } from "~/utils/content";
 const { id } = Astro.params;
 
 if (!id) {
-  return Astro.rewrite("/404");
+  return new Response(null, { status: 404, statusText: "Not found" });
 }
 
 const cv = await getEntry("cv", id);
 
 if (!cv) {
-  return Astro.rewrite("/404");
+  return new Response(null, { status: 404, statusText: "Not found" });
 }
 
 const today = new Date();

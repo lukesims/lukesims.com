@@ -54,6 +54,8 @@ jobs:
         run: npm run lint:style
       - name: Run unit/integration tests
         run: npm run test:unit
+      - name: Add wrangler config
+        run: cp content/wrangler.jsonc wrangler.jsonc
       - name: Build the application
         run: npm run build -- --mode test
       - name: Install browsers for e2e tests

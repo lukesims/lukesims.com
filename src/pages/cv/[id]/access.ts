@@ -1,6 +1,6 @@
 import type { APIRoute } from "astro";
+import { z } from "astro/zod";
 import { getEntry } from "astro:content";
-import { z } from "zod";
 
 import { string } from "~/schemas/validation";
 import { createSignedUrl } from "~/utils/signatures";

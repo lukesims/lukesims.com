@@ -13,7 +13,7 @@ import { ExpiredCvError, getCv } from "~/utils/content";
 import { assertUrlIsValid, ExpiredSignatureError } from "~/utils/signatures";
 
 if (!Astro.params.id) {
-  return Astro.rewrite("/404");
+  return new Response(null, { status: 404, statusText: "Not found" });
 }
 
 try {
@@ -28,7 +28,7 @@ try {
 const cv = await getCv(Astro.params.id);
 
 if (!cv) {
-  return Astro.rewrite("/404");
+  return new Response(null, { status: 404, statusText: "Not found" });
 }
 
 const today = new Date();

@@ -1,6 +1,8 @@
 import { captureMessage } from "@sentry/astro";
 import type { APIRoute } from "astro";
-import { z } from "zod";
+import { z } from "astro/zod";
+import { CONTACT_EMAIL } from "astro:env/server";
+import { env } from "cloudflare:workers";
 
 import { email, string } from "~/schemas/validation";
 import { sendEmail } from "~/utils/email";
@@ -20,13 +22,7 @@ const requestSchema = z.object({
 /**
  * Request handler for: `POST /contact/send`
  */
-export const POST: APIRoute = async ({
-  clientAddress,
-  locals,
-  request,
-  site,
-  url,
-}) => {
+export const POST: APIRoute = async ({ clientAddress, request, site, url }) => {
   const contentType = request.headers.get("content-type");
   if (!contentType || !/^multipart\/form-data(?:;.*)?$/.test(contentType)) {
     return new Response("Bad Request", { status: 400 });
@@ -50,13 +46,13 @@ export const POST: APIRoute = async ({
   );
 
   if (import.meta.env.MODE !== "test") {
-    if (!locals.runtime.env.EMAIL_RATE_LIMITER) {
+    if (!env.EMAIL_RATE_LIMITER) {
       const msg = "EMAIL_RATE_LIMITER binding not available";
       console.error(msg);
       captureMessage(msg);
       return new Response("Internal Server Error", { status: 500 });
     }
-    const { success } = await locals.runtime.env.EMAIL_RATE_LIMITER.limit({
+    const { success } = await env.EMAIL_RATE_LIMITER.limit({
       key: clientAddress + url.pathname,
     });
     if (!success) {
@@ -65,7 +61,7 @@ export const POST: APIRoute = async ({
   }
 
   const sendEmailResponse = await sendEmail({
-    to: [import.meta.env.CONTACT_EMAIL],
+    to: [CONTACT_EMAIL],
     subject: `Contact form submission from ${validated.name}`,
     text:
       `Message received via the ${import.meta.env.PUBLIC_SITE_URL} contact form:\n\n` +

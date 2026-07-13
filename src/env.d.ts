@@ -1,6 +1,9 @@
-type CloudflareRuntime = import("@astrojs/cloudflare").Runtime<Env>;
-
 declare namespace App {
-  // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-  interface Locals extends CloudflareRuntime {}
+  interface Locals {
+    cfContext?: ExecutionContext;
+  }
 }
+
+declare module "@fontsource-variable/bricolage-grotesque";
+declare module "@fontsource-variable/google-sans-code";
+declare module "@fontsource-variable/public-sans";

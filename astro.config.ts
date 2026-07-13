@@ -8,37 +8,55 @@ import {
   transformerNotationHighlight,
 } from "@shikijs/transformers";
 import tailwindcss from "@tailwindcss/vite";
-import { defineConfig } from "astro/config";
+import { defineConfig, envField } from "astro/config";
 import { loadEnv } from "vite";
 
 import { transformerMetaTitle } from "./src/utils/shiki";
 
-const { ALLOWED_DOMAINS, PUBLIC_SENTRY_DSN, PUBLIC_SITE_URL, SENTRY_ENABLED } =
-  loadEnv(process.env.NODE_ENV || "production", process.cwd(), "");
+const { ALLOWED_DOMAINS, PUBLIC_SITE_URL, SENTRY_ENABLED } = loadEnv(
+  process.env.NODE_ENV || "production",
+  process.cwd(),
+  "",
+);
 
 // https://astro.build/config
 export default defineConfig({
   site: PUBLIC_SITE_URL,
   trailingSlash: "never",
 
-  adapter: cloudflare({
-    cloudflareModules: false,
-    imageService: "cloudflare",
-  }),
+  adapter:
+    process.env.NODE_ENV === "test"
+      ? undefined // Disabled for vitest
+      : cloudflare({
+          imageService: "compile",
+          prerenderEnvironment: "node",
+        }),
 
-  experimental: {
-    csp: {
-      directives: [
-        "base-uri 'self'",
-        `connect-src 'self' ${PUBLIC_SENTRY_DSN ? new URL(PUBLIC_SENTRY_DSN).origin : ""}`,
-        "form-action 'self'",
-        "frame-src 'self' https://challenges.cloudflare.com",
-        "object-src 'none'",
-        // "upgrade-insecure-requests",
-      ],
-      scriptDirective: {
-        resources: ["'self'", "https://challenges.cloudflare.com"],
-      },
+  env: {
+    schema: {
+      CONTACT_EMAIL: envField.string({ context: "server", access: "secret" }),
+      FROM_EMAIL: envField.string({ context: "server", access: "secret" }),
+      HMAC_ALGO: envField.string({
+        context: "server",
+        access: "secret",
+        optional: true,
+      }),
+      HMAC_KEY: envField.string({ context: "server", access: "secret" }),
+      MAILGUN_API_KEY: envField.string({ context: "server", access: "secret" }),
+      MAILGUN_BASE_URL: envField.string({
+        context: "server",
+        access: "secret",
+      }),
+      MAILGUN_DOMAIN: envField.string({ context: "server", access: "secret" }),
+      MAILPIT_URL: envField.string({
+        context: "server",
+        access: "secret",
+        optional: true,
+      }),
+      TURNSTILE_SECRET_KEY: envField.string({
+        context: "server",
+        access: "secret",
+      }),
     },
   },
 
@@ -76,6 +94,19 @@ export default defineConfig({
           };
         })
       : undefined,
+    // TODO: Move away from Shiki or find a CSP workaround
+    // csp: {
+    //   directives: [
+    //     "base-uri 'self'",
+    //     `connect-src 'self' ${PUBLIC_SENTRY_DSN ? new URL(PUBLIC_SENTRY_DSN).origin : ""}`,
+    //     "form-action 'self'",
+    //     "frame-src 'self' https://challenges.cloudflare.com",
+    //     "object-src 'none'",
+    //   ],
+    //   scriptDirective: {
+    //     resources: ["'self'", "https://challenges.cloudflare.com"],
+    //   },
+    // },
   },
 
   server: {
@@ -84,10 +115,10 @@ export default defineConfig({
   },
 
   vite: {
-    plugins: [
-      // @ts-expect-error types are wrong
-      tailwindcss(),
-    ],
+    plugins: [tailwindcss()],
+    optimizeDeps: {
+      exclude: ["astro/env/runtime", "zod"],
+    },
     ssr: {
       external: [
         "node:buffer",

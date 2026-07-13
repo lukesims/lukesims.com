@@ -27,7 +27,15 @@ export const renderErrors = defineMiddleware(async (_, next) => {
       });
     }
     if (error instanceof ZodError) {
-      return new Response(JSON.stringify(error.flatten().fieldErrors), {
+      const fieldErrors: Record<string, string[]> = {};
+      for (const issue of error.issues) {
+        const path = issue.path.join(".");
+        if (!fieldErrors[path]) {
+          fieldErrors[path] = [];
+        }
+        fieldErrors[path].push(issue.message);
+      }
+      return new Response(JSON.stringify(fieldErrors), {
         headers: { "content-type": "application/json" },
         status: 422,
       });

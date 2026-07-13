@@ -1,4 +1,4 @@
-import { randomUUID } from "node:crypto";
+import { TURNSTILE_SECRET_KEY } from "astro:env/server";
 
 import config from "~/config";
 
@@ -31,10 +31,10 @@ export async function validateTurnstile(
   expectedHostname?: string,
 ) {
   const body = new FormData();
-  body.append("secret", import.meta.env.TURNSTILE_SECRET_KEY);
+  body.append("secret", TURNSTILE_SECRET_KEY);
   body.append("response", token);
   body.append("remoteip", remoteip);
-  body.append("idempotency_key", randomUUID());
+  body.append("idempotency_key", crypto.randomUUID());
 
   let result: TurnstileResponse = {
     success: false,

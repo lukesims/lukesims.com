@@ -5,26 +5,17 @@
     "prettier-plugin-tailwindcss"
   ],
 
-  "overrides": [
-    {
-      "files": "*.astro",
-      "options": {
-        "parser": "astro"
-      }
-    },
-    {
-      "files": "*.jsonc",
-      "options": {
-        "trailingComma": "none"
-      }
-    }
-  ],
-
   "importOrder": ["<THIRD_PARTY_MODULES>", "^[~]", "^[./]"],
   "importOrderCaseInsensitive": true,
   "importOrderGroupNamespaceSpecifiers": true,
   "importOrderSeparation": true,
   "importOrderSortSpecifiers": true,
 
-  "tailwindFunctions": ["cn", "cva"]
+  "tailwindFunctions": ["cn", "cva"],
+
+  "overrides": [
+    { "files": "*.astro", "options": { "parser": "astro" } },
+    { "files": "tsconfig.json", "options": { "parser": "jsonc" } },
+    { "files": ["*.json", "*.jsonc"], "options": { "trailingComma": "none" } }
+  ]
 }

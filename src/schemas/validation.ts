@@ -1,6 +1,6 @@
-import z from "zod";
+import { z } from "astro/zod";
 
-export const email = () => string().trim().email({ message: "typeMismatch" });
+export const email = () => z.email({ error: "typeMismatch" });
 
 export const string = () =>
-  z.string({ message: "valueMissing" }).trim().min(1, { message: "tooShort" });
+  z.string({ error: "valueMissing" }).trim().min(1, { error: "tooShort" });

@@ -1,16 +1,14 @@
+import { HMAC_ALGO, HMAC_KEY } from "astro:env/server";
 import { createHmac as nodeCreateHmac, timingSafeEqual } from "node:crypto";
 
 export function createHmac(data: string): string {
-  if (!import.meta.env.HMAC_KEY) {
+  if (!HMAC_KEY) {
     throw new Error("HMAC_KEY must be set");
   }
   if (!data) {
     throw new Error("data must be provided");
   }
-  return nodeCreateHmac(
-    import.meta.env.HMAC_ALGO || "sha256",
-    import.meta.env.HMAC_KEY,
-  )
+  return nodeCreateHmac(HMAC_ALGO || "sha256", HMAC_KEY)
     .update(data, "utf8")
     .digest("hex");
 }

@@ -2,8 +2,14 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { sendEmailViaMailgun } from "~/utils/email/mailgun";
 
-const { mgCreateMessage } = vi.hoisted(() => ({
+const { mgCreateMessage, mockEnv } = vi.hoisted(() => ({
   mgCreateMessage: vi.fn(),
+  mockEnv: {
+    FROM_EMAIL: process.env.FROM_EMAIL,
+    MAILGUN_DOMAIN: process.env.MAILGUN_DOMAIN,
+    MAILGUN_API_KEY: process.env.MAILGUN_API_KEY,
+    MAILGUN_BASE_URL: process.env.MAILGUN_BASE_URL,
+  },
 }));
 
 vi.mock("mailgun.js", () => ({
@@ -18,7 +24,9 @@ vi.mock("mailgun.js", () => ({
   }),
 }));
 
-const { FROM_EMAIL, MAILGUN_DOMAIN } = import.meta.env;
+vi.mock("astro:env/server", () => mockEnv);
+
+const { FROM_EMAIL, MAILGUN_DOMAIN } = mockEnv;
 
 describe("sendEmailViaMailgun", () => {
   beforeEach(() => {

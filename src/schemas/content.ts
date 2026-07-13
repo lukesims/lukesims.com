@@ -1,10 +1,11 @@
-import { reference, type SchemaContext, z } from "astro:content";
+import { z } from "astro/zod";
+import { reference, type SchemaContext } from "astro:content";
 
 //==== Pages ===========================
 
 export const pagesSchema = z.object({
   bodyClass: z.string().optional(),
-  canonical: z.string().url().optional(),
+  canonical: z.url().optional(),
   container: z.enum(["sm", "md", "lg"]).optional(),
   description: z.string().optional(),
   nofollow: z.boolean().optional().default(false),
@@ -28,9 +29,7 @@ export const blogSchema = ({ image }: SchemaContext) =>
         z.object({
           url: image(),
           class: z.string().optional(),
-          credit: z.optional(
-            z.object({ name: z.string(), url: z.string().url() }),
-          ),
+          credit: z.optional(z.object({ name: z.string(), url: z.url() })),
         }),
       ]),
     ),
@@ -118,7 +117,7 @@ export const contactInfoSchema = z.object({
     z.object({
       icon: z.string(),
       text: z.string(),
-      url: z.string().url().optional(),
+      url: z.url().optional(),
     }),
   ),
 });

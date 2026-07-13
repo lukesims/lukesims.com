@@ -1,9 +1,11 @@
+import { FROM_EMAIL, MAILPIT_URL } from "astro:env/server";
+
 import type { SendEmailConfig, SendEmailResponse } from "~/utils/email/types";
 
 export async function sendEmailViaMailpit(
   email: SendEmailConfig,
 ): Promise<SendEmailResponse> {
-  const res = await fetch(`${import.meta.env.MAILPIT_URL}/api/v1/send`, {
+  const res = await fetch(`${MAILPIT_URL}/api/v1/send`, {
     method: "POST",
     headers: {
       Accept: "application/json",
@@ -11,7 +13,7 @@ export async function sendEmailViaMailpit(
     },
     body: JSON.stringify({
       To: email.to.map((Email) => ({ Email })),
-      From: { Email: email.from || import.meta.env.FROM_EMAIL },
+      From: { Email: email.from || FROM_EMAIL },
       Subject: email.subject,
       Text: email.text,
       HTML: email.html,

@@ -1,11 +1,23 @@
 import { randomBytes } from "node:crypto";
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { createHmac, verifyHmac } from "./hmacs";
 
+const mockEnv = vi.hoisted(() => ({
+  HMAC_KEY: "test-key",
+  HMAC_ALGO: "sha256",
+}));
+
+vi.mock("astro:env/server", () => mockEnv);
+
 describe("createHmac", () => {
+  beforeEach(() => {
+    mockEnv.HMAC_KEY = "test-key";
+    mockEnv.HMAC_ALGO = "sha256";
+  });
+
   afterEach(() => {
-    vi.unstubAllEnvs();
+    vi.restoreAllMocks();
   });
 
   it("returns HMACs as hexadecimal strings", () => {
@@ -60,24 +72,24 @@ describe("createHmac", () => {
   });
 
   it("uses HMAC_ALGO as the digest algorithm when defined", () => {
-    vi.stubEnv("HMAC_ALGO", "md5");
+    mockEnv.HMAC_ALGO = "md5";
     expect(createHmac("foo").length).toBe(32);
-    vi.stubEnv("HMAC_ALGO", "sha1");
+    mockEnv.HMAC_ALGO = "sha1";
     expect(createHmac("foo").length).toBe(40);
-    vi.stubEnv("HMAC_ALGO", "sha256");
+    mockEnv.HMAC_ALGO = "sha256";
     expect(createHmac("foo").length).toBe(64);
   });
 
   it("uses sha256 as the default digest algorithm", () => {
     const defaultHmac = createHmac("foo");
-    vi.stubEnv("HMAC_ALGO", "sha256");
+    mockEnv.HMAC_ALGO = "sha256";
     const sha256Hmac = createHmac("foo");
     expect(defaultHmac).toBe(sha256Hmac);
   });
 
   it("uses HMAC_KEY as the secret key", () => {
     const hmacs = Array.from({ length: 10 }, () => {
-      vi.stubEnv("HMAC_KEY", randomBytes(4).toString("hex"));
+      mockEnv.HMAC_KEY = randomBytes(4).toString("hex");
       return createHmac("foo");
     });
     const uniqueHmacs = [...new Set(hmacs)];
@@ -88,7 +100,7 @@ describe("createHmac", () => {
     for (let i = 0; i < 10; i++) {
       const key = randomBytes(4).toString("hex");
       const data = randomBytes(4).toString("hex");
-      vi.stubEnv("HMAC_KEY", key);
+      mockEnv.HMAC_KEY = key;
       const hmac = createHmac(data);
       expect(hmac).not.toContain(key);
       expect(hmac).not.toContain(data);
@@ -96,9 +108,9 @@ describe("createHmac", () => {
   });
 
   it("throws when HMAC_KEY is not set", () => {
-    vi.stubEnv("HMAC_KEY", "");
+    mockEnv.HMAC_KEY = "";
     expect(() => createHmac("test")).toThrow("HMAC_KEY must be set");
-    vi.stubEnv("HMAC_KEY", undefined);
+    mockEnv.HMAC_KEY = undefined as unknown as string;
     expect(() => createHmac("test")).toThrow("HMAC_KEY must be set");
   });
 

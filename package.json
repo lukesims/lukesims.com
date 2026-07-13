@@ -4,7 +4,7 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "preview": "wrangler dev --ip 0.0.0.0",
+    "preview": "astro preview --ip 0.0.0.0",
     "lint": "concurrently --group --names issues,style,types 'npm run lint:issues' 'npm run lint:style' 'npm run lint:types'",
     "lint:issues": "eslint .",
     "lint:style": "prettier --check .",
@@ -17,10 +17,10 @@
     "test:e2e": "playwright test"
   },
   "dependencies": {
-    "@astrojs/cloudflare": "^12.6.13",
-    "@astrojs/mdx": "^4.3.14",
-    "@astrojs/react": "^4.4.2",
-    "@astrojs/sitemap": "^3.7.1",
+    "@astrojs/cloudflare": "13.7.0",
+    "@astrojs/mdx": "^5.0.6",
+    "@astrojs/react": "^5.0.7",
+    "@astrojs/sitemap": "^3.7.3",
     "@fontsource-variable/bricolage-grotesque": "^5.2.10",
     "@fontsource-variable/google-sans-code": "^5.2.3",
     "@fontsource-variable/public-sans": "^5.2.7",
@@ -64,7 +64,7 @@
     "@types/react-dom": "^19.2.3",
     "@typescript-eslint/parser": "^8.55.0",
     "@vitest/browser": "^4.1.0",
-    "astro": "^5.18.1",
+    "astro": "^6.4.8",
     "concurrently": "^9.2.1",
     "eslint": "^9.39.4",
     "eslint-config-prettier": "^10.1.8",
@@ -79,6 +79,9 @@
     "typescript-eslint": "^8.57.0",
     "vitest": "^4.0.15",
     "vitest-browser-react": "^2.0.5",
-    "wrangler": "^4.72.0"
+    "wrangler": "^4.83.0"
+  },
+  "overrides": {
+    "vite": "^7"
   }
 }

@@ -2,10 +2,18 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { sendEmailViaMailpit } from "~/utils/email/mailpit";
 
+const mockEnv = vi.hoisted(() => ({
+  FROM_EMAIL: "from_email@example.com",
+  MAILPIT_URL: "http://localhost:8025",
+}));
+
+vi.mock("astro:env/server", () => mockEnv);
+
 describe("sendEmailViaMailpit", () => {
   beforeEach(() => {
-    vi.unstubAllEnvs();
     vi.clearAllMocks();
+    mockEnv.FROM_EMAIL = "from_email@example.com";
+    mockEnv.MAILPIT_URL = "http://localhost:8025";
     global.fetch = vi.fn();
   });
 
@@ -40,7 +48,7 @@ describe("sendEmailViaMailpit", () => {
   });
 
   it("uses `env.FROM_EMAIL` when `email.from` is not provided", async () => {
-    vi.stubEnv("FROM_EMAIL", "from_email@example.com");
+    mockEnv.FROM_EMAIL = "from_email@example.com";
     vi.mocked(global.fetch).mockResolvedValueOnce({
       json: vi.fn().mockResolvedValue({ ID: "123" }),
       ok: true,
