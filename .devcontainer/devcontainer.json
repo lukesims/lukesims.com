@@ -5,6 +5,7 @@
   "service": "app",
   "workspaceFolder": "/workspaces/lukesims.com/",
 
+  "remoteUser": "node",
   "containerUser": "node",
   "containerEnv": {
     "PLAYWRIGHT_BROWSERS_PATH": "/playwright-browsers"
