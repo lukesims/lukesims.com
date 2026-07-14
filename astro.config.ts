@@ -28,7 +28,7 @@ export default defineConfig({
     process.env.NODE_ENV === "test"
       ? undefined // Disabled for vitest
       : cloudflare({
-          imageService: "cloudflare",
+          imageService: "cloudflare-binding",
           prerenderEnvironment: "node",
         }),
 
