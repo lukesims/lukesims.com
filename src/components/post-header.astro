@@ -49,14 +49,14 @@ const heroImageClass = hero && "url" in hero ? hero.class : undefined;
     )
   }
   <hgroup class="flex flex-col items-center gap-8 pt-12">
-    <div class="flex items-center justify-center gap-8">
+    <p class="flex items-center justify-center gap-8">
       {
         categories.length > 0 && (
-          <div class="flex gap-2">
+          <span class="flex gap-2">
             {categories.map((c) => (
               <Chip size="sm">{c.data.title}</Chip>
             ))}
-          </div>
+          </span>
         )
       }
       {
@@ -66,13 +66,13 @@ const heroImageClass = hero && "url" in hero ? hero.class : undefined;
       }
       {
         published && (
-          <div class="flex items-center justify-center gap-4">
+          <span class="flex items-center justify-center gap-4">
             <StyledDate date={published} title="Published" />
             {updated && <StyledDate date={updated} title="Updated" />}
-          </div>
+          </span>
         )
       }
-    </div>
+    </p>
     <Heading className="text-center text-balance">{title}</Heading>
   </hgroup>
 </header>

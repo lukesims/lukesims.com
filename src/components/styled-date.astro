@@ -15,20 +15,20 @@ const year = date.getFullYear();
 <time class={className} datetime={date.toISOString()}>
   {
     title && (
-      <div class="text-muted-foreground text-center text-[0.75em] leading-none font-semibold uppercase">
+      <span class="text-muted-foreground block w-full text-center text-[0.75em] leading-none font-semibold uppercase">
         {title}
-      </div>
+      </span>
     )
   }
-  <div class="flex items-center justify-center gap-1">
-    <div class="text-[2em] leading-none font-extrabold">
+  <span class="flex items-center justify-center gap-1">
+    <span class="text-[2em] leading-none font-extrabold">
       {day}
-    </div>
-    <div class="flex flex-col items-center">
-      <div class="text-[0.85em] leading-none font-bold uppercase">
+    </span>
+    <span class="flex flex-col items-center">
+      <span class="text-[0.85em] leading-none font-bold uppercase">
         {month}
-      </div>
-      <div class="text-[0.85em] leading-none font-bold">{year}</div>
-    </div>
-  </div>
+      </span>
+      <span class="text-[0.85em] leading-none font-bold">{year}</span>
+    </span>
+  </span>
 </time>
