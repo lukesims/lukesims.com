@@ -9,7 +9,7 @@ updates:
     directory: "/"
     target-branch: "dev"
     schedule:
-      interval: "daily"
+      interval: "monthly"
     groups:
       astro:
         patterns: ["@astrojs/*", "astro*"]
