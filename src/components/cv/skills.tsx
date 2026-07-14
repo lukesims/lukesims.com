@@ -12,7 +12,7 @@ export const Skills = ({ skills }: SkillsProps) => (
       <div id="skills" className="absolute -top-20 lg:-top-24"></div>
       Skills
       <div className="text-[0.4em] opacity-50">
-        / languages / frameworks / etc.
+        (or languages/frameworks/tools/etc that I have experience with)
       </div>
     </Heading>
 
