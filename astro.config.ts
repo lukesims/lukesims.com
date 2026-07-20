@@ -13,7 +13,7 @@ import { loadEnv } from "vite";
 
 import { transformerMetaTitle } from "./src/utils/shiki";
 
-const { ALLOWED_DOMAINS, PUBLIC_SITE_URL, SENTRY_ENABLED } = loadEnv(
+const { ALLOWED_DOMAINS, NODE_ENV, PUBLIC_SITE_URL, SENTRY_ENABLED } = loadEnv(
   process.env.NODE_ENV || "production",
   process.cwd(),
   "",
@@ -25,9 +25,13 @@ export default defineConfig({
   trailingSlash: "never",
 
   adapter:
-    process.env.NODE_ENV === "test"
+    NODE_ENV === "test"
       ? undefined // Disabled for vitest
-      : cloudflare({ imageService: "cloudflare-binding" }),
+      : cloudflare({
+          prerenderEnvironment: "node",
+          imageService:
+            NODE_ENV === "development" ? "passthrough" : "cloudflare-binding",
+        }),
 
   env: {
     schema: {
