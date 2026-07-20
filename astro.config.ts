@@ -27,35 +27,47 @@ export default defineConfig({
   adapter:
     process.env.NODE_ENV === "test"
       ? undefined // Disabled for vitest
-      : cloudflare({
-          imageService: "cloudflare-binding",
-          prerenderEnvironment: "node",
-        }),
+      : cloudflare({ imageService: "cloudflare-binding" }),
 
   env: {
     schema: {
-      CONTACT_EMAIL: envField.string({ context: "server", access: "secret" }),
-      FROM_EMAIL: envField.string({ context: "server", access: "secret" }),
-      HMAC_ALGO: envField.string({
-        context: "server",
+      CONTACT_EMAIL: envField.string({
         access: "secret",
+        context: "server",
+      }),
+      FROM_EMAIL: envField.string({
+        access: "secret",
+        context: "server",
+      }),
+      HMAC_ALGO: envField.string({
+        access: "secret",
+        context: "server",
         optional: true,
       }),
-      HMAC_KEY: envField.string({ context: "server", access: "secret" }),
-      MAILGUN_API_KEY: envField.string({ context: "server", access: "secret" }),
-      MAILGUN_BASE_URL: envField.string({
-        context: "server",
+      HMAC_KEY: envField.string({
         access: "secret",
+        context: "server",
       }),
-      MAILGUN_DOMAIN: envField.string({ context: "server", access: "secret" }),
-      MAILPIT_URL: envField.string({
-        context: "server",
+      MAILGUN_API_KEY: envField.string({
         access: "secret",
+        context: "server",
+      }),
+      MAILGUN_BASE_URL: envField.string({
+        access: "secret",
+        context: "server",
+      }),
+      MAILGUN_DOMAIN: envField.string({
+        access: "secret",
+        context: "server",
+      }),
+      MAILPIT_URL: envField.string({
+        access: "secret",
+        context: "server",
         optional: true,
       }),
       TURNSTILE_SECRET_KEY: envField.string({
-        context: "server",
         access: "secret",
+        context: "server",
       }),
     },
   },
