@@ -3,7 +3,6 @@ import type { APIRoute } from "astro";
 import { z } from "astro/zod";
 import { PUBLIC_SITE_URL } from "astro:env/client";
 import { CONTACT_EMAIL } from "astro:env/server";
-import { env } from "cloudflare:workers";
 
 import { email, string } from "~/schemas/validation";
 import { sendEmail } from "~/utils/email";
@@ -47,6 +46,7 @@ export const POST: APIRoute = async ({ clientAddress, request, site, url }) => {
   );
 
   if (import.meta.env.MODE !== "test") {
+    const { env } = await import("cloudflare:workers");
     if (!env.EMAIL_RATE_LIMITER) {
       const msg = "EMAIL_RATE_LIMITER binding not available";
       console.error(msg);
