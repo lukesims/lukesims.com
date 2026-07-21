@@ -31,7 +31,12 @@ export default defineConfig({
       : cloudflare({
           prerenderEnvironment: "node",
           imageService:
-            NODE_ENV === "development" ? "passthrough" : "cloudflare-binding",
+            NODE_ENV === "development"
+              ? "passthrough"
+              : {
+                  build: "compile",
+                  runtime: "cloudflare-binding",
+                },
         }),
 
   env: {
@@ -51,6 +56,25 @@ export default defineConfig({
     react(),
     sentry({ enabled: SENTRY_ENABLED === "true" }),
     sitemap(),
+    // Temporary fix to make build-time image optimisation work until
+    // this issue is fixed: https://github.com/withastro/astro/issues/17346
+    // TODO: remove this when the issue is fixed.
+    {
+      name: "sharp-build-image-service",
+      hooks: {
+        "astro:config:setup": ({ updateConfig }) => {
+          if (NODE_ENV !== "development") {
+            updateConfig({
+              image: {
+                service: {
+                  entrypoint: "astro/assets/services/sharp",
+                },
+              },
+            });
+          }
+        },
+      },
+    },
   ],
 
   markdown: {
