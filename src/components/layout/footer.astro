@@ -1,4 +1,6 @@
 ---
+import { PUBLIC_REPO_URL } from "astro:env/client";
+
 import { Link } from "~/components/link";
 import { QRCode } from "~/components/qr-code";
 import { cn } from "~/utils/styles";
@@ -15,7 +17,7 @@ const years = year === 2025 ? "2025" : `2025&ndash;${year}`;
 
 const links: { href: string; icon: string; text: string }[] = [
   {
-    href: import.meta.env.PUBLIC_REPO_URL,
+    href: PUBLIC_REPO_URL,
     icon: "icon-[ri--code-s-slash-fill]",
     text: "View Source",
   },

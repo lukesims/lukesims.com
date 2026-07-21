@@ -1,3 +1,4 @@
+import { PUBLIC_SITE_URL } from "astro:env/client";
 import { Slot } from "radix-ui";
 import type { ComponentProps } from "react";
 
@@ -19,7 +20,7 @@ export function Link({
     typeof href === "string" &&
     !href.startsWith("#") &&
     !href.startsWith("/") &&
-    !href.startsWith(import.meta.env.PUBLIC_SITE_URL + "/");
+    !href.startsWith(PUBLIC_SITE_URL + "/");
 
   return (
     <Comp

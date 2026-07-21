@@ -1,6 +1,8 @@
 ---
 export const prerender = false;
 
+import { PUBLIC_SITE_URL } from "astro:env/client";
+
 import ContactInfo from "~/components/cv/contact-info.astro";
 import Education from "~/components/cv/education.astro";
 import Experience from "~/components/cv/experience.astro";
@@ -39,10 +41,7 @@ if (cv.expires && cv.expires <= today) {
 }
 
 const { education, experience, skills, summary, title } = cv;
-const qrCode = new URL(
-  `/cv/${Astro.params.id}`,
-  import.meta.env.PUBLIC_SITE_URL,
-).toString();
+const qrCode = new URL(`/cv/${Astro.params.id}`, PUBLIC_SITE_URL).toString();
 ---
 
 <Layout

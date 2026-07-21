@@ -1,6 +1,7 @@
 import { captureMessage } from "@sentry/astro";
 import type { APIRoute } from "astro";
 import { z } from "astro/zod";
+import { PUBLIC_SITE_URL } from "astro:env/client";
 import { CONTACT_EMAIL } from "astro:env/server";
 import { env } from "cloudflare:workers";
 
@@ -64,7 +65,7 @@ export const POST: APIRoute = async ({ clientAddress, request, site, url }) => {
     to: [CONTACT_EMAIL],
     subject: `Contact form submission from ${validated.name}`,
     text:
-      `Message received via the ${import.meta.env.PUBLIC_SITE_URL} contact form:\n\n` +
+      `Message received via the ${PUBLIC_SITE_URL} contact form:\n\n` +
       `Name:  ${validated.name}\n` +
       `Email:  ${validated.email}\n` +
       `Phone:  ${validated.phone}\n\n` +

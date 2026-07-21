@@ -8,9 +8,10 @@ import {
   transformerNotationHighlight,
 } from "@shikijs/transformers";
 import tailwindcss from "@tailwindcss/vite";
-import { defineConfig, envField } from "astro/config";
+import { defineConfig } from "astro/config";
 import { loadEnv } from "vite";
 
+import { env } from "./astro.env";
 import { transformerMetaTitle } from "./src/utils/shiki";
 
 const { ALLOWED_DOMAINS, NODE_ENV, PUBLIC_SITE_URL, SENTRY_ENABLED } = loadEnv(
@@ -34,46 +35,7 @@ export default defineConfig({
         }),
 
   env: {
-    schema: {
-      CONTACT_EMAIL: envField.string({
-        access: "secret",
-        context: "server",
-      }),
-      FROM_EMAIL: envField.string({
-        access: "secret",
-        context: "server",
-      }),
-      HMAC_ALGO: envField.string({
-        access: "secret",
-        context: "server",
-        optional: true,
-      }),
-      HMAC_KEY: envField.string({
-        access: "secret",
-        context: "server",
-      }),
-      MAILGUN_API_KEY: envField.string({
-        access: "secret",
-        context: "server",
-      }),
-      MAILGUN_BASE_URL: envField.string({
-        access: "secret",
-        context: "server",
-      }),
-      MAILGUN_DOMAIN: envField.string({
-        access: "secret",
-        context: "server",
-      }),
-      MAILPIT_URL: envField.string({
-        access: "secret",
-        context: "server",
-        optional: true,
-      }),
-      TURNSTILE_SECRET_KEY: envField.string({
-        access: "secret",
-        context: "server",
-      }),
-    },
+    schema: env,
   },
 
   integrations: [
