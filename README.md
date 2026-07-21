@@ -48,6 +48,14 @@ Note: the `/content` directory is a submodule pointing to a separate private rep
 
 1. **Edit `.env` with your values.**
 
+1. **Set up wrangler:**
+
+   ```sh
+   cp wrangler.example.jsonc wrangler.jsonc
+   ```
+
+1. **Edit `wrangler.jsonc` with your values.**
+
 1. **Start the dev server:**
 
    ```sh
