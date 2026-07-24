@@ -1,0 +1,3 @@
+# Separated so the content directory is ignored by scripts/CI but not by IDEs
+# (since it won't be auto-dicovered but we explicitly pass it to scripts).
+/content

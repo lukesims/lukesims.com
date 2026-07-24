@@ -7,11 +7,11 @@
     "preview": "wrangler types && astro preview --ip 0.0.0.0",
     "lint": "concurrently -g 'npm:lint:*'",
     "lint:issues": "eslint .",
-    "lint:style": "prettier --check .",
+    "lint:style": "prettier --ignore-path=.gitignore --ignore-path=.prettierignore --ignore-path=.prettierignore.content --check .",
     "lint:types": "astro check",
     "fix": "concurrently -g 'npm:fix:*'",
     "fix:eslint": "eslint --fix .",
-    "fix:prettier": "prettier --write .",
+    "fix:prettier": "prettier --ignore-path=.gitignore --ignore-path=.prettierignore --ignore-path=.prettierignore.content --write .",
     "test": "concurrently -g 'npm:test:*'",
     "test:unit": "vitest run",
     "test:e2e": "playwright test"
