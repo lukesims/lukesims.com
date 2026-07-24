@@ -68,7 +68,7 @@ export const skillsSchema = z.object({
   parent: reference("skills").optional(),
   print: z.boolean().optional().default(true),
   startYear: z.number().optional(),
-  tags: z.record(z.string(), skillsTagsSchema),
+  tags: z.record(z.string(), skillsTagsSchema).optional(),
   theme: z.string().optional(),
 });
 

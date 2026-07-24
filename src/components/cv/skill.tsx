@@ -15,6 +15,17 @@ type SkillProps = {
 export const Skill = ({ level = 0, skill }: SkillProps) => {
   const HeadingComponent = useMemo(() => (level === 0 ? "h3" : "h4"), [level]);
   const chipClass = useMemo(() => skill.theme ?? "", [skill]);
+
+  const skillIds = useMemo(
+    () =>
+      skill.tags
+        ? Object.keys(skill.tags)
+            .sort()
+            .filter((id) => !!skill.tags[id].tag)
+        : [],
+    [skill],
+  );
+
   const years = useMemo(() => {
     if (!skill.startYear) return undefined;
     return differenceInYears(new Date(), new Date(skill.startYear, 6));
@@ -46,23 +57,21 @@ export const Skill = ({ level = 0, skill }: SkillProps) => {
         />
       )}
 
-      {skill.tags && (
+      {skillIds.length > 0 && (
         <div className="text-left text-wrap">
-          {Object.keys(skill.tags)
-            .sort()
-            .map((id) => (
-              <Chip
-                className={cn(
-                  chipClass,
-                  skill.tags[id].print === false && "print:hidden",
-                  // "mr-2 mb-2 print:text-xs print:shadow-none",
-                  "mr-2 mb-2 print:text-xs",
-                )}
-                key={id}
-              >
-                {skill.tags[id].tag}
-              </Chip>
-            ))}
+          {skillIds.map((id) => (
+            <Chip
+              className={cn(
+                chipClass,
+                skill.tags[id].print === false && "print:hidden",
+                // "mr-2 mb-2 print:text-xs print:shadow-none",
+                "mr-2 mb-2 print:text-xs",
+              )}
+              key={id}
+            >
+              {skill.tags[id].tag}
+            </Chip>
+          ))}
         </div>
       )}
 
